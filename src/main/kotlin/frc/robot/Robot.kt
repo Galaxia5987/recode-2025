@@ -7,7 +7,6 @@ import com.pathplanner.lib.commands.PathfindingCommand
 import edu.wpi.first.hal.FRCNetComm.tInstances
 import edu.wpi.first.hal.FRCNetComm.tResourceType
 import edu.wpi.first.hal.HAL
-import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.PowerDistribution
 import edu.wpi.first.wpilibj2.command.Command
@@ -15,14 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler
 import frc.robot.Mode.REAL
 import frc.robot.Mode.REPLAY
 import frc.robot.Mode.SIM
-import frc.robot.autonomous.getPoseLookaheadTime
-import frc.robot.autonomous.logTriggers
-import frc.robot.autonomous.selectedFeeder
-import frc.robot.autonomous.selectedScorePose
 import frc.robot.lib.enableAutoLogOutputFor
-import frc.robot.subsystems.drive.TunerConstants
-import frc.robot.subsystems.leds.blueTeamPattern
-import frc.robot.subsystems.leds.redTeamPattern
 import org.ironmaple.simulation.SimulatedArena
 import org.littletonrobotics.junction.LogFileUtil
 import org.littletonrobotics.junction.LoggedRobot
@@ -93,18 +85,12 @@ object Robot : LoggedRobot() {
             }
         }
         Logger.start()
-
-        TunerConstants.init()
         RobotContainer // Initialize robot container.
 
         enableAutoLogOutputFor(this)
 
         DriverStation.silenceJoystickConnectionWarning(true)
         PathfindingCommand.warmupCommand().schedule()
-
-        leds
-            .setPattern(all = if (IS_RED) redTeamPattern else blueTeamPattern)
-            .schedule()
 
         val commandCounts = HashMap<String, Int>()
         val logCommandFunction =
@@ -144,27 +130,6 @@ object Robot : LoggedRobot() {
      */
     override fun robotPeriodic() {
         CommandScheduler.getInstance().run()
-        logTriggers()
-        Logger.recordOutput(
-            "ScoreState/SelectedScorePose",
-            selectedScorePose.first.invoke()
-        )
-        Logger.recordOutput(
-            "ScoreState/TagOfSelectedScorePose",
-            selectedScorePose.second
-        )
-        Logger.recordOutput(
-            "ScoreState/SelectedFeeder",
-            selectedFeeder.invoke()
-        )
-
-        Logger.recordOutput("disableAlignment", RobotContainer.disableAlignment)
-        Logger.recordOutput(
-            "disablePathFinding",
-            RobotContainer.disablePathFinding
-        )
-        Logger.recordOutput("shouldNet", RobotContainer.shouldNet)
-        Logger.recordOutput("LookaheadPose", getPoseLookaheadTime())
     }
 
     /**
@@ -179,12 +144,6 @@ object Robot : LoggedRobot() {
      * SendableChooser make sure to add them to the chooser code above as well.
      */
     override fun autonomousInit() {
-
-        swerveDrive.setGyroOffset(
-            if (IS_RED) Rotation2d.k180deg else Rotation2d.kZero
-        )
-        swerveDrive.resetLocalPoseEstimatorBasedOnGlobal()
-
         // Make sure command is compiled beforehand, otherwise there will be a delay.
         autonomousCommand = RobotContainer.getAutonomousCommand()
 
@@ -200,7 +159,6 @@ object Robot : LoggedRobot() {
         if (::autonomousCommand.isInitialized) {
             autonomousCommand.cancel()
         }
-        swerveDrive.useLocalInAuto = false
     }
 
     override fun simulationPeriodic() {
@@ -219,7 +177,9 @@ object Robot : LoggedRobot() {
     override fun teleopPeriodic() {}
 
     /** This function is called once when the robot is disabled. */
-    override fun disabledInit() {}
+    override fun disabledInit() {
+        RobotContainer.resetSimulationField()
+    }
 
     /** This function is called periodically when disabled. */
     override fun disabledPeriodic() {}

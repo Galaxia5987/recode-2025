@@ -14,15 +14,17 @@
 package frc.robot.subsystems.drive;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -36,12 +38,11 @@ import java.util.function.Supplier;
 public class DriveCommands {
     private static final double DEADBAND = 0.1;
     private static final double ANGLE_KP = 5.0;
-    private static final double ANGLE_KD = 0.2;
-    private static final Angle ANGLE_TOLERANCE = edu.wpi.first.units.Units.Degrees.of(1);
+    private static final double ANGLE_KD = 0.4;
     private static final double ANGLE_MAX_VELOCITY = 8.0;
     private static final double ANGLE_MAX_ACCELERATION = 20.0;
     private static final double FF_START_DELAY = 2.0; // Secs
-    private static final double FF_RAMP_RATE = 1; // Volts/Sec
+    private static final double FF_RAMP_RATE = 0.1; // Volts/Sec
     private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.25; // Rad/Sec
     private static final double WHEEL_RADIUS_RAMP_RATE = 0.05; // Rad/Sec^2
 
@@ -88,8 +89,15 @@ public class DriveCommands {
                                     linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
                                     linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
                                     omega * drive.getMaxAngularSpeedRadPerSec());
-
-                    drive.fieldOrientedRunVelocity(speeds);
+                    boolean isFlipped =
+                            DriverStation.getAlliance().isPresent()
+                                    && DriverStation.getAlliance().get() == Alliance.Red;
+                    drive.runVelocity(
+                            ChassisSpeeds.fromFieldRelativeSpeeds(
+                                    speeds,
+                                    isFlipped
+                                            ? drive.getRotation().plus(new Rotation2d(Math.PI))
+                                            : drive.getRotation()));
                 },
                 drive);
     }
@@ -105,9 +113,16 @@ public class DriveCommands {
             DoubleSupplier ySupplier,
             Supplier<Rotation2d> rotationSupplier) {
 
-        PIDController angleController = new PIDController(ANGLE_KP, 0.0, ANGLE_KD);
-
+        // Create PID controller
+        ProfiledPIDController angleController =
+                new ProfiledPIDController(
+                        ANGLE_KP,
+                        0.0,
+                        ANGLE_KD,
+                        new TrapezoidProfile.Constraints(
+                                ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
         angleController.enableContinuousInput(-Math.PI, Math.PI);
+
         // Construct command
         return Commands.run(
                         () -> {
@@ -118,11 +133,9 @@ public class DriveCommands {
 
                             // Calculate angular speed
                             double omega =
-                                    MathUtil.applyDeadband(
-                                            angleController.calculate(
-                                                    drive.getRotation().getRadians(),
-                                                    rotationSupplier.get().getRadians()),
-                                            ANGLE_TOLERANCE.in(edu.wpi.first.units.Units.Radians));
+                                    angleController.calculate(
+                                            drive.getRotation().getRadians(),
+                                            rotationSupplier.get().getRadians());
 
                             // Convert to field relative speeds & send command
                             ChassisSpeeds speeds =
@@ -132,16 +145,21 @@ public class DriveCommands {
                                             linearVelocity.getY()
                                                     * drive.getMaxLinearSpeedMetersPerSec(),
                                             omega);
-                            drive.fieldOrientedRunVelocity(speeds);
+                            boolean isFlipped =
+                                    DriverStation.getAlliance().isPresent()
+                                            && DriverStation.getAlliance().get() == Alliance.Red;
+                            drive.runVelocity(
+                                    ChassisSpeeds.fromFieldRelativeSpeeds(
+                                            speeds,
+                                            isFlipped
+                                                    ? drive.getRotation()
+                                                            .plus(new Rotation2d(Math.PI))
+                                                    : drive.getRotation()));
                         },
                         drive)
 
                 // Reset PID controller when command starts
-                .beforeStarting(angleController::reset);
-    }
-
-    public static Command driveCommand(Drive drive, ChassisSpeeds chassisSpeeds) {
-        return drive.run(() -> drive.limitlessRunVelocity(chassisSpeeds));
+                .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
     }
 
     /**
@@ -163,11 +181,7 @@ public class DriveCommands {
                         }),
 
                 // Allow modules to orient
-                Commands.run(
-                                () -> {
-                                    drive.runCharacterization(0.0);
-                                },
-                                drive)
+                Commands.run(() -> drive.runCharacterization(0.0), drive)
                         .withTimeout(FF_START_DELAY),
 
                 // Start timer
@@ -229,7 +243,7 @@ public class DriveCommands {
                         Commands.run(
                                 () -> {
                                     double speed = limiter.calculate(WHEEL_RADIUS_MAX_VELOCITY);
-                                    drive.limitlessRunVelocity(new ChassisSpeeds(0.0, 0.0, speed));
+                                    drive.runVelocity(new ChassisSpeeds(0.0, 0.0, speed));
                                 },
                                 drive)),
 
@@ -293,11 +307,6 @@ public class DriveCommands {
                                                                             wheelRadius))
                                                             + " inches");
                                         })));
-    }
-
-    public static Command timedLeave(Drive drive, double timeSeconds) {
-        return Commands.run(() -> drive.limitlessRunVelocity(new ChassisSpeeds(1.0, 0.0, 0.0)))
-                .withTimeout(timeSeconds);
     }
 
     private static class WheelRadiusCharacterizationState {
