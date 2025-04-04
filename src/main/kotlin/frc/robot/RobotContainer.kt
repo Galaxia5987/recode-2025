@@ -18,10 +18,13 @@ object RobotContainer {
 
     private val driverController = CommandPS5Controller(0)
 
-    private val autoChooser: LoggedDashboardChooser<Command> =
-        LoggedDashboardChooser("Auto Choices", AutoBuilder.buildAutoChooser())
+    private val autoChooser: LoggedDashboardChooser<Command>
+
 
     init {
+        drive // Ensure Drive is initialized
+
+        autoChooser = LoggedDashboardChooser("Auto Choices", AutoBuilder.buildAutoChooser())
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -29,6 +32,7 @@ object RobotContainer {
         if (CURRENT_MODE == Mode.SIM) {
             SimulatedArena.getInstance().resetFieldForAuto()
         }
+
 
         enableAutoLogOutputFor(this)
     }
