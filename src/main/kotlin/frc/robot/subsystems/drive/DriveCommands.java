@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.InitializerKt;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedList;
@@ -36,6 +37,8 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class DriveCommands {
+    private static final Drive drive = InitializerKt.getDrive();
+
     private static final double DEADBAND = 0.1;
     private static final double ANGLE_KP = 5.0;
     private static final double ANGLE_KD = 0.4;
@@ -66,11 +69,8 @@ public class DriveCommands {
      * Field relative drive command using two joysticks (controlling linear and angular velocities).
      */
     public static Command joystickDrive(
-            Drive drive,
-            DoubleSupplier xSupplier,
-            DoubleSupplier ySupplier,
-            DoubleSupplier omegaSupplier) {
-        return Commands.run(
+            DoubleSupplier xSupplier, DoubleSupplier ySupplier, DoubleSupplier omegaSupplier) {
+        return drive.run(
                 () -> {
                     // Get linear velocity
                     Translation2d linearVelocity =
@@ -98,8 +98,7 @@ public class DriveCommands {
                                     isFlipped
                                             ? drive.getRotation().plus(new Rotation2d(Math.PI))
                                             : drive.getRotation()));
-                },
-                drive);
+                });
     }
 
     /**
@@ -124,7 +123,7 @@ public class DriveCommands {
         angleController.enableContinuousInput(-Math.PI, Math.PI);
 
         // Construct command
-        return Commands.run(
+        return drive.run(
                         () -> {
                             // Get linear velocity
                             Translation2d linearVelocity =
@@ -155,8 +154,7 @@ public class DriveCommands {
                                                     ? drive.getRotation()
                                                             .plus(new Rotation2d(Math.PI))
                                                     : drive.getRotation()));
-                        },
-                        drive)
+                        })
 
                 // Reset PID controller when command starts
                 .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
@@ -167,7 +165,7 @@ public class DriveCommands {
      *
      * <p>This command should only be used in voltage control mode.
      */
-    public static Command feedforwardCharacterization(Drive drive) {
+    public static Command feedforwardCharacterization() {
         List<Double> velocitySamples = new LinkedList<>();
         List<Double> voltageSamples = new LinkedList<>();
         Timer timer = new Timer();
@@ -226,7 +224,7 @@ public class DriveCommands {
     }
 
     /** Measures the robot's wheel radius by spinning in a circle. */
-    public static Command wheelRadiusCharacterization(Drive drive) {
+    public static Command wheelRadiusCharacterization() {
         SlewRateLimiter limiter = new SlewRateLimiter(WHEEL_RADIUS_RAMP_RATE);
         WheelRadiusCharacterizationState state = new WheelRadiusCharacterizationState();
 
