@@ -18,10 +18,13 @@ object RobotContainer {
 
     private val driverController = CommandPS5Controller(0)
 
-    private val autoChooser: LoggedDashboardChooser<Command> =
-        LoggedDashboardChooser("Auto Choices", AutoBuilder.buildAutoChooser())
+    private val autoChooser: LoggedDashboardChooser<Command>
+
 
     init {
+        drive // Ensure Drive is initialized
+
+        autoChooser = LoggedDashboardChooser("Auto Choices", AutoBuilder.buildAutoChooser())
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -29,6 +32,7 @@ object RobotContainer {
         if (CURRENT_MODE == Mode.SIM) {
             SimulatedArena.getInstance().resetFieldForAuto()
         }
+
 
         enableAutoLogOutputFor(this)
     }
@@ -40,7 +44,6 @@ object RobotContainer {
     private fun configureDefaultCommands() {
         drive.defaultCommand =
             DriveCommands.joystickDrive(
-                drive,
                 { -driverController.leftY },
                 { -driverController.leftX },
                 { -driverController.rightX * 0.8 }
@@ -92,11 +95,11 @@ object RobotContainer {
         // Set up SysId routines
         autoChooser.addOption(
             "Drive Wheel Radius Characterization",
-            DriveCommands.wheelRadiusCharacterization(drive)
+            DriveCommands.wheelRadiusCharacterization()
         )
         autoChooser.addOption(
             "Drive Simple FF Characterization",
-            DriveCommands.feedforwardCharacterization(drive)
+            DriveCommands.feedforwardCharacterization()
         )
         autoChooser.addOption(
             "Drive SysId (Quasistatic Forward)",
