@@ -8,8 +8,7 @@ import edu.wpi.first.units.measure.Voltage
 import org.team9432.annotation.Logged
 
 interface ElevatorIO {
-    fun setHeight(length: Distance) {}
-
+    fun setHeight(height: Distance) {}
     fun setVelocity(velocity: LinearVelocity) {}
     fun updateInputs() {}
 
@@ -20,5 +19,4 @@ interface ElevatorIO {
         var current: Current = Units.Amp.zero()
         var flooredSensor: Boolean = false
     }
-
 }
