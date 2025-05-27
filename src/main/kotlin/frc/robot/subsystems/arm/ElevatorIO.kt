@@ -13,6 +13,7 @@ interface ElevatorIO {
     fun setVelocity(velocity: LinearVelocity) {}
     fun getFlooredSensor(): Boolean
     fun updateInputs() {}
+    fun reset(){}
 
     @Logged
     open class Inputs {
