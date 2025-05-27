@@ -8,9 +8,10 @@ import edu.wpi.first.units.measure.Voltage
 import org.team9432.annotation.Logged
 
 interface ElevatorIO {
-    fun setHeight(length: Distance) {}
-
+    fun setHeight(height: Distance) {}
+    fun getHeight(): Distance
     fun setVelocity(velocity: LinearVelocity) {}
+    fun getFlooredSensor(): Boolean
     fun updateInputs() {}
 
     @Logged
