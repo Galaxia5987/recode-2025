@@ -1,4 +1,4 @@
-package frc.robot.subsystems.arm
+package frc.robot.subsystems.arm.elevator
 
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance

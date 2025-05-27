@@ -1,4 +1,4 @@
-package frc.robot.subsystems.arm
+package frc.robot.subsystems.arm.elevator
 
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Current
@@ -9,7 +9,9 @@ import org.team9432.annotation.Logged
 
 interface ElevatorIO {
     fun setHeight(height: Distance) {}
+    fun getHeight(): Distance
     fun setVelocity(velocity: LinearVelocity) {}
+    fun getFlooredSensor(): Boolean
     fun updateInputs() {}
 
     @Logged
@@ -19,4 +21,5 @@ interface ElevatorIO {
         var current: Current = Units.Amp.zero()
         var flooredSensor: Boolean = false
     }
+
 }
