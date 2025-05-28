@@ -12,6 +12,7 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
 
     val atSetpoint: Trigger = Trigger { io.getHeight().isNear(setPoint, TOLERANCE) }
 
+    val floored: Trigger = Trigger { io.getFlooredSensor() }.onTrue(reset())
 
     fun setVelocity(velocity: LinearVelocity): Command = run {
         io.setVelocity(velocity)
