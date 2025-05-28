@@ -16,7 +16,7 @@ interface ElevatorIO {
     fun reset(){}
 
     @Logged
-    open class Inputs {
+    open class ElevatorInputs {
         var velocity: LinearVelocity = Units.MetersPerSecond.zero()
         var voltage: Voltage = Units.Volt.zero()
         var current: Current = Units.Amp.zero()
