@@ -1,5 +1,6 @@
 package frc.robot.subsystems.arm.elevator
 
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
 import edu.wpi.first.wpilibj2.command.Command
@@ -7,9 +8,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
 
 class Elevator(private val io: ElevatorIO) : SubsystemBase() {
+    var setPoint: Distance = Units.Meters.zero()
 
-//    val atSetpoint : Trigger = Trigger{}
-//    val flooredSensor: Trigger = Trigger{io.getFlooredSensor()}.onTrue()
+    val atSetpoint: Trigger = Trigger { io.getHeight().isNear(setPoint, TOLERANCE) }
+
 
     fun setVelocity(velocity: LinearVelocity): Command = run {
         io.setVelocity(velocity)
