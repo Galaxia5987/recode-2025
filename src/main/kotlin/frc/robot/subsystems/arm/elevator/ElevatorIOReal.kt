@@ -1,6 +1,5 @@
 package frc.robot.subsystems.arm.elevator
 
-import com.ctre.phoenix6.configs.HardwareLimitSwitchConfigs
 import com.ctre.phoenix6.controls.Follower
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.controls.VelocityVoltage
@@ -24,7 +23,6 @@ class ElevatorIOReal() : ElevatorIO {
 
         auxMotor.setControl(Follower(MAIN_MOTOR_ID, false))
     }
-
 
     override fun setHeight(height: Distance) {
         mainMotor.setControl(
@@ -61,5 +59,6 @@ class ElevatorIOReal() : ElevatorIO {
             auxMotor.velocity.value.toLinear(RADIUS, GEAR_RATIO)
     }
     override fun reset() {
+        mainMotor.setPosition(0.0)
     }
 }
