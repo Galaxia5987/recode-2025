@@ -13,8 +13,8 @@ import frc.robot.lib.toAngular
 
 class ElevatorRealIO() : ElevatorIO {
     override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
-    val velocityVoltage: VelocityVoltage = VelocityVoltage(0.0)
-    val positionVoltage: PositionVoltage = PositionVoltage(0.0)
+    val velocityVoltageController: VelocityVoltage = VelocityVoltage(0.0)
+    val positionVoltageController: PositionVoltage = PositionVoltage(0.0)
     val mainMotor = TalonFX(MAIN_MOTOR_ID)
     val auxMotor = TalonFX(AUX_MOTOR_ID)
 
@@ -29,8 +29,8 @@ class ElevatorRealIO() : ElevatorIO {
 
     override fun setHeight(height: Distance) {
         mainMotor.setControl(
-            positionVoltage.withPosition(
-                height.toAngle(RADIUS, 1.0)
+            positionVoltageController.withPosition(
+                height.toAngle(RADIUS, GEAR_RATIO)
             )
         )
     }
@@ -40,8 +40,8 @@ class ElevatorRealIO() : ElevatorIO {
 
     override fun setVelocity(velocity: LinearVelocity) {
         mainMotor.setControl(
-            velocityVoltage.withVelocity(
-                velocity.toAngular(RADIUS, 1.0)
+            velocityVoltageController.withVelocity(
+                velocity.toAngular(RADIUS, GEAR_RATIO)
             )
         )
     }
