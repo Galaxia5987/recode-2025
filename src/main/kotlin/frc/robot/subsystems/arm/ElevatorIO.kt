@@ -16,7 +16,7 @@ interface ElevatorIO {
     fun setVelocity(velocity: LinearVelocity) {}
     fun getFlooredSensor(): Boolean
     fun updateInputs() {}
-    fun reset(){}
+    fun reset() {}
 
     @Logged
     open class ElevatorInputs {
@@ -28,5 +28,4 @@ interface ElevatorIO {
         var auxCurrent: Current = Units.Amp.zero()
         var flooredSensor: Boolean = false
     }
-
 }
