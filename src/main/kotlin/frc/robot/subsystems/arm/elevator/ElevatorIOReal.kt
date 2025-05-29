@@ -10,8 +10,9 @@ import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
 import frc.robot.lib.toAngle
 import frc.robot.lib.toAngular
+import frc.robot.lib.toLinear
 
-class ElevatorRealIO() : ElevatorIO {
+class ElevatorIOReal() : ElevatorIO {
     override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
     val velocityVoltageController: VelocityVoltage = VelocityVoltage(0.0)
     val positionVoltageController: PositionVoltage = PositionVoltage(0.0)
@@ -19,9 +20,7 @@ class ElevatorRealIO() : ElevatorIO {
     val auxMotor = TalonFX(AUX_MOTOR_ID)
 
     init {
-        mainMotor.configurator.apply(
-            MOTOR_CONFIG
-        )
+        mainMotor.configurator.apply(MOTOR_CONFIG)
 
         auxMotor.setControl(Follower(MAIN_MOTOR_ID, false))
     }
@@ -36,7 +35,10 @@ class ElevatorRealIO() : ElevatorIO {
     }
 
     override fun getHeight(): Distance =
-        Units.Meters.of(RADIUS.`in`(Units.Meters) * mainMotor.position.value.`in`(Units.Radian))
+        Units.Meters.of(
+            RADIUS.`in`(Units.Meters) *
+                mainMotor.position.value.`in`(Units.Radian)
+        )
 
     override fun setVelocity(velocity: LinearVelocity) {
         mainMotor.setControl(
@@ -46,7 +48,18 @@ class ElevatorRealIO() : ElevatorIO {
         )
     }
 
-    override fun getFlooredSensor(): Boolean = {mainMotor.sens}
-    override fun updateInputs() {}
-    override fun reset() {}
+    override fun isFloored(): Boolean = mainMotor.reverseLimit.value.value == 1
+    override fun updateInputs() {
+        inputs.isFloored = mainMotor.reverseLimit.value.value == 1
+        inputs.mainVoltage = mainMotor.supplyVoltage.value
+        inputs.auxVoltage = auxMotor.supplyVoltage.value
+        inputs.mainCurrent = mainMotor.supplyCurrent.value
+        inputs.auxCurrent = auxMotor.supplyCurrent.value
+        inputs.mainVelocity =
+            mainMotor.velocity.value.toLinear(RADIUS, GEAR_RATIO)
+        inputs.auxVelocity =
+            auxMotor.velocity.value.toLinear(RADIUS, GEAR_RATIO)
+    }
+    override fun reset() {
+    }
 }
