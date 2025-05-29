@@ -26,6 +26,6 @@ interface ElevatorIO {
         var auxVoltage: Voltage = Units.Volt.zero()
         var mainCurrent: Current = Units.Amp.zero()
         var auxCurrent: Current = Units.Amp.zero()
-        var flooredSensor: Boolean = false
+        var isFloored: Boolean = false
     }
 }
