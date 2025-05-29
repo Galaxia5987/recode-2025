@@ -17,9 +17,12 @@ interface ElevatorIO {
 
     @Logged
     open class ElevatorInputs {
-        var velocity: LinearVelocity = Units.MetersPerSecond.zero()
-        var voltage: Voltage = Units.Volt.zero()
-        var current: Current = Units.Amp.zero()
+        var mainVelocity: LinearVelocity = Units.MetersPerSecond.zero()
+        var auxVelocity: LinearVelocity = Units.MetersPerSecond.zero()
+        var mainVoltage: Voltage = Units.Volt.zero()
+        var auxVoltage: Voltage = Units.Volt.zero()
+        var mainCurrent: Current = Units.Amp.zero()
+        var auxCurrent: Current = Units.Amp.zero()
         var flooredSensor: Boolean = false
     }
 
