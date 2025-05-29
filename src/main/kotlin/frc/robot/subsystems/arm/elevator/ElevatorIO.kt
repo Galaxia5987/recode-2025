@@ -8,19 +8,24 @@ import edu.wpi.first.units.measure.Voltage
 import org.team9432.annotation.Logged
 
 interface ElevatorIO {
+
+    val inputs: LoggedElevatorInputs
+
     fun setHeight(height: Distance) {}
     fun getHeight(): Distance
     fun setVelocity(velocity: LinearVelocity) {}
     fun getFlooredSensor(): Boolean
     fun updateInputs() {}
-    fun reset(){}
+    fun reset() {}
 
     @Logged
-    open class Inputs {
-        var velocity: LinearVelocity = Units.MetersPerSecond.zero()
-        var voltage: Voltage = Units.Volt.zero()
-        var current: Current = Units.Amp.zero()
-        var flooredSensor: Boolean = false
+    open class ElevatorInputs {
+        var mainVelocity: LinearVelocity = Units.MetersPerSecond.zero()
+        var auxVelocity: LinearVelocity = Units.MetersPerSecond.zero()
+        var mainVoltage: Voltage = Units.Volt.zero()
+        var auxVoltage: Voltage = Units.Volt.zero()
+        var mainCurrent: Current = Units.Amp.zero()
+        var auxCurrent: Current = Units.Amp.zero()
+        var isFloored: Boolean = false
     }
-
 }
