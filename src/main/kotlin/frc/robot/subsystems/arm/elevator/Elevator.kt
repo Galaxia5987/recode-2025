@@ -6,15 +6,16 @@ import edu.wpi.first.units.measure.LinearVelocity
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
+import org.littletonrobotics.junction.AutoLogOutput
 
 class Elevator(private val io: ElevatorIO) : SubsystemBase() {
-    var setPoint: Distance = Units.Meters.zero()
+    @AutoLogOutput var setPoint: Distance = Units.Meters.zero()
 
     val atSetpoint: Trigger = Trigger {
         io.getHeight().isNear(setPoint, TOLERANCE)
     }
 
-    val floored: Trigger = Trigger { io.getFlooredSensor() }.onTrue(reset())
+    val floored: Trigger = Trigger { io.isFloored() }.onTrue(reset())
 
     fun setVelocity(velocity: LinearVelocity): Command = run {
         io.setVelocity(velocity)
