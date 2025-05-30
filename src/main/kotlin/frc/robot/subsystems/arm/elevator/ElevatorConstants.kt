@@ -31,7 +31,7 @@ const val KP = 0.0
 const val KI = 0.0
 const val KD = 0.0
 
-val PIDController = PIDController(KP,KI,KD)
+val PIDController = PIDController(KP, KI, KD)
 
 const val MAIN_MOTOR_ID = 1
 const val AUX_MOTOR_ID = 2
