@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
 
 class Elevator(private val io: ElevatorIO) : SubsystemBase() {
-    var setPoint: Distance = Units.Meters.zero()
+    private var setPoint: Distance = Units.Meters.zero()
 
     val atSetpoint: Trigger = Trigger {
         io.getHeight().isNear(setPoint, TOLERANCE)
