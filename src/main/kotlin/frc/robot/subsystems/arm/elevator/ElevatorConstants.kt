@@ -49,7 +49,7 @@ val MOTOR_CONFIG: TalonFXConfiguration =
                 ReverseLimitType = ReverseLimitTypeValue.NormallyOpen
                 ReverseLimitEnable = true
                 ReverseLimitSource = ReverseLimitSourceValue.LimitSwitchPin
-                ReverseLimitRemoteSensorID = MAIN_MOTOR_ID
+                ReverseLimitRemoteSensorID = LIMIT_SWITCH_ID
             }
         CurrentLimits =
             CurrentLimitsConfigs().apply {
