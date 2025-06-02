@@ -10,10 +10,14 @@ import frc.robot.lib.motors.TalonType
 import frc.robot.lib.toAngle
 import frc.robot.lib.toAngular
 import frc.robot.lib.toLinear
+import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean
 import kotlin.math.PI
+
 
 class ElevatorIOSim : ElevatorIO {
     override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
+
+    private val isFloored = LoggedNetworkBoolean("isFloored", false)
 
     private val velocityVoltageRequest: VelocityVoltage = VelocityVoltage(0.0)
     private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
@@ -50,7 +54,7 @@ class ElevatorIOSim : ElevatorIO {
         )
     }
 
-    override fun isFloored(): Boolean = false
+    override fun isFloored(): Boolean = isFloored.get()
 
     override fun updateInputs() {
         inputs.isFloored = false
