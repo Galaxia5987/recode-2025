@@ -18,18 +18,18 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
 
     fun setVelocity(velocity: LinearVelocity): Command = runOnce {
         io.setVelocity(velocity)
-    }
+    }.withName("Elevator/setVelocity")
 
     fun setHeight(height: Distance): Command = runOnce {
         io.setHeight(height)
         setPoint = height
-    }
+    }.withName("Elevator/setHeight")
 
-    fun l1(): Command = setHeight(l1Height)
-    fun l2(): Command = setHeight(l2Height)
-    fun l3(): Command = setHeight(l3Height)
-    fun l4(): Command = setHeight(l4Height)
-    fun reset(): Command = runOnce { reset() }
+    fun l1(): Command = setHeight(l1Height).withName("Elevator/setL1")
+    fun l2(): Command = setHeight(l2Height).withName("Elevator/setL2")
+    fun l3(): Command = setHeight(l3Height).withName("Elevator/setL3")
+    fun l4(): Command = setHeight(l4Height).withName("Elevator/setL4")
+    fun reset(): Command = runOnce { reset() }.withName("Elevator/reset")
 
     override fun periodic() {
         io.updateInputs()
