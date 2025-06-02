@@ -18,7 +18,7 @@ class ElevatorIOSim : ElevatorIO {
     private val velocityVoltageRequest: VelocityVoltage = VelocityVoltage(0.0)
     private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
 
-    val mainMotor =
+    private val mainMotor =
         TalonFXSim(
             MAIN_MOTOR_ID,
             GEAR_RATIO,
