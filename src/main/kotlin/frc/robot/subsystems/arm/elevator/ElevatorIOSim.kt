@@ -15,8 +15,8 @@ import kotlin.math.PI
 class ElevatorIOSim : ElevatorIO {
     override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
 
-    private val velocityVoltageController: VelocityVoltage = VelocityVoltage(0.0)
-    private val positionVoltageController: PositionVoltage = PositionVoltage(0.0)
+    private val velocityVoltageRequest: VelocityVoltage = VelocityVoltage(0.0)
+    private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
 
     val mainMotor =
         TalonFXSim(
@@ -33,7 +33,7 @@ class ElevatorIOSim : ElevatorIO {
 
     override fun setHeight(height: Distance) {
         mainMotor.setControl(
-            positionVoltageController.withPosition(
+            positionVoltageRequest.withPosition(
                 height.toAngle(RADIUS, GEAR_RATIO)
             )
         )
@@ -44,7 +44,7 @@ class ElevatorIOSim : ElevatorIO {
 
     override fun setVelocity(velocity: LinearVelocity) {
         mainMotor.setControl(
-            velocityVoltageController.withVelocity(
+            velocityVoltageRequest.withVelocity(
                 velocity.toAngular(RADIUS, GEAR_RATIO)
             )
         )
