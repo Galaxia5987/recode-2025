@@ -57,7 +57,7 @@ class ElevatorIOSim : ElevatorIO {
     override fun isFloored(): Boolean = isFloored.get()
 
     override fun updateInputs() {
-        inputs.isFloored = false
+        inputs.isFloored = isFloored.get()
         inputs.mainVoltage = mainMotor.appliedVoltage
         inputs.auxVoltage = mainMotor.appliedVoltage
         inputs.mainCurrent = mainMotor.appliedCurrent
