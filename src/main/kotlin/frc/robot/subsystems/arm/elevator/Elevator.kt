@@ -16,11 +16,11 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
 
     val floored: Trigger = Trigger { io.getFlooredSensor() }.onTrue(reset())
 
-    fun setVelocity(velocity: LinearVelocity): Command = run {
+    fun setVelocity(velocity: LinearVelocity): Command = runOnce {
         io.setVelocity(velocity)
     }
 
-    fun setHeight(height: Distance): Command = run {
+    fun setHeight(height: Distance): Command = runOnce {
         io.setHeight(height)
         setPoint = height
     }
@@ -29,7 +29,7 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
     fun l2(): Command = setHeight(l2Height)
     fun l3(): Command = setHeight(l3Height)
     fun l4(): Command = setHeight(l4Height)
-    fun reset(): Command = run { reset() }
+    fun reset(): Command = runOnce { reset() }
 
     override fun periodic() {
         io.updateInputs()
