@@ -12,7 +12,7 @@ interface ClimberIO {
 
     @org.team9432.annotation.Logged
     open class ClimberInputs {
-        var applirdVoltage: Voltage = Units.Volts.zero()
+        var appliedVoltage: Voltage = Units.Volts.zero()
         var angle: Angle = Units.Degree.zero()
     }
 }
