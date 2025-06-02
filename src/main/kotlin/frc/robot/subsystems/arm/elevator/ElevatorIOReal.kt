@@ -13,8 +13,10 @@ import frc.robot.lib.toLinear
 
 class ElevatorIOReal() : ElevatorIO {
     override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
-    private val velocityVoltageController: VelocityVoltage = VelocityVoltage(0.0)
-    private val positionVoltageController: PositionVoltage = PositionVoltage(0.0)
+    private val velocityVoltageController: VelocityVoltage =
+        VelocityVoltage(0.0)
+    private val positionVoltageController: PositionVoltage =
+        PositionVoltage(0.0)
     private val mainMotor = TalonFX(MAIN_MOTOR_ID)
     private val auxMotor = TalonFX(AUX_MOTOR_ID)
 
