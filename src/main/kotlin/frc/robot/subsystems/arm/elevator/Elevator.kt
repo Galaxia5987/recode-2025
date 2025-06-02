@@ -17,7 +17,7 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
     }
 
     @AutoLogOutput
-    val floored: Trigger = Trigger { io.getFlooredSensor() }.onTrue(reset())
+    val floored: Trigger = Trigger { io.isFloored() }.onTrue(reset())
 
     fun setVelocity(velocity: LinearVelocity): Command =
         runOnce { io.setVelocity(velocity) }.withName("Elevator/setVelocity")
