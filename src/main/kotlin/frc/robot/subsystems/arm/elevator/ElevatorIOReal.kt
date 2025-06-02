@@ -60,5 +60,6 @@ class ElevatorIOReal() : ElevatorIO {
     }
     override fun reset() {
         mainMotor.setPosition(0.0)
+        auxMotor.setPosition(0.0)
     }
 }
