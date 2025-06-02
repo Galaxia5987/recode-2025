@@ -10,9 +10,8 @@ import frc.robot.lib.motors.TalonType
 import frc.robot.lib.toAngle
 import frc.robot.lib.toAngular
 import frc.robot.lib.toLinear
-import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean
 import kotlin.math.PI
-
+import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean
 
 class ElevatorIOSim : ElevatorIO {
     override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
