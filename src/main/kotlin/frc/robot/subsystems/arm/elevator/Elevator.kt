@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
 import org.littletonrobotics.junction.AutoLogOutput
+import org.littletonrobotics.junction.Logger
 
 class Elevator(private val io: ElevatorIO) : SubsystemBase() {
     private var setPoint: Distance = Units.Meters.zero()
@@ -37,5 +38,6 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
 
     override fun periodic() {
         io.updateInputs()
+        Logger.processInputs(this.name, io.inputs)
     }
 }

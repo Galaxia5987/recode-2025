@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
+import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
 import frc.robot.lib.toAngle
@@ -56,6 +57,7 @@ class ElevatorIOSim : ElevatorIO {
     override fun isFloored(): Boolean = isFloored.get()
 
     override fun updateInputs() {
+        mainMotor.update(Timer.getFPGATimestamp())
         inputs.isFloored = isFloored.get()
         inputs.mainVoltage = mainMotor.appliedVoltage
         inputs.auxVoltage = mainMotor.appliedVoltage
