@@ -9,8 +9,8 @@ import org.team9432.annotation.Logged
 interface ExtenderIO {
     val inputs: LoggedExtenderInputs
 
-    fun setLength(length: Distance)
-    fun updateInputs()
+    fun setLength(length: Distance) {}
+    fun updateInputs() {}
 
     @Logged
     open class ExtenderInputs {

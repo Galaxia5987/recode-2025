@@ -10,8 +10,10 @@ import frc.robot.subsystems.drive.gyroIOs.GyroIO
 import frc.robot.subsystems.drive.gyroIOs.GyroIONavX
 import frc.robot.subsystems.drive.gyroIOs.GyroIOSim
 import frc.robot.subsystems.intake.extender.Extender
+import frc.robot.subsystems.intake.extender.ExtenderIO
 import frc.robot.subsystems.intake.extender.ExtenderIOReal
 import frc.robot.subsystems.intake.extender.ExtenderIOSim
+import frc.robot.subsystems.intake.extender.LoggedExtenderInputs
 import frc.robot.subsystems.vision.Vision
 import frc.robot.subsystems.vision.VisionConstants
 import frc.robot.subsystems.vision.VisionIOPhotonVision
@@ -87,5 +89,7 @@ val extender: Extender =
     when (CURRENT_MODE) {
         Mode.REAL -> Extender(ExtenderIOReal())
         Mode.SIM -> Extender(ExtenderIOSim())
-        else -> TODO()
+        else -> Extender(object: ExtenderIO {
+            override val inputs = LoggedExtenderInputs()
+        })
     }
