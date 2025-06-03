@@ -23,9 +23,9 @@ import org.ironmaple.simulation.drivesims.SwerveDriveSimulation
 val driveSimulation: SwerveDriveSimulation? =
     if (CURRENT_MODE != Mode.REPLAY)
         SwerveDriveSimulation(
-                Drive.mapleSimConfig,
-                Pose2d(3.0, 3.0, Rotation2d())
-            )
+            Drive.mapleSimConfig,
+            Pose2d(3.0, 3.0, Rotation2d())
+        )
             .apply {
                 SimulatedArena.getInstance().addDriveTrainSimulation(this)
             }
@@ -33,11 +33,11 @@ val driveSimulation: SwerveDriveSimulation? =
 
 private val driveModuleIOs =
     arrayOf(
-            TunerConstants.FrontLeft,
-            TunerConstants.FrontRight,
-            TunerConstants.BackLeft,
-            TunerConstants.BackRight
-        )
+        TunerConstants.FrontLeft,
+        TunerConstants.FrontRight,
+        TunerConstants.BackLeft,
+        TunerConstants.BackRight
+    )
         .mapIndexed { index, module ->
             when (CURRENT_MODE) {
                 Mode.REAL -> ModuleIOTalonFX(module)
@@ -55,6 +55,7 @@ private val gyroIO =
                 driveSimulation?.gyroSimulation
                     ?: throw Exception("Gyro simulation is null")
             )
+
         else -> object : GyroIO {}
     }
 
@@ -71,6 +72,7 @@ private val visionIOs =
             VisionConstants.OVNameToTransform.map {
                 VisionIOPhotonVision(it.key, it.value)
             }
+
         Mode.SIM ->
             VisionConstants.OVNameToTransform.map {
                 VisionIOPhotonVisionSim(
@@ -79,13 +81,14 @@ private val visionIOs =
                     driveSimulation!!::getSimulatedDriveTrainPose
                 )
             }
+
         Mode.REPLAY -> emptyList()
     }.toTypedArray()
 
 val vision = Vision(drive, *visionIOs)
 
-val elevator = when(CURRENT_MODE){
-    Mode.REAL-> Elevator(ElevatorIOReal())
-    Mode.SIM-> Elevator(ElevatorIOSim())
-    else -> {}
+val elevator: Elevator = when (CURRENT_MODE) {
+    Mode.REAL -> Elevator(ElevatorIOReal())
+    Mode.SIM -> Elevator(ElevatorIOSim())
+    Mode.REPLAY -> TODO()
 }
