@@ -7,7 +7,7 @@ import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
 
 var GRER_RATIO = 0.0
-var MOTOR_OF_INERTIA = 0.0
+var MOMENT_OF_INERTIA = 0.0
 var MOTOR_CONFIG =
     TalonFXSConfiguration().apply {
         MotorOutput.apply {
@@ -16,4 +16,4 @@ var MOTOR_CONFIG =
         }
     }
 var MOTOR_CONFIG_SIM =
-    TalonFXSim(1, GRER_RATIO, MOTOR_OF_INERTIA, 1.0, TalonType.KRAKEN_FOC)
+    TalonFXSim(1, GRER_RATIO, MOMENT_OF_INERTIA, 1.0, TalonType.KRAKEN_FOC)
