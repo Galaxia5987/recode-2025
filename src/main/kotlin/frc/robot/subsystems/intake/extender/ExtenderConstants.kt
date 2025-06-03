@@ -1,0 +1,55 @@
+package frc.robot.subsystems.intake.extender
+
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs
+import com.ctre.phoenix6.configs.FeedbackConfigs
+import com.ctre.phoenix6.configs.MotorOutputConfigs
+import com.ctre.phoenix6.configs.Slot0Configs
+import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.signals.InvertedValue
+import com.ctre.phoenix6.signals.NeutralModeValue
+import edu.wpi.first.math.controller.PIDController
+import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Distance
+import edu.wpi.first.units.measure.MomentOfInertia
+
+val OPEN_LENGTH: Distance = Units.Meters.one()
+val CLOSE_LENGTH: Distance = Units.Meters.zero()
+
+val RADIUS: Distance = Units.Millimeters.of(36.4 / 2)
+
+const val MOTOR_ID = 1
+
+val jKgMetersSquared: MomentOfInertia = Units.KilogramSquareMeters.of(0.003)
+val TOLERANCE: Distance = Units.Centimeter.of(2.0)
+
+const val CONVERSION_FACTOR = 1.0
+const val GEAR_RATIO = 1.0
+
+const val KP = 1.0
+const val KI = 0.0
+const val KD = 0.0
+
+val PIDController = PIDController(KP, KI, KD)
+
+val MOTOR_CONFIG: TalonFXConfiguration =
+    TalonFXConfiguration().apply {
+        MotorOutput =
+            MotorOutputConfigs().apply {
+                NeutralMode = NeutralModeValue.Brake
+                Inverted = InvertedValue.CounterClockwise_Positive
+            }
+        Feedback = FeedbackConfigs().apply { RotorToSensorRatio = 1.0 }
+        Slot0 =
+            Slot0Configs().apply {
+                kP = KP
+                kI = KI
+                kD = KD
+            }
+        CurrentLimits =
+            CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = true
+                SupplyCurrentLimitEnable = true
+                StatorCurrentLimit = 80.0
+                SupplyCurrentLimit = 40.0
+            }
+    }
