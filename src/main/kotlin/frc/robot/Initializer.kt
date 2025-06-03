@@ -6,6 +6,7 @@ import frc.robot.subsystems.arm.elevator.Elevator
 import frc.robot.subsystems.arm.elevator.ElevatorIO
 import frc.robot.subsystems.arm.elevator.ElevatorIOReal
 import frc.robot.subsystems.arm.elevator.ElevatorIOSim
+import frc.robot.subsystems.arm.elevator.LoggedElevatorInputs
 import frc.robot.subsystems.drive.*
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIO
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIOSim
@@ -87,8 +88,12 @@ private val visionIOs =
 
 val vision = Vision(drive, *visionIOs)
 
-val elevator: Elevator = when (CURRENT_MODE) {
-    Mode.REAL -> Elevator(ElevatorIOReal())
-    Mode.SIM -> Elevator(ElevatorIOSim())
-    Mode.REPLAY -> TODO()
-}
+val elevator: Elevator =
+    when (CURRENT_MODE) {
+        Mode.REAL -> Elevator(ElevatorIOReal())
+        Mode.SIM -> Elevator(ElevatorIOSim())
+        Mode.REPLAY -> Elevator(object : ElevatorIO {
+            override val inputs = LoggedElevatorInputs()
+            override fun isFloored(): Boolean = false
+        })
+    }

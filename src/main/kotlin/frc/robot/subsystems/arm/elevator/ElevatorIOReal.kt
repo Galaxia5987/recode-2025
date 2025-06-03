@@ -4,7 +4,6 @@ import com.ctre.phoenix6.controls.Follower
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
-import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
 import frc.robot.lib.toAngle
@@ -33,7 +32,6 @@ class ElevatorIOReal() : ElevatorIO {
         )
     }
 
-
     override fun setVelocity(velocity: LinearVelocity) {
         mainMotor.setControl(
             velocityVoltageRequest.withVelocity(
@@ -53,8 +51,7 @@ class ElevatorIOReal() : ElevatorIO {
             mainMotor.velocity.value.toLinear(RADIUS, GEAR_RATIO)
         inputs.auxVelocity =
             auxMotor.velocity.value.toLinear(RADIUS, GEAR_RATIO)
-        inputs.height =
-            mainMotor.position.value.toDistance(RADIUS,GEAR_RATIO)
+        inputs.height = mainMotor.position.value.toDistance(RADIUS, GEAR_RATIO)
     }
 
     override fun reset() {

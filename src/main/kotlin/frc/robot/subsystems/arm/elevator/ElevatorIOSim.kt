@@ -12,7 +12,6 @@ import frc.robot.lib.toAngle
 import frc.robot.lib.toAngular
 import frc.robot.lib.toDistance
 import frc.robot.lib.toLinear
-import kotlin.math.PI
 import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean
 
 class ElevatorIOSim : ElevatorIO {
@@ -23,7 +22,8 @@ class ElevatorIOSim : ElevatorIO {
     private val velocityVoltageRequest: VelocityVoltage = VelocityVoltage(0.0)
     private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
 
-    private val mainMotor = TalonFXSim(2, GEAR_RATIO, 0.003, 1.0, TalonType.KRAKEN_FOC)
+    private val mainMotor =
+        TalonFXSim(2, GEAR_RATIO, 0.003, 1.0, TalonType.KRAKEN_FOC)
 
     init {
         mainMotor.setController(PIDController)
@@ -36,7 +36,6 @@ class ElevatorIOSim : ElevatorIO {
             )
         )
     }
-
 
     override fun setVelocity(velocity: LinearVelocity) {
         mainMotor.setControl(
@@ -57,6 +56,8 @@ class ElevatorIOSim : ElevatorIO {
         inputs.auxCurrent = mainMotor.appliedCurrent
         inputs.mainVelocity = mainMotor.velocity.toLinear(RADIUS, GEAR_RATIO)
         inputs.auxVelocity = mainMotor.velocity.toLinear(RADIUS, GEAR_RATIO)
-        inputs.height = Units.Rotations.of(mainMotor.position).toDistance(RADIUS,GEAR_RATIO)
+        inputs.height =
+            Units.Rotations.of(mainMotor.position)
+                .toDistance(RADIUS, GEAR_RATIO)
     }
 }
