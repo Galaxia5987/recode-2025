@@ -15,19 +15,19 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.MomentOfInertia
 
-val l4Height: Distance = Units.Meters.of(0.0)
-val l3Height: Distance = Units.Meters.of(0.0)
-val l2Height: Distance = Units.Meters.of(15.0)
-val l1Height: Distance = Units.Meters.of(105.0)
+val l1Height: Distance = Units.Meters.of(0.0)
+val l2Height: Distance = Units.Meters.of(0.0)
+val l3Height: Distance = Units.Meters.of(15.0)
+val l4Height: Distance = Units.Meters.of(105.0)
 val TOLERANCE: Distance = Units.Centimeter.of(2.0)
-val RADIUS: Distance = Units.Centimeter.of(5.0)
+val RADIUS: Distance = Units.Millimeters.of(36.4 / 2)
 
 val jKgMetersSquared: MomentOfInertia = Units.KilogramSquareMeters.one()
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
 
-const val KP = 0.0
+const val KP = 1.0
 const val KI = 0.0
 const val KD = 0.0
 
