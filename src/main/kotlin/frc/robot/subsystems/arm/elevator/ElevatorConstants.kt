@@ -22,7 +22,7 @@ val l1Height: Distance = Units.Meters.of(105.0)
 val TOLERANCE: Distance = Units.Centimeter.of(2.0)
 val RADIUS: Distance = Units.Centimeter.of(5.0)
 
-val jKgMetersSquared: MomentOfInertia = Units.KilogramSquareMeters.zero()
+val jKgMetersSquared: MomentOfInertia = Units.KilogramSquareMeters.one()
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
