@@ -12,7 +12,6 @@ interface ElevatorIO {
     val inputs: LoggedElevatorInputs
 
     fun setHeight(height: Distance) {}
-    fun getHeight(): Distance
     fun setVelocity(velocity: LinearVelocity) {}
     fun isFloored(): Boolean
     fun updateInputs() {}
@@ -27,5 +26,6 @@ interface ElevatorIO {
         var mainCurrent: Current = Units.Amp.zero()
         var auxCurrent: Current = Units.Amp.zero()
         var isFloored: Boolean = false
+        var height: Distance = Units.Meters.zero()
     }
 }

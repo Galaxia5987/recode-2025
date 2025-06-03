@@ -21,7 +21,7 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
 
     @AutoLogOutput
     val atSetpoint: Trigger = Trigger {
-        io.getHeight().isNear(setPoint, TOLERANCE)
+        io.inputs.height.isNear(setPoint, TOLERANCE)
     }
 
     @AutoLogOutput
@@ -46,7 +46,8 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
     override fun periodic() {
         io.updateInputs()
         Logger.recordOutput("Mechanism2d", mechanism);
+        Logger.recordOutput("SetPoint", setPoint);
         Logger.processInputs("Elevator", io.inputs)
-        elevatorLigament.length = io.getHeight().`in`(Units.Meters)
+        elevatorLigament.length = io.inputs.height.`in`(Units.Meters)
     }
 }
