@@ -16,16 +16,16 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
     private val elevatorLigament =
         root.append(LoggedMechanismLigament2d("ExtenderLigament", 5.0, 0.0))
 
-    private var setPoint: Distance = Units.Meters.zero()
+    private var setpoint = Units.Meters.zero()
 
     @AutoLogOutput
     val atSetpoint: Trigger = Trigger {
-        io.inputs.length.isNear(setPoint, TOLERANCE)
+        io.inputs.length.isNear(setpoint, TOLERANCE)
     }
 
     fun setLength(length: Distance): Command = runOnce {
         io.setLength(length)
-        setPoint = length
+        setpoint = length
     }
 
     fun open(): Command = setLength(OPEN_LENGTH)
@@ -34,7 +34,7 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
     override fun periodic() {
         io.updateInputs()
         Logger.recordOutput("mechanism2d", mechanism)
-        Logger.recordOutput("SetPoint", setPoint)
+        Logger.recordOutput("SetPoint", setpoint)
         Logger.processInputs("Extender", io.inputs)
         elevatorLigament.length = io.inputs.length.`in`(Units.Meters)
     }

@@ -89,7 +89,10 @@ val extender: Extender =
     when (CURRENT_MODE) {
         Mode.REAL -> Extender(ExtenderIOReal())
         Mode.SIM -> Extender(ExtenderIOSim())
-        else -> Extender(object: ExtenderIO {
-            override val inputs = LoggedExtenderInputs()
-        })
+        else ->
+            Extender(
+                object : ExtenderIO {
+                    override val inputs = LoggedExtenderInputs()
+                }
+            )
     }
