@@ -16,12 +16,12 @@ import frc.robot.lib.toLinear
 import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean
 
 class ElevatorIOSim : ElevatorIO {
-    override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
+    override val inputs = LoggedElevatorInputs()
 
     private val isFloored = LoggedNetworkBoolean("isFloored", false)
 
-    private val velocityVoltageRequest: VelocityVoltage = VelocityVoltage(0.0)
-    private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
+    private val velocityVoltageRequest = VelocityVoltage(0.0)
+    private val positionVoltageRequest = PositionVoltage(0.0)
 
     private val motors =
         TalonFXSim(

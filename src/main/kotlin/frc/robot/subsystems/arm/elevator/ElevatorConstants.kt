@@ -23,10 +23,10 @@ enum class ElevatorHeight(val height: Distance) {
     L4(Units.Meters.of(105.0))
 }
 
-val TOLERANCE: Distance = Units.Centimeter.of(2.0)
-val RADIUS: Distance = Units.Millimeters.of(36.4 / 2)
+val TOLERANCE = Units.Centimeter.of(2.0)
+val RADIUS = Units.Millimeters.of(36.4 / 2)
 
-val MOMENT_OF_INERTIA: MomentOfInertia = Units.KilogramSquareMeters.of(0.003)
+val MOMENT_OF_INERTIA = Units.KilogramSquareMeters.of(0.003)
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0

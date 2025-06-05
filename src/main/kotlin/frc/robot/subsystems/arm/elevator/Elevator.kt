@@ -17,7 +17,7 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
     private val elevatorLigament =
         root.append(LoggedMechanismLigament2d("ElevatorLigament", 5.0, 90.0))
 
-    private var setpoint: Distance = Units.Meters.zero()
+    private var setpoint = Units.Meters.zero()
 
     @AutoLogOutput
     val atSetpoint: Trigger = Trigger {

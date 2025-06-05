@@ -17,13 +17,13 @@ interface ElevatorIO {
 
     @Logged
     open class ElevatorInputs {
-        var mainVelocity: LinearVelocity = Units.MetersPerSecond.zero()
-        var auxVelocity: LinearVelocity = Units.MetersPerSecond.zero()
-        var mainVoltage: Voltage = Units.Volt.zero()
-        var auxVoltage: Voltage = Units.Volt.zero()
-        var mainCurrent: Current = Units.Amp.zero()
-        var auxCurrent: Current = Units.Amp.zero()
-        var isFloored: Boolean = false
-        var height: Distance = Units.Meters.zero()
+        var mainVelocity = Units.MetersPerSecond.zero()
+        var auxVelocity = Units.MetersPerSecond.zero()
+        var mainVoltage = Units.Volt.zero()
+        var auxVoltage = Units.Volt.zero()
+        var mainCurrent = Units.Amp.zero()
+        var auxCurrent = Units.Amp.zero()
+        var isFloored = false
+        var height = Units.Meters.zero()
     }
 }
