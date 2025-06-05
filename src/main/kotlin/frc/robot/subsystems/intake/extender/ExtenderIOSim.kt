@@ -39,6 +39,6 @@ class ExtenderIOSim : ExtenderIO {
             Units.Rotations.of(motor.position).toDistance(RADIUS, GEAR_RATIO)
         inputs.current = motor.appliedCurrent
         inputs.voltage = motor.appliedVoltage
-        motor.update(Timer.getFPGATimestamp())
+        motor.update(Timer.getTimestamp())
     }
 }
