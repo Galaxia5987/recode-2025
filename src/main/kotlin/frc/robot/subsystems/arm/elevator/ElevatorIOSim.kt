@@ -45,7 +45,6 @@ class ElevatorIOSim : ElevatorIO {
         )
     }
 
-    override fun isFloored(): Boolean = isFloored.get()
 
     override fun updateInputs() {
         mainMotor.update(Timer.getFPGATimestamp())

@@ -13,7 +13,6 @@ interface ElevatorIO {
 
     fun setHeight(height: Distance) {}
     fun setVelocity(velocity: LinearVelocity) {}
-    fun isFloored(): Boolean
     fun updateInputs() {}
     fun reset() {}
 

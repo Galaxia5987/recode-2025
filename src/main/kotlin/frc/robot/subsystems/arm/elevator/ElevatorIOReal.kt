@@ -40,7 +40,6 @@ class ElevatorIOReal() : ElevatorIO {
         )
     }
 
-    override fun isFloored(): Boolean = mainMotor.reverseLimit.value.value == 1
     override fun updateInputs() {
         inputs.isFloored = mainMotor.reverseLimit.value.value == 1
         inputs.mainVoltage = mainMotor.supplyVoltage.value
