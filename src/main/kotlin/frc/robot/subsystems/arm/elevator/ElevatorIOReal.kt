@@ -52,5 +52,4 @@ class ElevatorIOReal() : ElevatorIO {
             auxMotor.velocity.value.toLinear(RADIUS, GEAR_RATIO)
         inputs.height = mainMotor.position.value.toDistance(RADIUS, GEAR_RATIO)
     }
-
 }

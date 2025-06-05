@@ -24,14 +24,13 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
         io.inputs.height.isNear(setpoint, TOLERANCE)
     }
 
-
     fun setVelocity(velocity: LinearVelocity): Command =
         runOnce { io.setVelocity(velocity) }.withName("Elevator/setVelocity")
 
     fun setHeight(height: Distance): Command =
         runOnce {
                 io.setHeight(height)
-            setpoint = height
+                setpoint = height
             }
             .withName("Elevator/setHeight")
 

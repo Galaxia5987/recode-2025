@@ -13,7 +13,8 @@ import com.ctre.phoenix6.signals.ReverseLimitTypeValue
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.MomentOfInertia
-import frc.robot.lib.Gains import frc.robot.lib.selectGainsBasedOnMode
+import frc.robot.lib.Gains
+import frc.robot.lib.selectGainsBasedOnMode
 
 enum class ElevatorHeight(val height: Distance) {
     L1(Units.Meters.of(0.0)),
@@ -43,11 +44,11 @@ val MOTOR_CONFIG: TalonFXConfiguration =
                 Inverted = InvertedValue.CounterClockwise_Positive
             }
         Feedback = FeedbackConfigs().apply { RotorToSensorRatio = 1.0 }
-            Slot0Configs().apply {
-                kP = GAINS.kP
-                kI = GAINS.kI
-                kD = GAINS.kP
-            }
+        Slot0Configs().apply {
+            kP = GAINS.kP
+            kI = GAINS.kI
+            kD = GAINS.kP
+        }
         HardwareLimitSwitch =
             HardwareLimitSwitchConfigs().apply {
                 ReverseLimitType = ReverseLimitTypeValue.NormallyOpen

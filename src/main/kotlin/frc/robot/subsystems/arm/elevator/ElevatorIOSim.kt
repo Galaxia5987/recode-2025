@@ -24,9 +24,15 @@ class ElevatorIOSim : ElevatorIO {
     private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
 
     private val motors =
-        TalonFXSim(2, GEAR_RATIO, momentOfInertia.`in`(Units.KilogramSquareMeters), 1.0, TalonType.KRAKEN_FOC)
+        TalonFXSim(
+            2,
+            GEAR_RATIO,
+            MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),
+            1.0,
+            TalonType.KRAKEN_FOC
+        )
 
-    private val PIDController = PIDController(GAINS.kP,GAINS.kI,GAINS.kP)
+    private val PIDController = PIDController(GAINS.kP, GAINS.kI, GAINS.kP)
     init {
         motors.setController(PIDController)
     }
@@ -47,7 +53,6 @@ class ElevatorIOSim : ElevatorIO {
         )
     }
 
-
     override fun updateInputs() {
         motors.update(Timer.getFPGATimestamp())
         inputs.isFloored = isFloored.get()
@@ -58,7 +63,6 @@ class ElevatorIOSim : ElevatorIO {
         inputs.mainVelocity = motors.velocity.toLinear(RADIUS, GEAR_RATIO)
         inputs.auxVelocity = motors.velocity.toLinear(RADIUS, GEAR_RATIO)
         inputs.height =
-            Units.Rotations.of(motors.position)
-                .toDistance(RADIUS, GEAR_RATIO)
+            Units.Rotations.of(motors.position).toDistance(RADIUS, GEAR_RATIO)
     }
 }
