@@ -19,17 +19,17 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
     private var setpoint = Units.Meters.zero()
 
     @AutoLogOutput
-    val atSetpoint: Trigger = Trigger {
+    val atSetpoint = Trigger {
         io.inputs.length.isNear(setpoint, TOLERANCE)
     }
 
-    fun setLength(length: Distance): Command = runOnce {
+    fun setLength(length: Distance) = runOnce {
         io.setLength(length)
         setpoint = length
     }
 
-    fun open(): Command = setLength(OPEN_LENGTH)
-    fun close(): Command = setLength(CLOSE_LENGTH)
+    fun open() = setLength(OPEN_LENGTH)
+    fun close() = setLength(CLOSE_LENGTH)
 
     override fun periodic() {
         io.updateInputs()

@@ -12,15 +12,15 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.MomentOfInertia
 
-val OPEN_LENGTH: Distance = Units.Meters.one()
-val CLOSE_LENGTH: Distance = Units.Meters.zero()
+val OPEN_LENGTH = Units.Meters.one()
+val CLOSE_LENGTH = Units.Meters.zero()
 
-val RADIUS: Distance = Units.Millimeters.of(36.4 / 2)
+val RADIUS = Units.Millimeters.of(36.4 / 2)
 
 const val MOTOR_ID = 1
 
-val jKgMetersSquared: MomentOfInertia = Units.KilogramSquareMeters.of(0.003)
-val TOLERANCE: Distance = Units.Centimeter.of(2.0)
+val jKgMetersSquared = Units.KilogramSquareMeters.of(0.003)
+val TOLERANCE = Units.Centimeter.of(2.0)
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0

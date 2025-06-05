@@ -14,8 +14,8 @@ interface ExtenderIO {
 
     @Logged
     open class ExtenderInputs {
-        var length: Distance = Units.Meters.zero()
-        var current: Current = Units.Amp.zero()
-        var voltage: Voltage = Units.Volt.zero()
+        var length = Units.Meters.zero()
+        var current = Units.Amp.zero()
+        var voltage = Units.Volt.zero()
     }
 }
