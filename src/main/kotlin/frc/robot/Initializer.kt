@@ -9,6 +9,11 @@ import frc.robot.subsystems.drive.ModuleIOs.ModuleIOTalonFX
 import frc.robot.subsystems.drive.gyroIOs.GyroIO
 import frc.robot.subsystems.drive.gyroIOs.GyroIONavX
 import frc.robot.subsystems.drive.gyroIOs.GyroIOSim
+import frc.robot.subsystems.intake.into.Into
+import frc.robot.subsystems.intake.into.IntoIO
+import frc.robot.subsystems.intake.into.IntoIOReal
+import frc.robot.subsystems.intake.into.IntoIOSim
+import frc.robot.subsystems.intake.into.LoggedIntoInputs
 import frc.robot.subsystems.vision.Vision
 import frc.robot.subsystems.vision.VisionConstants
 import frc.robot.subsystems.vision.VisionIOPhotonVision
@@ -79,3 +84,11 @@ private val visionIOs =
     }.toTypedArray()
 
 val vision = Vision(drive, *visionIOs)
+
+val into: Into = when(CURRENT_MODE){
+    Mode.REAL -> Into(IntoIOReal())
+    Mode.SIM -> Into(IntoIOSim())
+    Mode.REPLAY -> Into(object:IntoIO{
+        override val inputs: LoggedIntoInputs= LoggedIntoInputs()
+    })
+}
