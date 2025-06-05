@@ -14,7 +14,8 @@ import frc.robot.lib.toLinear
 class ElevatorIOReal() : ElevatorIO {
     override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
     private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
-    private val velocityTorqueRequest: MotionMagicVelocityTorqueCurrentFOC = MotionMagicVelocityTorqueCurrentFOC(0.0)
+    private val velocityTorqueRequest: MotionMagicVelocityTorqueCurrentFOC =
+        MotionMagicVelocityTorqueCurrentFOC(0.0)
     private val mainMotor = TalonFX(MAIN_MOTOR_ID)
     private val auxMotor = TalonFX(AUX_MOTOR_ID)
 
