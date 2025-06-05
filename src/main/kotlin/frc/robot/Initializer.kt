@@ -93,7 +93,6 @@ val elevator: Elevator =
             Elevator(
                 object : ElevatorIO {
                     override val inputs = LoggedElevatorInputs()
-                    override fun isFloored(): Boolean = false
                 }
             )
     }
