@@ -2,6 +2,7 @@ package frc.robot.subsystems.intake.extender
 
 import com.ctre.phoenix6.controls.PositionVoltage
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
@@ -25,10 +26,10 @@ class ExtenderIOSim : ExtenderIO {
         motor.setController(PIDController)
     }
 
-    override fun setLength(length: Distance) {
+    override fun setLength(length: Angle) {
         motor.setControl(
             voltagePositionRequest.withPosition(
-                length.toAngle(RADIUS, GEAR_RATIO)
+                length
             )
         )
     }

@@ -5,6 +5,7 @@ import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
+import frc.robot.lib.toAngle
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import org.littletonrobotics.junction.mechanism.LoggedMechanism2d
@@ -24,7 +25,7 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
     }
 
     fun setLength(length: Distance) = runOnce {
-        io.setLength(length)
+        io.setLength(length.toAngle(RADIUS, GEAR_RATIO))
         setpoint = length
     }
 
