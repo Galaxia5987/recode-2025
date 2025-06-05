@@ -59,6 +59,8 @@ val MOTOR_CONFIG: TalonFXConfiguration =
                 ReverseLimitType = ReverseLimitTypeValue.NormallyOpen
                 ReverseLimitEnable = true
                 ReverseLimitSource = ReverseLimitSourceValue.LimitSwitchPin
+                ReverseLimitAutosetPositionEnable = true
+                ReverseLimitAutosetPositionValue = 0.0
                 ReverseLimitRemoteSensorID = LIMIT_SWITCH_ID
             }
         CurrentLimits =

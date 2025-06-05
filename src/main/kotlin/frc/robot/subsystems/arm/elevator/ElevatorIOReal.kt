@@ -53,8 +53,4 @@ class ElevatorIOReal() : ElevatorIO {
         inputs.height = mainMotor.position.value.toDistance(RADIUS, GEAR_RATIO)
     }
 
-    override fun reset() {
-        mainMotor.setPosition(0.0)
-        auxMotor.setPosition(0.0)
-    }
 }

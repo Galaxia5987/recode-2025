@@ -14,7 +14,6 @@ interface ElevatorIO {
     fun setHeight(height: Distance) {}
     fun setVelocity(velocity: LinearVelocity) {}
     fun updateInputs() {}
-    fun reset() {}
 
     @Logged
     open class ElevatorInputs {

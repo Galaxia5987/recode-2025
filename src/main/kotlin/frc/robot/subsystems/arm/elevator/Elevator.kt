@@ -24,8 +24,6 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
         io.inputs.height.isNear(setpoint, TOLERANCE)
     }
 
-    @AutoLogOutput
-    val floored: Trigger = Trigger { io.inputs.isFloored }.onTrue(reset())
 
     fun setVelocity(velocity: LinearVelocity): Command =
         runOnce { io.setVelocity(velocity) }.withName("Elevator/setVelocity")
@@ -45,7 +43,6 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
         setHeight(ElevatorHeight.L3.height).withName("Elevator/setL3")
     fun l4(): Command =
         setHeight(ElevatorHeight.L4.height).withName("Elevator/setL4")
-    fun reset(): Command = runOnce { reset() }.withName("Elevator/reset")
 
     override fun periodic() {
         io.updateInputs()
