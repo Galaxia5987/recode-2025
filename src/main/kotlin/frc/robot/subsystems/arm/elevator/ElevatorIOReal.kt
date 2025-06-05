@@ -3,7 +3,6 @@ package frc.robot.subsystems.arm.elevator
 import com.ctre.phoenix6.controls.Follower
 import com.ctre.phoenix6.controls.MotionMagicVelocityTorqueCurrentFOC
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
-import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity

@@ -12,7 +12,6 @@ import com.ctre.phoenix6.signals.ReverseLimitSourceValue
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
-import edu.wpi.first.units.measure.MomentOfInertia
 import frc.robot.lib.Gains
 import frc.robot.lib.selectGainsBasedOnMode
 
