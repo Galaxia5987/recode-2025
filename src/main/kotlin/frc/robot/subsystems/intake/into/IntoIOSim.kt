@@ -8,12 +8,21 @@ import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
 
 class IntoIOSim() : IntoIO {
-    override val inputs: LoggedIntoInputs = LoggedIntoInputs()
+    override val inputs = LoggedIntoInputs()
     private val voltageRequest = VoltageOut(0.0)
-    private val motor = TalonFXSim(MOTOR_ID,GEAR_RATIO,MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),CONVERSION_FACTOR, TalonType.KRAKEN_FOC)
+    private val motor =
+        TalonFXSim(
+            MOTOR_ID,
+            GEAR_RATIO,
+            MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),
+            CONVERSION_FACTOR,
+            TalonType.KRAKEN_FOC
+        )
+
     init {
         motor.setController(PIDController)
     }
+
     override fun setVoltage(voltage: Voltage) {
         motor.setControl(voltageRequest.withOutput(voltage))
     }

@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
-import org.team9432.annotation.Logged
 
 class Into(private val io: IntoIO) : SubsystemBase() {
     var setVoltage = Units.Volt.zero()
 
-    @AutoLogOutput val onSetVoltage = Trigger { io.inputs.voltage == setVoltage}
+    @AutoLogOutput
+    val onSetVoltage = Trigger { io.inputs.voltage == setVoltage }
 
     fun setVoltage(voltage: Voltage) = run {
         io.setVoltage(voltage)
@@ -23,7 +23,7 @@ class Into(private val io: IntoIO) : SubsystemBase() {
 
     override fun periodic() {
         io.updateInputs()
-        Logger.processInputs("Into",io.inputs)
-        Logger.recordOutput("IntoSetVoltage",setVoltage)
+        Logger.processInputs("Into", io.inputs)
+        Logger.recordOutput("IntoSetVoltage", setVoltage)
     }
 }

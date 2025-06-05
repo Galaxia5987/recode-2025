@@ -85,10 +85,14 @@ private val visionIOs =
 
 val vision = Vision(drive, *visionIOs)
 
-val into: Into = when(CURRENT_MODE){
-    Mode.REAL -> Into(IntoIOReal())
-    Mode.SIM -> Into(IntoIOSim())
-    Mode.REPLAY -> Into(object:IntoIO{
-        override val inputs: LoggedIntoInputs= LoggedIntoInputs()
-    })
-}
+val into: Into =
+    when (CURRENT_MODE) {
+        Mode.REAL -> Into(IntoIOReal())
+        Mode.SIM -> Into(IntoIOSim())
+        Mode.REPLAY ->
+            Into(
+                object : IntoIO {
+                    override val inputs: LoggedIntoInputs = LoggedIntoInputs()
+                }
+            )
+    }

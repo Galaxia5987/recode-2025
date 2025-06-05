@@ -1,7 +1,6 @@
 package frc.robot.subsystems.intake.into
 
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.measure.Current
 import edu.wpi.first.units.measure.Voltage
 import org.team9432.annotation.Logged
 
@@ -12,7 +11,7 @@ interface IntoIO {
 
     @Logged
     open class IntoInputs {
-        var voltage: Voltage = Units.Volt.zero()
-        var current: Current = Units.Amp.zero()
+        var voltage = Units.Volt.zero()
+        var current = Units.Amp.zero()
     }
 }
