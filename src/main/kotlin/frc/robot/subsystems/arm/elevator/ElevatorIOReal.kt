@@ -1,8 +1,8 @@
 package frc.robot.subsystems.arm.elevator
 
 import com.ctre.phoenix6.controls.Follower
+import com.ctre.phoenix6.controls.MotionMagicVelocityTorqueCurrentFOC
 import com.ctre.phoenix6.controls.PositionVoltage
-import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
@@ -13,8 +13,8 @@ import frc.robot.lib.toLinear
 
 class ElevatorIOReal() : ElevatorIO {
     override val inputs: LoggedElevatorInputs = LoggedElevatorInputs()
-    private val velocityVoltageRequest: VelocityVoltage = VelocityVoltage(0.0)
     private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
+    private val velocityTorqueRequest: MotionMagicVelocityTorqueCurrentFOC = MotionMagicVelocityTorqueCurrentFOC(0.0)
     private val mainMotor = TalonFX(MAIN_MOTOR_ID)
     private val auxMotor = TalonFX(AUX_MOTOR_ID)
 
@@ -34,7 +34,7 @@ class ElevatorIOReal() : ElevatorIO {
 
     override fun setVelocity(velocity: LinearVelocity) {
         mainMotor.setControl(
-            velocityVoltageRequest.withVelocity(
+            velocityTorqueRequest.withVelocity(
                 velocity.toAngular(RADIUS, GEAR_RATIO)
             )
         )
