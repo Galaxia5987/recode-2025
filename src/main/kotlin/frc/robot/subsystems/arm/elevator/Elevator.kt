@@ -37,10 +37,14 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
             }
             .withName("Elevator/setHeight")
 
-    fun l1(): Command = setHeight(l1Height).withName("Elevator/setL1")
-    fun l2(): Command = setHeight(l2Height).withName("Elevator/setL2")
-    fun l3(): Command = setHeight(l3Height).withName("Elevator/setL3")
-    fun l4(): Command = setHeight(l4Height).withName("Elevator/setL4")
+    fun l1(): Command =
+        setHeight(ElevatorHeight.L1.height).withName("Elevator/setL1")
+    fun l2(): Command =
+        setHeight(ElevatorHeight.L2.height).withName("Elevator/setL2")
+    fun l3(): Command =
+        setHeight(ElevatorHeight.L3.height).withName("Elevator/setL3")
+    fun l4(): Command =
+        setHeight(ElevatorHeight.L4.height).withName("Elevator/setL4")
     fun reset(): Command = runOnce { reset() }.withName("Elevator/reset")
 
     override fun periodic() {
