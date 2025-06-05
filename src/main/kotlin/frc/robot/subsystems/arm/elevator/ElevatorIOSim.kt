@@ -22,15 +22,15 @@ class ElevatorIOSim : ElevatorIO {
     private val velocityVoltageRequest: VelocityVoltage = VelocityVoltage(0.0)
     private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
 
-    private val mainMotor =
+    private val motors =
         TalonFXSim(2, GEAR_RATIO, 0.003, 1.0, TalonType.KRAKEN_FOC)
 
     init {
-        mainMotor.setController(PIDController)
+        motors.setController(PIDController)
     }
 
     override fun setHeight(height: Distance) {
-        mainMotor.setControl(
+        motors.setControl(
             positionVoltageRequest.withPosition(
                 height.toAngle(RADIUS, GEAR_RATIO)
             )
@@ -38,7 +38,7 @@ class ElevatorIOSim : ElevatorIO {
     }
 
     override fun setVelocity(velocity: LinearVelocity) {
-        mainMotor.setControl(
+        motors.setControl(
             velocityVoltageRequest.withVelocity(
                 velocity.toAngular(RADIUS, GEAR_RATIO)
             )
@@ -47,16 +47,16 @@ class ElevatorIOSim : ElevatorIO {
 
 
     override fun updateInputs() {
-        mainMotor.update(Timer.getFPGATimestamp())
+        motors.update(Timer.getFPGATimestamp())
         inputs.isFloored = isFloored.get()
-        inputs.mainVoltage = mainMotor.appliedVoltage
-        inputs.auxVoltage = mainMotor.appliedVoltage
-        inputs.mainCurrent = mainMotor.appliedCurrent
-        inputs.auxCurrent = mainMotor.appliedCurrent
-        inputs.mainVelocity = mainMotor.velocity.toLinear(RADIUS, GEAR_RATIO)
-        inputs.auxVelocity = mainMotor.velocity.toLinear(RADIUS, GEAR_RATIO)
+        inputs.mainVoltage = motors.appliedVoltage
+        inputs.auxVoltage = motors.appliedVoltage
+        inputs.mainCurrent = motors.appliedCurrent
+        inputs.auxCurrent = motors.appliedCurrent
+        inputs.mainVelocity = motors.velocity.toLinear(RADIUS, GEAR_RATIO)
+        inputs.auxVelocity = motors.velocity.toLinear(RADIUS, GEAR_RATIO)
         inputs.height =
-            Units.Rotations.of(mainMotor.position)
+            Units.Rotations.of(motors.position)
                 .toDistance(RADIUS, GEAR_RATIO)
     }
 }
