@@ -19,7 +19,7 @@ val RADIUS = Units.Millimeters.of(36.4 / 2)
 
 const val MOTOR_ID = 1
 
-val jKgMetersSquared = Units.KilogramSquareMeters.of(0.003)
+val MOMENT_OF_INERTIA = Units.KilogramSquareMeters.of(0.003)
 val TOLERANCE = Units.Centimeter.of(2.0)
 
 const val CONVERSION_FACTOR = 1.0

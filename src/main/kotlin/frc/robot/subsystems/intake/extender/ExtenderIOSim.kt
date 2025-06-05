@@ -15,7 +15,7 @@ class ExtenderIOSim : ExtenderIO {
         TalonFXSim(
             MOTOR_ID,
             GEAR_RATIO,
-            jKgMetersSquared.`in`(Units.KilogramSquareMeters),
+            MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),
             CONVERSION_FACTOR,
             TalonType.KRAKEN_FOC
         )
