@@ -9,8 +9,6 @@ import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.measure.Distance
-import edu.wpi.first.units.measure.MomentOfInertia
 
 val OPEN_LENGTH = Units.Meters.one()
 val CLOSE_LENGTH = Units.Meters.zero()

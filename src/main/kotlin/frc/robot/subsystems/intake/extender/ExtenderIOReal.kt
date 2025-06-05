@@ -1,11 +1,8 @@
 package frc.robot.subsystems.intake.extender
 
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
-import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import edu.wpi.first.units.measure.Angle
-import edu.wpi.first.units.measure.Distance
-import frc.robot.lib.toAngle
 import frc.robot.lib.toDistance
 
 class ExtenderIOReal() : ExtenderIO {
@@ -16,11 +13,7 @@ class ExtenderIOReal() : ExtenderIO {
         motor.configurator.apply(MOTOR_CONFIG)
     }
     override fun setLength(length: Angle) {
-        motor.setControl(
-            positionTorqueRequest.withPosition(
-                length
-            )
-        )
+        motor.setControl(positionTorqueRequest.withPosition(length))
     }
 
     override fun updateInputs() {

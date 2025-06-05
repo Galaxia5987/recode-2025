@@ -2,7 +2,6 @@ package frc.robot.subsystems.intake.extender
 
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
-import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
 import frc.robot.lib.toAngle
@@ -20,9 +19,7 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
     private var setpoint = Units.Meters.zero()
 
     @AutoLogOutput
-    val atSetpoint = Trigger {
-        io.inputs.length.isNear(setpoint, TOLERANCE)
-    }
+    val atSetpoint = Trigger { io.inputs.length.isNear(setpoint, TOLERANCE) }
 
     fun setLength(length: Distance) = runOnce {
         io.setLength(length.toAngle(RADIUS, GEAR_RATIO))

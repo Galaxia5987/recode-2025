@@ -3,11 +3,9 @@ package frc.robot.subsystems.intake.extender
 import com.ctre.phoenix6.controls.PositionVoltage
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
-import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
-import frc.robot.lib.toAngle
 import frc.robot.lib.toDistance
 
 class ExtenderIOSim : ExtenderIO {
@@ -27,11 +25,7 @@ class ExtenderIOSim : ExtenderIO {
     }
 
     override fun setLength(length: Angle) {
-        motor.setControl(
-            voltagePositionRequest.withPosition(
-                length
-            )
-        )
+        motor.setControl(voltagePositionRequest.withPosition(length))
     }
 
     override fun updateInputs() {
