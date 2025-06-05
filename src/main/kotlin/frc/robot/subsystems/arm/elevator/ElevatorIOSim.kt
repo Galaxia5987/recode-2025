@@ -2,6 +2,7 @@ package frc.robot.subsystems.arm.elevator
 
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.controls.VelocityVoltage
+import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
@@ -25,6 +26,7 @@ class ElevatorIOSim : ElevatorIO {
     private val motors =
         TalonFXSim(2, GEAR_RATIO, 0.003, 1.0, TalonType.KRAKEN_FOC)
 
+    private val PIDController = PIDController(GAINS.kP,GAINS.kI,GAINS.kP)
     init {
         motors.setController(PIDController)
     }

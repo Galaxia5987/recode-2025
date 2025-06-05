@@ -10,7 +10,6 @@ import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue
-import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.MomentOfInertia
@@ -31,7 +30,6 @@ val jKgMetersSquared: MomentOfInertia = Units.KilogramSquareMeters.one()
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
 val GAINS = selectGainsBasedOnMode(Gains(1.0), Gains(1.0))
-val PIDController = PIDController(GAINS.KP, GAINS.KI, GAINS.KD)
 
 const val MAIN_MOTOR_ID = 1
 const val AUX_MOTOR_ID = 2
