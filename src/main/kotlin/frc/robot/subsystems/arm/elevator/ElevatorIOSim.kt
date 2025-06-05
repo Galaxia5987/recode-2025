@@ -24,7 +24,7 @@ class ElevatorIOSim : ElevatorIO {
     private val positionVoltageRequest: PositionVoltage = PositionVoltage(0.0)
 
     private val motors =
-        TalonFXSim(2, GEAR_RATIO, 0.003, 1.0, TalonType.KRAKEN_FOC)
+        TalonFXSim(2, GEAR_RATIO, momentOfInertia.`in`(Units.KilogramSquareMeters), 1.0, TalonType.KRAKEN_FOC)
 
     private val PIDController = PIDController(GAINS.kP,GAINS.kI,GAINS.kP)
     init {

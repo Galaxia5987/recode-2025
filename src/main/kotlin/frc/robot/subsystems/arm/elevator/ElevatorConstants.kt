@@ -25,7 +25,7 @@ enum class ElevatorHeight(val height: Distance) {
 val TOLERANCE: Distance = Units.Centimeter.of(2.0)
 val RADIUS: Distance = Units.Millimeters.of(36.4 / 2)
 
-val jKgMetersSquared: MomentOfInertia = Units.KilogramSquareMeters.one()
+val momentOfInertia: MomentOfInertia = Units.KilogramSquareMeters.of(0.003)
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
