@@ -14,6 +14,7 @@ import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.MomentOfInertia
+import frc.robot.lib.Gains import frc.robot.lib.selectGainsBasedOnMode
 
 enum class ElevatorHeight(val height: Distance) {
     L1(Units.Meters.of(0.0)),
@@ -29,12 +30,8 @@ val jKgMetersSquared: MomentOfInertia = Units.KilogramSquareMeters.one()
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
-
-const val KP = 1.0
-const val KI = 0.0
-const val KD = 0.0
-
-val PIDController = PIDController(KP, KI, KD)
+val GAINS = selectGainsBasedOnMode(Gains(1.0), Gains(1.0))
+val PIDController = PIDController(GAINS.KP, GAINS.KI, GAINS.KD)
 
 const val MAIN_MOTOR_ID = 1
 const val AUX_MOTOR_ID = 2
@@ -48,11 +45,10 @@ val MOTOR_CONFIG: TalonFXConfiguration =
                 Inverted = InvertedValue.CounterClockwise_Positive
             }
         Feedback = FeedbackConfigs().apply { RotorToSensorRatio = 1.0 }
-        Slot0 =
             Slot0Configs().apply {
-                kP = KP
-                kI = KI
-                kD = KD
+                kP = GAINS.kP
+                kI = GAINS.kI
+                kD = GAINS.kP
             }
         HardwareLimitSwitch =
             HardwareLimitSwitchConfigs().apply {
