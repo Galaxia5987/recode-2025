@@ -8,7 +8,7 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Roller(private val io: RollerIO) : SubsystemBase() {
-    var setVoltage = Units.Volt.zero()
+    private var setVoltage = Units.Volt.zero()
 
     @AutoLogOutput
     val onSetVoltage = Trigger { io.inputs.voltage == setVoltage }
