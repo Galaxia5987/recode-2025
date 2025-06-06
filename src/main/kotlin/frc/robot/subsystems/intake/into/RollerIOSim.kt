@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
 
-class IntoIOSim() : IntoIO {
-    override val inputs = LoggedIntoInputs()
+class RollerIOSim() : RollerIO {
+    override val inputs = LoggedRollerInputs()
     private val voltageRequest = VoltageOut(0.0)
     private val motor =
         TalonFXSim(

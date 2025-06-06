@@ -9,11 +9,11 @@ import frc.robot.subsystems.drive.ModuleIOs.ModuleIOTalonFX
 import frc.robot.subsystems.drive.gyroIOs.GyroIO
 import frc.robot.subsystems.drive.gyroIOs.GyroIONavX
 import frc.robot.subsystems.drive.gyroIOs.GyroIOSim
-import frc.robot.subsystems.intake.into.Into
-import frc.robot.subsystems.intake.into.IntoIO
-import frc.robot.subsystems.intake.into.IntoIOReal
-import frc.robot.subsystems.intake.into.IntoIOSim
-import frc.robot.subsystems.intake.into.LoggedIntoInputs
+import frc.robot.subsystems.intake.into.LoggedRollerInputs
+import frc.robot.subsystems.intake.into.Roller
+import frc.robot.subsystems.intake.into.RollerIO
+import frc.robot.subsystems.intake.into.RollerIOReal
+import frc.robot.subsystems.intake.into.RollerIOSim
 import frc.robot.subsystems.vision.Vision
 import frc.robot.subsystems.vision.VisionConstants
 import frc.robot.subsystems.vision.VisionIOPhotonVision
@@ -85,14 +85,14 @@ private val visionIOs =
 
 val vision = Vision(drive, *visionIOs)
 
-val into: Into =
+val roller: Roller =
     when (CURRENT_MODE) {
-        Mode.REAL -> Into(IntoIOReal())
-        Mode.SIM -> Into(IntoIOSim())
+        Mode.REAL -> Roller(RollerIOReal())
+        Mode.SIM -> Roller(RollerIOSim())
         Mode.REPLAY ->
-            Into(
-                object : IntoIO {
-                    override val inputs: LoggedIntoInputs = LoggedIntoInputs()
+            Roller(
+                object : RollerIO {
+                    override val inputs: LoggedRollerInputs = LoggedRollerInputs()
                 }
             )
     }

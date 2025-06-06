@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
-class Into(private val io: IntoIO) : SubsystemBase() {
+class Roller(private val io: RollerIO) : SubsystemBase() {
     var setVoltage = Units.Volt.zero()
 
     @AutoLogOutput

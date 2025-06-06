@@ -4,8 +4,8 @@ import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.TalonFX
 import edu.wpi.first.units.measure.Voltage
 
-class IntoIOReal() : IntoIO {
-    override val inputs = LoggedIntoInputs()
+class RollerIOReal() : RollerIO {
+    override val inputs = LoggedRollerInputs()
     private val motor = TalonFX(MOTOR_ID)
     private val voltageRequest = VoltageOut(0.0)
 
