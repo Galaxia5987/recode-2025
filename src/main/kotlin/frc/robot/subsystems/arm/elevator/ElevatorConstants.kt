@@ -15,7 +15,7 @@ import edu.wpi.first.units.measure.Distance
 import frc.robot.lib.Gains
 import frc.robot.lib.selectGainsBasedOnMode
 
-enum class ElevatorHeight(val height: Distance) {
+enum class ElevatorSet(val height: Distance) {
     L1(Units.Meters.of(0.0)),
     L2(Units.Meters.of(0.0)),
     L3(Units.Meters.of(15.0)),

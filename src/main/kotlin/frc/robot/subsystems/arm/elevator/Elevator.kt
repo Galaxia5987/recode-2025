@@ -3,7 +3,6 @@ package frc.robot.subsystems.arm.elevator
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
-import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
 import org.littletonrobotics.junction.AutoLogOutput
@@ -35,13 +34,13 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
             .withName("Elevator/setHeight")
 
     fun l1() =
-        setHeight(ElevatorHeight.L1.height).withName("Elevator/setL1")
+        setHeight(ElevatorSet.L1.height).withName("Elevator/L1")
     fun l2() =
-        setHeight(ElevatorHeight.L2.height).withName("Elevator/setL2")
+        setHeight(ElevatorSet.L2.height).withName("Elevator/L2")
     fun l3() =
-        setHeight(ElevatorHeight.L3.height).withName("Elevator/setL3")
+        setHeight(ElevatorSet.L3.height).withName("Elevator/L3")
     fun l4() =
-        setHeight(ElevatorHeight.L4.height).withName("Elevator/setL4")
+        setHeight(ElevatorSet.L4.height).withName("Elevator/L4")
 
     override fun periodic() {
         io.updateInputs()
