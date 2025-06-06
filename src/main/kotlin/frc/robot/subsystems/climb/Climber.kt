@@ -14,8 +14,8 @@ import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d
 class Climber(private val io: ClimberIO) : SubsystemBase() {
     var inputs = io.inputs
 
-    @AutoLogOutput private var mechaism = LoggedMechanism2d(3.0, 2.0)
-    private var root = mechaism.getRoot("climber", 1.0, 1.0)
+    @AutoLogOutput private val mechaism = LoggedMechanism2d(3.0, 2.0)
+    private val root = mechaism.getRoot("climber", 1.0, 1.0)
     private val ligament =
         root.append(
             LoggedMechanismLigament2d("climber ligament", 0.27003, 90.0)
