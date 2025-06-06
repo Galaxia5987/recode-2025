@@ -10,6 +10,15 @@ import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 
+const val MECHANISM_HEIGHT = 3.0
+const val MECHANISM_WIDTH = 3.0
+
+const val MECHANISM_ROOT_X = 0.0
+const val MECHANISM_ROOT_Y = 2.0
+
+const val MECHANISM_LIGAMENT_LENGTH = 5.0
+const val MECHANISM_LIGAMENT_ANGLE = 0.0
+
 val OPEN_LENGTH = Units.Meters.one()
 val CLOSE_LENGTH = Units.Meters.zero()
 
