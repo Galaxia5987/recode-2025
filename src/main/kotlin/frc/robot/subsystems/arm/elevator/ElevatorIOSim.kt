@@ -7,6 +7,7 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
 import edu.wpi.first.wpilibj.Timer
+import frc.robot.lib.gainsPIDController
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
 import frc.robot.lib.toAngle
@@ -32,7 +33,7 @@ class ElevatorIOSim : ElevatorIO {
             TalonType.KRAKEN_FOC
         )
 
-    private val PIDController = PIDController(GAINS.kP, GAINS.kI, GAINS.kP)
+    private val PIDController = gainsPIDController(GAINS)
     init {
         motors.setController(PIDController)
     }

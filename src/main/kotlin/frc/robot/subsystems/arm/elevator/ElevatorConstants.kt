@@ -4,7 +4,6 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs
 import com.ctre.phoenix6.configs.FeedbackConfigs
 import com.ctre.phoenix6.configs.HardwareLimitSwitchConfigs
 import com.ctre.phoenix6.configs.MotorOutputConfigs
-import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
@@ -13,7 +12,7 @@ import com.ctre.phoenix6.signals.ReverseLimitTypeValue
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import frc.robot.lib.Gains
-import frc.robot.lib.selectGainsBasedOnMode
+import frc.robot.lib.gainsPIDSlot0
 
 enum class ElevatorSet(val height: Distance) {
     L1(Units.Meters.of(0.0)),
@@ -29,7 +28,7 @@ val MOMENT_OF_INERTIA = Units.KilogramSquareMeters.of(0.003)
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
-val GAINS = selectGainsBasedOnMode(Gains(1.0), Gains(1.0))
+val GAINS = Gains(1.0)
 
 const val MAIN_MOTOR_ID = 1
 const val AUX_MOTOR_ID = 2
@@ -43,11 +42,7 @@ val MOTOR_CONFIG: TalonFXConfiguration =
                 Inverted = InvertedValue.CounterClockwise_Positive
             }
         Feedback = FeedbackConfigs().apply { RotorToSensorRatio = 1.0 }
-        Slot0Configs().apply {
-            kP = GAINS.kP
-            kI = GAINS.kI
-            kD = GAINS.kP
-        }
+        Slot0 = gainsPIDSlot0(GAINS)
         HardwareLimitSwitch =
             HardwareLimitSwitchConfigs().apply {
                 ReverseLimitType = ReverseLimitTypeValue.NormallyOpen
