@@ -9,6 +9,7 @@ import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
+import frc.robot.lib.Gains
 
 const val MECHANISM_HEIGHT = 3.0
 const val MECHANISM_WIDTH = 3.0
@@ -30,13 +31,11 @@ val MOMENT_OF_INERTIA = Units.KilogramSquareMeters.of(0.003)
 val TOLERANCE = Units.Centimeter.of(2.0)
 
 const val CONVERSION_FACTOR = 1.0
-const val GEAR_RATIO = 1.0
+const val GEAR_RATIO = 1.0 / 3.0
 
-const val KP = 1.0
-const val KI = 0.0
-const val KD = 0.0
+val Gains = Gains(1.0)
 
-val PIDController = PIDController(KP, KI, KD)
+val PIDController = PIDController(Gains.kP, Gains.kI, Gains.kD)
 
 val MOTOR_CONFIG: TalonFXConfiguration =
     TalonFXConfiguration().apply {
@@ -48,9 +47,9 @@ val MOTOR_CONFIG: TalonFXConfiguration =
         Feedback = FeedbackConfigs().apply { RotorToSensorRatio = 1.0 }
         Slot0 =
             Slot0Configs().apply {
-                kP = KP
-                kI = KI
-                kD = KD
+                kP = Gains.kP
+                kI = Gains.kI
+                kD = Gains.kD
             }
         CurrentLimits =
             CurrentLimitsConfigs().apply {
