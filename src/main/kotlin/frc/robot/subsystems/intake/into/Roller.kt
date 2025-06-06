@@ -8,11 +8,11 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Roller(private val io: RollerIO) : SubsystemBase() {
-    private var setVoltage = Units.Volt.zero()
+    private var appliedVoltage = Units.Volt.zero()
 
     fun setVoltage(voltage: Voltage) = runOnce {
         io.setVoltage(voltage)
-        setVoltage = voltage
+        appliedVoltage = voltage
     }.withName("Roller/setVoltage")
 
     fun inTake() = setVoltage(intakeVoltage).withName("Roller/InTake")
@@ -21,6 +21,6 @@ class Roller(private val io: RollerIO) : SubsystemBase() {
     override fun periodic() {
         io.updateInputs()
         Logger.processInputs("Into", io.inputs)
-        Logger.recordOutput("IntoSetVoltage", setVoltage)
+        Logger.recordOutput("IntoSetVoltage", appliedVoltage)
     }
 }
