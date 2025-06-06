@@ -5,6 +5,42 @@ import edu.wpi.first.units.*
 import edu.wpi.first.units.measure.*
 import kotlin.math.PI
 
+/**
+ * # Unit DSL Extensions for WPILib
+ *
+ * Provides convenient Kotlin extensions for working with WPILib units using readable syntax.
+ *
+ * ## Example Usage
+ *
+ * ```kotlin
+ * // Distances
+ * val d1 = 5.m
+ * val d2 = 30.cm
+ * val total = d1 + d2
+ * val dInMm = d1[mm]
+ *
+ * // Angles
+ * val a = 90.deg
+ * val angleInRads = a[rad]
+ * val rot2d = a.toRotation2d()
+ *
+ * // Velocities
+ * val linear = 2.mps
+ * val angular = linear.toAngular(diameter = 0.1.m, gearRatio = 3.0)
+ *
+ * // Time and Others
+ * val t = 2.sec
+ * val voltage = 6.volts
+ * val current = 20.amps
+ *
+ * // Derived Units
+ * val speed = total / t
+ * ```
+ *
+ * These extensions allow for natural and concise code in robot control logic.
+ */
+
+
 // Length
 val m get() = Units.Meters
 val cm get() = Units.Centimeters
