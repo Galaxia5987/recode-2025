@@ -20,7 +20,7 @@ const val MECHANISM_ROOT_Y = 2.0
 const val MECHANISM_LIGAMENT_LENGTH = 5.0
 const val MECHANISM_LIGAMENT_ANGLE = 0.0
 
-val OPEN_LENGTH = Units.Meters.one()
+val OPEN_LENGTH = Units.Meters.of(0.34)
 val CLOSE_LENGTH = Units.Meters.zero()
 
 val RADIUS = Units.Millimeters.of(36.4 / 2)
@@ -28,7 +28,7 @@ val RADIUS = Units.Millimeters.of(36.4 / 2)
 const val MOTOR_ID = 1
 
 val MOMENT_OF_INERTIA = Units.KilogramSquareMeters.of(0.003)
-val TOLERANCE = Units.Centimeter.of(2.0)
+val TOLERANCE = Units.Centimeters.of(0.58)
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0 / 3.0
