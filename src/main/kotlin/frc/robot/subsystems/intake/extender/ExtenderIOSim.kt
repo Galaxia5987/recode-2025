@@ -1,9 +1,11 @@
 package frc.robot.subsystems.intake.extender
 
 import com.ctre.phoenix6.controls.PositionVoltage
+import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.wpilibj.Timer
+import frc.robot.lib.gainsPIDController
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
 import frc.robot.lib.toDistance
@@ -19,6 +21,8 @@ class ExtenderIOSim : ExtenderIO {
             TalonType.KRAKEN_FOC
         )
     private val voltagePositionRequest = PositionVoltage(0.0)
+
+    private val PIDController = gainsPIDController(Gains)
 
     init {
         motor.setController(PIDController)

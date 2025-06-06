@@ -3,13 +3,12 @@ package frc.robot.subsystems.intake.extender
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs
 import com.ctre.phoenix6.configs.FeedbackConfigs
 import com.ctre.phoenix6.configs.MotorOutputConfigs
-import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import frc.robot.lib.Gains
+import frc.robot.lib.gainsPIDSlot0
 
 const val MECHANISM_HEIGHT = 3.0
 const val MECHANISM_WIDTH = 3.0
@@ -35,7 +34,6 @@ const val GEAR_RATIO = 1.0 / 3.0
 
 val Gains = Gains(1.0)
 
-val PIDController = PIDController(Gains.kP, Gains.kI, Gains.kD)
 
 val MOTOR_CONFIG: TalonFXConfiguration =
     TalonFXConfiguration().apply {
@@ -45,12 +43,7 @@ val MOTOR_CONFIG: TalonFXConfiguration =
                 Inverted = InvertedValue.CounterClockwise_Positive
             }
         Feedback = FeedbackConfigs().apply { RotorToSensorRatio = 1.0 }
-        Slot0 =
-            Slot0Configs().apply {
-                kP = Gains.kP
-                kI = Gains.kI
-                kD = Gains.kD
-            }
+        Slot0 = gainsPIDSlot0(Gains)
         CurrentLimits =
             CurrentLimitsConfigs().apply {
                 StatorCurrentLimitEnable = true
