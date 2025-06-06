@@ -17,7 +17,6 @@ const val GEAR_RATIO = 1.0
 
 const val MOTOR_ID = 1
 
-
 val MOTOR_CONFIG: TalonFXConfiguration =
     TalonFXConfiguration().apply {
         MotorOutput =

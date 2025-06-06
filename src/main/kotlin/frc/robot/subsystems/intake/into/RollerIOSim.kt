@@ -18,11 +18,6 @@ class RollerIOSim() : RollerIO {
             CONVERSION_FACTOR,
             TalonType.KRAKEN_FOC
         )
-
-    init {
-        //        motor.setController(PIDController)
-    }
-
     override fun setVoltage(voltage: Voltage) {
         motor.setControl(voltageRequest.withOutput(voltage))
     }
