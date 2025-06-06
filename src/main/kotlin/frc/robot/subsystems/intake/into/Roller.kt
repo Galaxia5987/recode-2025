@@ -13,7 +13,7 @@ class Roller(private val io: RollerIO) : SubsystemBase() {
     @AutoLogOutput
     val onSetVoltage = Trigger { io.inputs.voltage == setVoltage }
 
-    fun setVoltage(voltage: Voltage) = run {
+    fun setVoltage(voltage: Voltage) = runOnce {
         io.setVoltage(voltage)
         setVoltage = voltage
     }
