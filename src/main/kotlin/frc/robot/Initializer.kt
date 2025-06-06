@@ -86,13 +86,13 @@ private val visionIOs =
 val vision = Vision(drive, *visionIOs)
 
 val elevator: Elevator =
-    when (CURRENT_MODE) {
-        Mode.REAL -> Elevator(ElevatorIOReal())
-        Mode.SIM -> Elevator(ElevatorIOSim())
-        Mode.REPLAY ->
-            Elevator(
+    Elevator(
+        when (CURRENT_MODE) {
+            Mode.REAL -> ElevatorIOReal()
+            Mode.SIM -> ElevatorIOSim()
+            Mode.REPLAY ->
                 object : ElevatorIO {
                     override val inputs = LoggedElevatorInputs()
                 }
-            )
-    }
+        }
+    )
