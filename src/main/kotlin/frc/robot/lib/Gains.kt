@@ -4,8 +4,7 @@ import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.Slot1Configs
 import com.ctre.phoenix6.configs.Slot2Configs
 import edu.wpi.first.math.controller.PIDController
-import frc.robot.CURRENT_MODE
-import frc.robot.Mode
+
 
 data class Gains(
     val kP: Double = 0.0,
@@ -16,11 +15,6 @@ data class Gains(
     val kA: Double = 0.0,
     val kG: Double = 0.0
 )
-
-fun selectGainsBasedOnMode(realGains: Gains, simGains: Gains): Gains {
-    return if (CURRENT_MODE == Mode.SIM) simGains else realGains
-}
-
 fun gainsPIDController(gains: Gains): PIDController = PIDController(gains.kP, gains.kI, gains.kD)
 fun gainsPIDSlot0(gains: Gains): Slot0Configs =
     Slot0Configs().apply {
