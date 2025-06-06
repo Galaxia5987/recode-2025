@@ -20,7 +20,6 @@ const val GEAR_RATIO = 1.0
 
 val Gains = Gains(1.0)
 
-val PIDController = PIDController(Gains.kP, Gains.kI, Gains.kD)
 
 const val MOTOR_ID = 1
 
