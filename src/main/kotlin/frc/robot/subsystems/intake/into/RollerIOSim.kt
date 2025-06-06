@@ -26,5 +26,6 @@ class RollerIOSim() : RollerIO {
         motor.update(Timer.getFPGATimestamp())
         inputs.voltage = motor.appliedVoltage
         inputs.current = motor.appliedCurrent
+        inputs.angle = Units.Rotation.of(motor.position)
     }
 }

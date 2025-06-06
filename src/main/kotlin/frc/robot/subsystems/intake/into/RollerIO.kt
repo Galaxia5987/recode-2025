@@ -13,5 +13,6 @@ interface RollerIO {
     open class RollerInputs {
         var voltage = Units.Volt.zero()
         var current = Units.Amp.zero()
+        var angle = Units.Rotations.zero()
     }
 }

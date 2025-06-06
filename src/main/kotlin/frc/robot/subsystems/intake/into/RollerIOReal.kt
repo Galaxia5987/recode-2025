@@ -16,5 +16,6 @@ class RollerIOReal() : RollerIO {
     override fun updateInputs() {
         inputs.voltage = motor.supplyVoltage.value
         inputs.current = motor.supplyCurrent.value
+        inputs.angle = motor.position.value
     }
 }

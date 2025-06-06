@@ -8,6 +8,15 @@ import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.Units
 
+const val MECHANISM_HEIGHT = 4.0
+const val MECHANISM_WIDTH = 4.0
+
+const val MECHANISM_ROOT_X = 2.0
+const val MECHANISM_ROOT_Y = 2.0
+
+const val MECHANISM_LIGAMENT_LENGTH = 0.5
+const val MECHANISM_LIGAMENT_ANGLE = 0.0
+
 val MOMENT_OF_INERTIA = Units.KilogramSquareMeters.of(0.003)
 val INTAKE_VOLTAGE = Units.Volts.of(-0.7 * 12.0)
 val OUTTAKE_VOLTAGE = Units.Volts.of(0.8 * 12.0)
