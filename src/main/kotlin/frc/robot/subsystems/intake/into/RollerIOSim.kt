@@ -1,7 +1,6 @@
 package frc.robot.subsystems.intake.into
 
 import com.ctre.phoenix6.controls.VoltageOut
-import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Voltage
 import edu.wpi.first.wpilibj.Timer
@@ -19,10 +18,9 @@ class RollerIOSim() : RollerIO {
             CONVERSION_FACTOR,
             TalonType.KRAKEN_FOC
         )
-    val PIDController = PIDController(Gains.kP, Gains.kI, Gains.kD)
 
     init {
-        motor.setController(PIDController)
+        //        motor.setController(PIDController)
     }
 
     override fun setVoltage(voltage: Voltage) {
