@@ -15,8 +15,8 @@ class Roller(private val io: RollerIO) : SubsystemBase() {
             }
             .withName("Roller/setVoltage")
 
-    fun inTake() = setVoltage(intakeVoltage).withName("Roller/InTake")
-    fun outTake() = setVoltage(outtakeVoltage).withName("Roller/OutTake")
+    fun inTake() = setVoltage(INTAKE_VOLTAGE).withName("Roller/InTake")
+    fun outTake() = setVoltage(OUTTAKE_VOLTAGE).withName("Roller/OutTake")
 
     override fun periodic() {
         io.updateInputs()

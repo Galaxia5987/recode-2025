@@ -9,13 +9,14 @@ import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.Units
 
 val MOMENT_OF_INERTIA = Units.KilogramSquareMeters.of(0.003)
-val intakeVoltage = Units.Volt.one()
-val outtakeVoltage = Units.Volt.of(-1.0)
+val INTAKE_VOLTAGE = Units.Volts.of(-0.7 * 12.0)
+val OUTTAKE_VOLTAGE = Units.Volts.of(0.8 * 12.0)
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
 
 const val MOTOR_ID = 1
+
 
 val MOTOR_CONFIG: TalonFXConfiguration =
     TalonFXConfiguration().apply {
