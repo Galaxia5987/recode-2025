@@ -85,14 +85,15 @@ private val visionIOs =
 
 val vision = Vision(drive, *visionIOs)
 
-val roller: Roller =
-    when (CURRENT_MODE) {
-        Mode.REAL -> Roller(RollerIOReal())
-        Mode.SIM -> Roller(RollerIOSim())
-        Mode.REPLAY ->
-            Roller(
+val roller =
+    Roller(
+        when (CURRENT_MODE) {
+            Mode.REAL -> RollerIOReal()
+            Mode.SIM -> RollerIOSim()
+            Mode.REPLAY ->
                 object : RollerIO {
-                    override val inputs: LoggedRollerInputs = LoggedRollerInputs()
+                    override val inputs: LoggedRollerInputs =
+                        LoggedRollerInputs()
                 }
-            )
-    }
+        }
+    )
