@@ -12,9 +12,16 @@ import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d
 
 class Extender(private val io: ExtenderIO) : SubsystemBase() {
     private val mechanism = LoggedMechanism2d(MECHANISM_WIDTH, MECHANISM_HEIGHT)
-    private val root = mechanism.getRoot("Extender", MECHANISM_ROOT_X, MECHANISM_ROOT_Y)
+    private val root =
+        mechanism.getRoot("Extender", MECHANISM_ROOT_X, MECHANISM_ROOT_Y)
     private val elevatorLigament =
-        root.append(LoggedMechanismLigament2d("ExtenderLigament", MECHANISM_LIGAMENT_LENGTH, MECHANISM_LIGAMENT_ANGLE))
+        root.append(
+            LoggedMechanismLigament2d(
+                "ExtenderLigament",
+                MECHANISM_LIGAMENT_LENGTH,
+                MECHANISM_LIGAMENT_ANGLE
+            )
+        )
 
     private var setpoint = Units.Meters.zero()
 
