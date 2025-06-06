@@ -7,7 +7,6 @@ import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import frc.robot.lib.Gains
 
@@ -19,7 +18,6 @@ const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
 
 val Gains = Gains(1.0)
-
 
 const val MOTOR_ID = 1
 
