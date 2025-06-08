@@ -15,10 +15,10 @@ import frc.robot.lib.Gains
 import frc.robot.lib.gainsPIDSlot0
 
 enum class Heights(val height: Distance) {
-    L1(Units.Meters.of(0.0)),
-    L2(Units.Meters.of(0.0)),
-    L3(Units.Meters.of(15.0)),
-    L4(Units.Meters.of(105.0))
+    L1(Units.Centimeter.of(0.0)),
+    L2(Units.Centimeter.of(0.0)),
+    L3(Units.Centimeter.of(15.0)),
+    L4(Units.Centimeter.of(105.0))
 }
 
 val TOLERANCE = Units.Centimeter.of(2.0)
