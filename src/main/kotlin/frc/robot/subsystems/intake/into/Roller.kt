@@ -11,7 +11,7 @@ class Roller(private val io: RollerIO) : SubsystemBase() {
     private val mechanism = LoggedMechanism2d(MECHANISM_WIDTH, MECHANISM_HEIGHT)
     private val root =
         mechanism.getRoot("Roller", MECHANISM_ROOT_X, MECHANISM_ROOT_Y)
-    private val elevatorLigament =
+    private val rollerLigament =
         root.append(
             LoggedMechanismLigament2d(
                 "RollerLigament",
@@ -37,6 +37,6 @@ class Roller(private val io: RollerIO) : SubsystemBase() {
         Logger.processInputs("Roller", io.inputs)
         Logger.recordOutput("RollerAppliedVoltage", appliedVoltage)
         Logger.recordOutput("Roller2dMechanism", mechanism)
-        elevatorLigament.angle = io.inputs.angle.`in`(Units.Degree)
+        rollerLigament.angle = io.inputs.angle.`in`(Units.Degree)
     }
 }
