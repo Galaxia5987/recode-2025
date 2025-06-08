@@ -4,10 +4,12 @@ import com.ctre.phoenix6.controls.PositionVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.gainsPIDController
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
+import frc.robot.lib.toAngle
 import frc.robot.lib.toDistance
 
 class ExtenderIOSim : ExtenderIO {
@@ -28,8 +30,8 @@ class ExtenderIOSim : ExtenderIO {
         motor.setController(PIDController)
     }
 
-    override fun setLength(length: Angle) {
-        motor.setControl(voltagePositionRequest.withPosition(length))
+    override fun setLength(length: Distance) {
+        motor.setControl(voltagePositionRequest.withPosition(length.toAngle(RADIUS, GEAR_RATIO)))
     }
 
     override fun updateInputs() {

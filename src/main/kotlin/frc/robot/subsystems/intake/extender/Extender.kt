@@ -34,7 +34,7 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
     val isClosed = Trigger { io.inputs.length.isNear(CLOSE_LENGTH, TOLERANCE) }
 
     fun setLength(length: Distance) = runOnce {
-        io.setLength(length.toAngle(RADIUS, GEAR_RATIO))
+        io.setLength(length)
         setpoint = length
     }
 
