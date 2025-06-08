@@ -4,7 +4,6 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs
 import com.ctre.phoenix6.configs.FeedbackConfigs
 import com.ctre.phoenix6.configs.HardwareLimitSwitchConfigs
 import com.ctre.phoenix6.configs.MotorOutputConfigs
-import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
@@ -15,7 +14,7 @@ import edu.wpi.first.units.measure.Distance
 import frc.robot.lib.Gains
 import frc.robot.lib.gainsPIDSlot0
 
-enum class ElevatorSet(val height: Distance) {
+enum class Heights(val height: Distance) {
     L1(Units.Meters.of(0.0)),
     L2(Units.Meters.of(0.0)),
     L3(Units.Meters.of(15.0)),

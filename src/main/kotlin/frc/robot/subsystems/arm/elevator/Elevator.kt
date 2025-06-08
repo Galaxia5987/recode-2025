@@ -33,10 +33,10 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
             }
             .withName("Elevator/setHeight")
 
-    fun l1() = setHeight(ElevatorSet.L1.height).withName("Elevator/L1")
-    fun l2() = setHeight(ElevatorSet.L2.height).withName("Elevator/L2")
-    fun l3() = setHeight(ElevatorSet.L3.height).withName("Elevator/L3")
-    fun l4() = setHeight(ElevatorSet.L4.height).withName("Elevator/L4")
+    fun l1() = setHeight(Heights.L1.height).withName("Elevator/L1")
+    fun l2() = setHeight(Heights.L2.height).withName("Elevator/L2")
+    fun l3() = setHeight(Heights.L3.height).withName("Elevator/L3")
+    fun l4() = setHeight(Heights.L4.height).withName("Elevator/L4")
 
     override fun periodic() {
         io.updateInputs()
