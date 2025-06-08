@@ -20,7 +20,6 @@ class ElevatorIOReal() : ElevatorIO {
 
     init {
         mainMotor.configurator.apply(MOTOR_CONFIG)
-
         auxMotor.setControl(Follower(MAIN_MOTOR_ID, false))
     }
 
