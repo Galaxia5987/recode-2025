@@ -28,6 +28,11 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
     @AutoLogOutput
     val atSetpoint = Trigger { io.inputs.length.isNear(setpoint, TOLERANCE) }
 
+    @AutoLogOutput
+    val isOpen = Trigger { io.inputs.length.isNear(OPEN_LENGTH, TOLERANCE) }
+    @AutoLogOutput
+    val isClosed = Trigger { io.inputs.length.isNear(CLOSE_LENGTH, TOLERANCE) }
+
     fun setLength(length: Distance) = runOnce {
         io.setLength(length.toAngle(RADIUS, GEAR_RATIO))
         setpoint = length
