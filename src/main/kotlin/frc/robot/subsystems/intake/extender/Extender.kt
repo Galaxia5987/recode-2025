@@ -14,7 +14,7 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
     private val mechanism = LoggedMechanism2d(MECHANISM_WIDTH, MECHANISM_HEIGHT)
     private val root =
         mechanism.getRoot("Extender", MECHANISM_ROOT_X, MECHANISM_ROOT_Y)
-    private val elevatorLigament =
+    private val extenderLigament =
         root.append(
             LoggedMechanismLigament2d(
                 "ExtenderLigament",
@@ -41,6 +41,6 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
         Logger.recordOutput("mechanism2d", mechanism)
         Logger.recordOutput("SetPoint", setpoint)
         Logger.processInputs("Extender", io.inputs)
-        elevatorLigament.length = io.inputs.length.`in`(Units.Meters)
+        extenderLigament.length = io.inputs.length.`in`(Units.Meters)
     }
 }
