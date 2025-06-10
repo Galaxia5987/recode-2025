@@ -18,7 +18,9 @@ enum class Heights(val height: Distance) {
     L1(Units.Centimeter.of(0.0)),
     L2(Units.Centimeter.of(0.0)),
     L3(Units.Centimeter.of(15.0)),
-    L4(Units.Centimeter.of(105.0))
+    L4(Units.Centimeter.of(105.0)),
+    MAX(Units.Centimeter.of(140.0)),
+    MIN(Units.Centimeter.of(0.0))
 }
 
 val TOLERANCE = Units.Centimeter.of(2.0)
@@ -51,6 +53,11 @@ val MOTOR_CONFIG: TalonFXConfiguration =
                 ReverseLimitAutosetPositionEnable = true
                 ReverseLimitAutosetPositionValue = 0.0
                 ReverseLimitRemoteSensorID = LIMIT_SWITCH_ID
+            }
+        SoftwareLimitSwitch =
+            SoftwareLimitSwitchConfigs().apply {
+                ForwardSoftLimitEnable = true
+                ForwardSoftLimitThreshold = Heights.MAX.height.toAngle(RADIUS,GEAR_RATIO).`in`(Units.Rotations)
             }
         CurrentLimits =
             CurrentLimitsConfigs().apply {
