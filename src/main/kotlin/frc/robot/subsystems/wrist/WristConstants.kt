@@ -8,10 +8,8 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.units.measure.MomentOfInertia
 import edu.wpi.first.units.measure.Voltage
-import frc.robot.lib.Gains
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
-import frc.robot.lib.selectGainsBasedOnMode
 
 const val ROTOR_TO_SENSOR = 1 / ((1.0 / 9.0) * (20.0 / 66.0))
 const val SENSOR_TO_MECHANISM = 1 / (16.0 / 42.0)
@@ -24,7 +22,6 @@ val MOMENT_OF_INERTIA: MomentOfInertia = Units.KilogramSquareMeters.of(0.001)
 var AT_SET_POINT: Angle = Units.Degrees.of(1.5)
 var NEAR_SET_POINT: Angle = Units.Degrees.of(10.0)
 val RESET_VOLTAGE: Voltage = Units.Volt.of(-10.0)
-val Gains = selectGainsBasedOnMode(Gains(kP = 150.0, kD = 8.0), Gains())
 var MOTOR_CONFIG =
     TalonFXSConfiguration().apply {
         MotorOutput.apply {
