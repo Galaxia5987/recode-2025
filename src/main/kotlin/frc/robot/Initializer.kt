@@ -2,6 +2,11 @@ package frc.robot
 
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
+import frc.robot.subsystems.climb.Climber
+import frc.robot.subsystems.climb.ClimberIO
+import frc.robot.subsystems.climb.ClimberIOReal
+import frc.robot.subsystems.climb.ClimberIOSim
+import frc.robot.subsystems.climb.LoggedClimberInputs
 import frc.robot.subsystems.drive.*
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIO
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIOSim
@@ -79,3 +84,15 @@ private val visionIOs =
     }.toTypedArray()
 
 val vision = Vision(drive, *visionIOs)
+
+val climber =
+    Climber(
+        when (CURRENT_MODE) {
+            Mode.REAL -> ClimberIOReal()
+            Mode.SIM -> ClimberIOSim()
+            Mode.REPLAY ->
+                object : ClimberIO {
+                    override var inputs = LoggedClimberInputs()
+                }
+        }
+    )
