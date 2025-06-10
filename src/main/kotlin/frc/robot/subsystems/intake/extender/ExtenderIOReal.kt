@@ -1,5 +1,6 @@
 package frc.robot.subsystems.intake.extender
 
+import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
 import com.ctre.phoenix6.hardware.TalonFX
 import edu.wpi.first.units.measure.Angle
@@ -10,7 +11,7 @@ import frc.robot.lib.toDistance
 class ExtenderIOReal() : ExtenderIO {
     override val inputs: LoggedExtenderInputs = LoggedExtenderInputs()
     private val motor: TalonFX = TalonFX(MOTOR_ID)
-    private val positionTorqueRequest = PositionTorqueCurrentFOC(0.0)
+    private val positionTorqueRequest = MotionMagicTorqueCurrentFOC(0.0)
     init {
         motor.configurator.apply(MOTOR_CONFIG)
     }
