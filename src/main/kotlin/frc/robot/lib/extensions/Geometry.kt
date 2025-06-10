@@ -1,4 +1,4 @@
-package frc.robot.lib
+package frc.robot.lib.extensions
 
 import com.pathplanner.lib.util.FlippingUtil
 import edu.wpi.first.math.geometry.Pose2d

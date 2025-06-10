@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands.runOnce
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
-import frc.robot.lib.enableAutoLogOutputFor
+import frc.robot.lib.extensions.enableAutoLogOutputFor
 import frc.robot.subsystems.drive.DriveCommands
 import org.ironmaple.simulation.SimulatedArena
 import org.littletonrobotics.junction.AutoLogOutput
@@ -20,11 +20,14 @@ object RobotContainer {
 
     private val autoChooser: LoggedDashboardChooser<Command>
 
-
     init {
         drive // Ensure Drive is initialized
 
-        autoChooser = LoggedDashboardChooser("Auto Choices", AutoBuilder.buildAutoChooser())
+        autoChooser =
+            LoggedDashboardChooser(
+                "Auto Choices",
+                AutoBuilder.buildAutoChooser()
+            )
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -32,7 +35,6 @@ object RobotContainer {
         if (CURRENT_MODE == Mode.SIM) {
             SimulatedArena.getInstance().resetFieldForAuto()
         }
-
 
         enableAutoLogOutputFor(this)
     }
