@@ -20,7 +20,7 @@ class Gripper(private val io: GripperIO) : SubsystemBase() {
 
     @AutoLogOutput
     val hasCoral: Trigger =
-        Trigger { io.inputs.sensorDistance < DISTANCE_THRESHOLD }
+        Trigger { io.inputs.sensorDistance< DISTANCE_THRESHOLD }
             .debounce(
                 DEBOUNCE_TIME.`in`(Units.Seconds),
                 Debouncer.DebounceType.kBoth
