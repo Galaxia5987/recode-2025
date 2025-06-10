@@ -3,7 +3,6 @@ package frc.robot.subsystems.climb
 import com.ctre.phoenix6.controls.VoltageOut
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Voltage
-import javax.management.timer.Timer
 
 class ClimberIOSim : ClimberIO {
     override val inputs: LoggedClimberInputs = LoggedClimberInputs()
@@ -15,8 +14,8 @@ class ClimberIOSim : ClimberIO {
     }
 
     override fun updateInputs() {
-        motor.update(edu.wpi.first.wpilibj.Timer.getFPGATimestamp() * 100)
         inputs.angle = Units.Rotations.of(motor.position)
         inputs.appliedVoltage = motor.appliedVoltage
+        inputs.angularVelocity = motor.velocity
     }
 }

@@ -21,5 +21,6 @@ class ClimberIOReal : ClimberIO {
     override fun updateInputs() {
         inputs.angle = motor.position.value
         inputs.appliedVoltage = motor.motorVoltage.value
+        inputs.angularVelocity = motor.velocity.value
     }
 }
