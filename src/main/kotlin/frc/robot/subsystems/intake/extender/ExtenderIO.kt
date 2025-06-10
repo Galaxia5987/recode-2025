@@ -1,7 +1,6 @@
 package frc.robot.subsystems.intake.extender
 
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.units.measure.Distance
 import org.team9432.annotation.Logged
 
