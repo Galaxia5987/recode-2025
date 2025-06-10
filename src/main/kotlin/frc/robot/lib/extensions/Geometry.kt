@@ -15,7 +15,6 @@ import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.units.measure.Distance
 import frc.robot.IS_RED
 import frc.robot.lib.extensions.get
-import frc.robot.lib.extensions.m
 
 fun Pose2d.moveBack(distance: Distance): Pose2d =
     this + Transform2d(-distance, Units.Meters.zero(), Rotation2d.kZero)
