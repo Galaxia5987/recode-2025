@@ -20,11 +20,14 @@ object RobotContainer {
 
     private val autoChooser: LoggedDashboardChooser<Command>
 
-
     init {
         drive // Ensure Drive is initialized
 
-        autoChooser = LoggedDashboardChooser("Auto Choices", AutoBuilder.buildAutoChooser())
+        autoChooser =
+            LoggedDashboardChooser(
+                "Auto Choices",
+                AutoBuilder.buildAutoChooser()
+            )
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -32,7 +35,6 @@ object RobotContainer {
         if (CURRENT_MODE == Mode.SIM) {
             SimulatedArena.getInstance().resetFieldForAuto()
         }
-
 
         enableAutoLogOutputFor(this)
     }
