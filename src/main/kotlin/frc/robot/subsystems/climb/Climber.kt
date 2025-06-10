@@ -21,7 +21,7 @@ class Climber(private val io: ClimberIO) : SubsystemBase() {
             LoggedMechanismLigament2d("climber ligament", 0.27003, 90.0)
         )
 
-    private fun setVoltage(voltage: Voltage): Command =
+     fun setVoltage(voltage: Voltage): Command =
         StartEndCommand(
                 { io.setVoltage(voltage) },
                 { io.setVoltage(Units.Volts.zero()) }
