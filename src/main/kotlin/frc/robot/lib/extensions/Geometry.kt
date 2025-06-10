@@ -25,8 +25,7 @@ fun Pose2d.moveTowards(target: Pose2d, distance: Distance): Pose2d {
     if (direction.translation.norm < (distance[m]))
         return target.withRotation(this.rotation)
     return (this.withRotation(Rotation2d.kZero) +
-            (direction) / direction.translation.norm *
-                (-distance[m]))
+            (direction) / direction.translation.norm * (-distance[m]))
         .withRotation(this.rotation)
 }
 
