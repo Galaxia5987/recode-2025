@@ -1,7 +1,6 @@
 package frc.robot.lib.motors
 
 import edu.wpi.first.math.MathUtil
-import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.wpilibj.Servo
 import edu.wpi.first.wpilibj.Timer
