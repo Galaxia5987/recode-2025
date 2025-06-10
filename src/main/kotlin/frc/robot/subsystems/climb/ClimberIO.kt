@@ -3,6 +3,7 @@ package frc.robot.subsystems.climb
 import edu.wpi.first.epilogue.Logged
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.units.measure.Voltage
 
 interface ClimberIO {
@@ -11,9 +12,10 @@ interface ClimberIO {
     fun setVoltage(voltage: Voltage) {}
     fun updateInputs() {}
 
-    @Logged
+    @org.team9432.annotation.Logged
     open class ClimberInputs {
         var appliedVoltage: Voltage = Units.Volts.zero()
         var angle: Angle = Units.Degree.zero()
+        var angularVelocity: AngularVelocity = Units.RotationsPerSecond.zero()
     }
 }
