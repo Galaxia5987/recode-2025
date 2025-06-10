@@ -61,7 +61,10 @@ val MOTOR_CONFIG: TalonFXConfiguration =
         SoftwareLimitSwitch =
             SoftwareLimitSwitchConfigs().apply {
                 ForwardSoftLimitEnable = true
-                ForwardSoftLimitThreshold = Heights.MAX.height.toAngle(RADIUS,GEAR_RATIO).`in`(Units.Rotations)
+                ForwardSoftLimitThreshold =
+                    Heights.MAX.height
+                        .toAngle(RADIUS, GEAR_RATIO)
+                        .`in`(Units.Rotations)
             }
         CurrentLimits =
             CurrentLimitsConfigs().apply {

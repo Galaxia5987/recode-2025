@@ -57,7 +57,8 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
                         velocity >= Units.MetersPerSecond.zero()
                     }
                     .until { atSetpoint.asBoolean }
-            ).withName("Elevator/setVelocity")
+            )
+            .withName("Elevator/setVelocity")
 
     fun setHeight(height: Distance) =
         runOnce {
