@@ -28,7 +28,7 @@ class Climber(private val io: ClimberIO) : SubsystemBase() {
             )
             .withName("Climber/setVoltage")
 
-    private fun powerControl(power: DoubleSupplier): Command =
+    private fun powerControl(power: () -> Double): Command =
         run { io.setVoltage(Units.Volts.of(power.asDouble * 10.0)) }
             .withName("Climber/powerControl")
 
