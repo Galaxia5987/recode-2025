@@ -26,8 +26,8 @@ class Wrist(private val io: WristIO) : SubsystemBase() {
     private var SetpointValue: Angle = Angles.ZERO.angle
 
     @AutoLogOutput
-    var atSetPoint: Trigger = Trigger {
-        SetpointValue.isNear(io.inputs.angle, AT_SET_POINT)
+    var atSetpoint: Trigger = Trigger {
+        SetpointValue.isNear(inputs.angle, AT_SET_POINT)
     }
 
     @AutoLogOutput
