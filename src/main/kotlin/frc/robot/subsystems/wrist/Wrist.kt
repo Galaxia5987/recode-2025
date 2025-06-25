@@ -38,9 +38,9 @@ class Wrist(private val io: WristIO) : SubsystemBase() {
     private val tuningAngleDegrees = LoggedNetworkNumber("tuning/WristAngle")
 
     private fun setVoltage(voltage: Voltage): Command =
-        StartEndCommand(
+        this.startEnd(
                 { io.setVoltage(voltage) },
-                { io.setVoltage(Units.Volts.zero()) }
+                { io.setVoltage(Units.Volts.zero()) },
             )
             .withName("Wrist/setVoltage")
 
