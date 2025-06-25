@@ -5,7 +5,6 @@ import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.units.measure.Voltage
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
-import edu.wpi.first.wpilibj2.command.StartEndCommand
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.button.Trigger
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
@@ -63,26 +62,26 @@ class Wrist(private val io: WristIO) : SubsystemBase() {
             )
             .withName("Wrist/reset")
 
-    fun l1(): Command = setAngle(Angles.L1)
-    fun l2(): Command = setAngle(Angles.L2)
-    fun l3(): Command = setAngle(Angles.L3)
-    fun l3Manual(): Command = setAngle(Angles.L3_MANUAL)
-    fun l4(): Command = setAngle(Angles.L4)
-    fun alignL2(): Command = setAngle(Angles.ALIGN_L2)
-    fun alignL4(): Command = setAngle(Angles.ALIGN_L4)
-    fun l2algae(): Command = setAngle(Angles.L2_ALGAE)
-    fun l2algaePickup(): Command = setAngle(Angles.L2_ALGAE_PICKUP)
-    fun l2algaePickupEnd(): Command = setAngle(Angles.L2_ALGAE_PICKUP_END)
-    fun l3algae(): Command = setAngle(Angles.L3_ALGAE)
-    fun l3algaePickup(): Command = setAngle(Angles.L3_ALGAE_PICKUP)
-    fun l3algaePickupEnd(): Command = setAngle(Angles.L3_ALGAE_PICKUP_END)
-    fun floorAlgae(): Command = setAngle(Angles.FLOOR_ALGAE)
-    fun net(): Command = setAngle(Angles.NET)
-    fun feeder(): Command = setAngle(Angles.FEEDER)
-    fun blockedFeeder(): Command = setAngle(Angles.BLOCKED_FEEDER)
-    fun retract(): Command = setAngle(Angles.ZERO)
-    fun skyward(): Command = setAngle(Angles.SKYWARD)
-    fun max(): Command = setAngle(Angles.MAX)
+    fun l1() = setAngle(Angles.L1)
+    fun l2() = setAngle(Angles.L2)
+    fun l3() = setAngle(Angles.L3)
+    fun l3Manual() = setAngle(Angles.L3_MANUAL)
+    fun l4() = setAngle(Angles.L4)
+    fun alignL2() = setAngle(Angles.ALIGN_L2)
+    fun alignL4() = setAngle(Angles.ALIGN_L4)
+    fun l2algae() = setAngle(Angles.L2_ALGAE)
+    fun l2algaePickup() = setAngle(Angles.L2_ALGAE_PICKUP)
+    fun l2algaePickupEnd() = setAngle(Angles.L2_ALGAE_PICKUP_END)
+    fun l3algae() = setAngle(Angles.L3_ALGAE)
+    fun l3algaePickup() = setAngle(Angles.L3_ALGAE_PICKUP)
+    fun l3algaePickupEnd() = setAngle(Angles.L3_ALGAE_PICKUP_END)
+    fun floorAlgae() = setAngle(Angles.FLOOR_ALGAE)
+    fun net() = setAngle(Angles.NET)
+    fun feeder() = setAngle(Angles.FEEDER)
+    fun blockedFeeder() = setAngle(Angles.BLOCKED_FEEDER)
+    fun retract() = setAngle(Angles.ZERO)
+    fun skyward() = setAngle(Angles.SKYWARD)
+    fun max() = setAngle(Angles.MAX)
 
     fun tunningAngle(): Command =
         run {
