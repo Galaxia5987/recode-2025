@@ -1,10 +1,10 @@
 package frc.robot.subsystems.wrist
 
-import edu.wpi.first.epilogue.Logged
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.units.measure.Voltage
+import org.team9432.annotation.Logged
 
 interface WristIO {
     val inputs: LoggedWristInputs
@@ -15,7 +15,7 @@ interface WristIO {
     fun resetAbsoluteEncoder(angle: Angle = Units.Degree.zero()) {}
     fun updateInputs() {}
 
-    @org.team9432.annotation.Logged
+    @Logged
     open class WristInputs {
         var appliedVoltage: Voltage = Units.Volts.zero()
         var angle: Angle = Units.Degree.zero()
