@@ -11,8 +11,8 @@ interface WristIO {
 
     fun setAngle(angle: Angle) {}
     fun setVoltage(voltage: Voltage) {}
-    fun setSoftLimits(value: Boolean) {}
-    fun resetAbsoluteEncoder(angle: Angle) {}
+    fun setSoftLimits(areEnabled: Boolean) {}
+    fun resetAbsoluteEncoder(angle: Angle = Units.Degree.zero()) {}
     fun updateInputs() {}
 
     @org.team9432.annotation.Logged
