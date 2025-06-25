@@ -7,7 +7,7 @@ import edu.wpi.first.units.measure.Voltage
 class ClimberIOReal : ClimberIO {
     override val inputs: LoggedClimberInputs = LoggedClimberInputs()
 
-    private val motor = TalonFX(17)
+    private val motor = TalonFX(MOTOR_ID)
     private val voltageControl = VoltageOut(0.0)
 
     init {
