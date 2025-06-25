@@ -6,6 +6,7 @@ import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.units.measure.Voltage
+import edu.wpi.first.wpilibj.Timer
 
 class WristIOSim : WristIO {
     override var inputs: LoggedWristInputs = LoggedWristInputs()
@@ -27,7 +28,7 @@ class WristIOSim : WristIO {
     }
 
     override fun updateInputs() {
-        motor.update(edu.wpi.first.wpilibj.Timer.getFPGATimestamp() * 100)
+        motor.update(Timer.getFPGATimestamp())
         inputs.angle = Units.Rotations.of(motor.position)
         inputs.appliedVoltage = motor.appliedVoltage
         inputs.velocity = motor.velocity
