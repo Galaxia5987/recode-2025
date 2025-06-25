@@ -38,25 +38,28 @@ var MOTOR_CONFIG_SIM =
         TalonType.KRAKEN_FOC
     )
 
+val Double.deg: Angle
+    get() = Units.Degrees.of(this)
+
 enum class Angles(val angle: Angle) {
-    L1(Units.Degrees.of(20.0)),
-    L2(Units.Degrees.of(0.0)),
-    L3(Units.Degrees.of(153.0)),
-    L3_MANUAL(Units.Degrees.of(170.0)),
-    L4(Units.Degrees.of(90.0)),
-    ALIGN_L2(Units.Degrees.of(120.0)),
-    ALIGN_L4(Units.Degrees.of(128.0)),
-    L2_ALGAE(Units.Degrees.of(80.0)),
-    L2_ALGAE_PICKUP(Units.Degrees.of(120.0)),
-    L2_ALGAE_PICKUP_END(Units.Degrees.of(140.0)),
-    L3_ALGAE(Units.Degrees.of(130.0)),
-    L3_ALGAE_PICKUP(Units.Degrees.of(120.0)),
-    L3_ALGAE_PICKUP_END(Units.Degrees.of(140.0)),
-    FLOOR_ALGAE(Units.Degrees.of(55.0)),
-    NET(Units.Degrees.of(210.0)),
-    FEEDER(Units.Degrees.of(17.0)),
-    BLOCKED_FEEDER(Units.Degrees.of(25.0)),
-    MAX(Units.Degrees.of(245.0)),
-    SKYWARD(Units.Degrees.of(200.0)),
-    ZERO(Units.Degrees.zero())
+    L1(20.0.deg),
+    L2(0.0.deg),
+    L3(153.0.deg),
+    L3_MANUAL(170.0.deg),
+    L4(90.0.deg),
+    ALIGN_L2(120.0.deg),
+    ALIGN_L4(128.8.deg),
+    L2_ALGAE(80.0.deg),
+    L2_ALGAE_PICKUP(120.0.deg),
+    L2_ALGAE_PICKUP_END(140.0.deg),
+    L3_ALGAE(130.0.deg),
+    L3_ALGAE_PICKUP(120.0.deg),
+    L3_ALGAE_PICKUP_END(140.0.deg),
+    FLOOR_ALGAE(55.0.deg),
+    NET(210.0.deg),
+    FEEDER(17.0.deg),
+    BLOCKED_FEEDER(25.0.deg),
+    MAX(245.0.deg),
+    SKYWARD(200.0.deg),
+    ZERO(0.0.deg)
 }
