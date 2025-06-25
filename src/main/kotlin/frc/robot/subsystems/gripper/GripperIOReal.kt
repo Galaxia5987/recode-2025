@@ -7,10 +7,10 @@ import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import com.revrobotics.AnalogInput
 import edu.wpi.first.math.filter.MedianFilter
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Voltage
+import edu.wpi.first.wpilibj.AnalogInput
 
 class GripperIOReal : GripperIO {
     override val inputs: LoggedGripperInputs = LoggedGripperInputs()
@@ -18,7 +18,7 @@ class GripperIOReal : GripperIO {
     private val motor = TalonFX(16)
     private val voltageControl = VoltageOut(0.0).withEnableFOC(true)
 
-    private val sensor = edu.wpi.first.wpilibj.AnalogInput(3)
+    private val sensor = AnalogInput(3)
     private val distanceFilter = MedianFilter(3)
 
     init {
