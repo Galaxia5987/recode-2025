@@ -3,11 +3,13 @@ package frc.robot.subsystems.wrist
 import com.ctre.phoenix6.configs.CANcoderConfiguration
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs
 import com.ctre.phoenix6.configs.FeedbackConfigs
+import com.ctre.phoenix6.configs.MotionMagicConfigs
 import com.ctre.phoenix6.configs.MotorOutputConfigs
 import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
-import com.ctre.phoenix6.controls.PositionVoltage
+import com.ctre.phoenix6.configs.TorqueCurrentConfigs
+import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC
 import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.CANcoder
 import com.ctre.phoenix6.hardware.TalonFX
@@ -22,9 +24,9 @@ import edu.wpi.first.units.measure.Voltage
 
 class WristIOReal : WristIO {
     override val inputs: LoggedWristInputs = LoggedWristInputs()
-    private val positionControl = PositionVoltage(0.0)
+    private val motionMagic = MotionMagicTorqueCurrentFOC(0.0).withSlot(0)
     private val voltageOut = VoltageOut(0.0)
-    private val motor: TalonFX = TalonFX(15)
+    private val motor = TalonFX(15)
     private val absoluteEncoder = CANcoder(50)
 
     private val softLimits =
@@ -34,6 +36,7 @@ class WristIOReal : WristIO {
             ForwardSoftLimitThreshold = FORWARD_SOFT_LIMIT.rotations
             ReverseSoftLimitThreshold = REVERSE_SOFT_LIMIT.rotations
         }
+
     init {
         motor.configurator.apply(
             TalonFXConfiguration().apply {
@@ -51,6 +54,7 @@ class WristIOReal : WristIO {
                         FeedbackSensorSource =
                             FeedbackSensorSourceValue.FusedCANcoder
                     }
+
                 Slot0 =
                     Slot0Configs().apply {
                         kP = 150.0
@@ -61,16 +65,30 @@ class WristIOReal : WristIO {
                         StaticFeedforwardSign =
                             StaticFeedforwardSignValue.UseClosedLoopSign
                     }
+
+                MotionMagic =
+                    MotionMagicConfigs().apply {
+                        MotionMagicCruiseVelocity = 100.0
+                        MotionMagicAcceleration = 200.0
+                    }
+
+                TorqueCurrent =
+                    TorqueCurrentConfigs().apply {
+                        PeakForwardTorqueCurrent = 30.0
+                        PeakReverseTorqueCurrent = -30.0
+                    }
+
                 SoftwareLimitSwitch = softLimits
                 CurrentLimits =
                     CurrentLimitsConfigs().apply {
                         StatorCurrentLimitEnable = true
-                        SupplyCurrentLimitEnable = true
                         StatorCurrentLimit = 20.0
+                        SupplyCurrentLimitEnable = true
                         SupplyCurrentLimit = 40.0
                     }
             }
         )
+
         absoluteEncoder.configurator.apply(
             CANcoderConfiguration().apply {
                 MagnetSensor.SensorDirection =
@@ -83,7 +101,7 @@ class WristIOReal : WristIO {
     }
 
     override fun setAngle(angle: Angle) {
-        motor.setControl(positionControl.withPosition(angle))
+        motor.setControl(motionMagic.withPosition(angle))
     }
 
     override fun setVoltage(voltage: Voltage) {
