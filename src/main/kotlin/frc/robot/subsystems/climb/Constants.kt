@@ -9,9 +9,8 @@ import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
 
 val GRER_RATIO = 1 / ((1.0 / 9.0) * (1.0 / 3.0) * (1.0 / 3.0) * (30.0 / 60.0))
-const val MOTOR_ID=17
-val MOMENT_OF_INERTIA: MomentOfInertia =
-    Units.KilogramSquareMeters.of(0.003)
+const val MOTOR_ID = 17
+val MOMENT_OF_INERTIA: MomentOfInertia = Units.KilogramSquareMeters.of(0.003)
 val MOTOR_CONFIG =
     TalonFXSConfiguration().apply {
         MotorOutput.apply {

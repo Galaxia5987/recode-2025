@@ -3,9 +3,7 @@ package frc.robot.subsystems.climb
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Voltage
 import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.StartEndCommand
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import java.util.function.DoubleSupplier
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import org.littletonrobotics.junction.mechanism.LoggedMechanism2d
@@ -21,15 +19,15 @@ class Climber(private val io: ClimberIO) : SubsystemBase() {
             LoggedMechanismLigament2d("climber ligament", 0.27003, 90.0)
         )
 
-     fun setVoltage(voltage: Voltage): Command =
+    fun setVoltage(voltage: Voltage): Command =
         startEnd(
                 { io.setVoltage(voltage) },
                 { io.setVoltage(Units.Volts.zero()) }
             )
             .withName("Climber/setVoltage")
 
-    private fun powerControl(power: DoubleSupplier): Command =
-        run { io.setVoltage(Units.Volts.of(power.asDouble * 10.0)) }
+    private fun powerControl(power: () -> Double): Command =
+        run { io.setVoltage(Units.Volts.of(power() * 10.0)) }
             .withName("Climber/powerControl")
 
     override fun periodic() {

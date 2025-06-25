@@ -21,11 +21,14 @@ object RobotContainer {
 
     private val autoChooser: LoggedDashboardChooser<Command>
 
-
     init {
         drive // Ensure Drive is initialized
 
-        autoChooser = LoggedDashboardChooser("Auto Choices", AutoBuilder.buildAutoChooser())
+        autoChooser =
+            LoggedDashboardChooser(
+                "Auto Choices",
+                AutoBuilder.buildAutoChooser()
+            )
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -33,7 +36,6 @@ object RobotContainer {
         if (CURRENT_MODE == Mode.SIM) {
             SimulatedArena.getInstance().resetFieldForAuto()
         }
-
 
         enableAutoLogOutputFor(this)
     }
@@ -64,13 +66,13 @@ object RobotContainer {
                 )
             )
 
-        driverController.cross().onTrue(
-            climber.setVoltage(Units.Volts.of(-12.0))
-        )
+        driverController
+            .cross()
+            .onTrue(climber.setVoltage(Units.Volts.of(-12.0)))
 
-        driverController.square().onTrue(
-            climber.setVoltage(Units.Volts.of(12.0))
-        )
+        driverController
+            .square()
+            .onTrue(climber.setVoltage(Units.Volts.of(12.0)))
 
         // Switch to X pattern when X button is pressed
         driverController.square().onTrue(runOnce(drive::stopWithX, drive))
@@ -127,8 +129,6 @@ object RobotContainer {
             drive.sysIdDynamic(SysIdRoutine.Direction.kReverse)
         )
     }
-
-
 
     fun resetSimulationField() {
         if (CURRENT_MODE != Mode.SIM) return
