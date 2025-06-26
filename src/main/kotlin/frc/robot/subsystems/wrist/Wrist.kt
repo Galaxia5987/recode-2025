@@ -15,24 +15,24 @@ import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d
 import org.littletonrobotics.junction.networktables.LoggedNetworkNumber
 
 class Wrist(private val io: WristIO) : SubsystemBase() {
-    var inputs = io.inputs
+    val inputs = io.inputs
 
     @AutoLogOutput private val mechanism = LoggedMechanism2d(2.0, 3.0)
     private val root = mechanism.getRoot("Wrist", 1.0, 1.0)
     private val ligament2d =
         root.append(LoggedMechanismLigament2d("Wrist ligament", 1.2, 0.0))
 
-    @AutoLogOutput private var SetpointName: String = Angles.ZERO.name
-    private var SetpointValue: Angle = Angles.ZERO.angle
+    @AutoLogOutput private var setpointName: String = Angles.ZERO.name
+    private var setpointValue: Angle = Angles.ZERO.angle
 
     @AutoLogOutput
     var atSetpoint: Trigger = Trigger {
-        SetpointValue.isNear(inputs.angle, AT_SET_POINT_THERSHOLD)
+        setpointValue.isNear(inputs.angle, AT_SET_POINT_THERSHOLD)
     }
 
     @AutoLogOutput
     var nearPoint: Trigger = Trigger {
-        SetpointValue.isNear(io.inputs.angle, NEAR_SET_POINT_THERSHOLD)
+        setpointValue.isNear(io.inputs.angle, NEAR_SET_POINT_THERSHOLD)
     }
 
     private val tuningAngleDegrees = LoggedNetworkNumber("tuning/WristAngle")
@@ -47,8 +47,8 @@ class Wrist(private val io: WristIO) : SubsystemBase() {
     private fun setAngle(angle: Angles): Command =
         runOnce {
                 io.setAngle(angle.angle)
-                SetpointName = angle.name
-                SetpointValue = angle.angle
+                setpointName = angle.name
+                setpointValue = angle.angle
             }
             .withName("Wrist/${angle.name}")
 
@@ -86,13 +86,13 @@ class Wrist(private val io: WristIO) : SubsystemBase() {
     fun tunningAngle(): Command =
         run {
                 io.setAngle(Units.Degrees.of(tuningAngleDegrees.get()))
-                SetpointName = "Tuning Angle"
-                SetpointValue = Units.Degrees.of(tuningAngleDegrees.get())
+                setpointName = "Tuning Angle"
+                setpointValue = Units.Degrees.of(tuningAngleDegrees.get())
             }
             .withName("wrist/tuning")
 
     fun characterize(): Command {
-        val routineForWards =
+        val routineForwards =
             SysIdRoutine(
                 SysIdRoutine.Config(
                     Units.Volt.per(Units.Second).of(5.0),
@@ -106,7 +106,7 @@ class Wrist(private val io: WristIO) : SubsystemBase() {
                     this,
                 )
             )
-        val routineBeckWards =
+        val routineBackwards =
             SysIdRoutine(
                 SysIdRoutine.Config(
                     Units.Volt.per(Units.Second).of(5.0),
@@ -117,20 +117,20 @@ class Wrist(private val io: WristIO) : SubsystemBase() {
                 SysIdRoutine.Mechanism({ io.setVoltage(it) }, null, this)
             )
         return Commands.sequence(
-                routineForWards.dynamic(SysIdRoutine.Direction.kForward),
+                routineForwards.dynamic(SysIdRoutine.Direction.kForward),
                 Commands.waitSeconds(1.0),
-                routineBeckWards.dynamic(SysIdRoutine.Direction.kReverse),
+                routineBackwards.dynamic(SysIdRoutine.Direction.kReverse),
                 Commands.waitSeconds(1.0),
-                routineForWards.quasistatic(SysIdRoutine.Direction.kForward),
+                routineForwards.quasistatic(SysIdRoutine.Direction.kForward),
                 Commands.waitSeconds(1.0),
-                routineBeckWards.quasistatic(SysIdRoutine.Direction.kReverse)
+                routineBackwards.quasistatic(SysIdRoutine.Direction.kReverse)
             )
             .withName("Wrist/characterize")
     }
 
     override fun periodic() {
         io.updateInputs()
-        Logger.processInputs(this::class.simpleName, io.inputs)
-        ligament2d.setAngle(io.inputs.angle.`in`(Units.Degree))
+        Logger.processInputs(this::class.simpleName, inputs)
+        ligament2d.setAngle(inputs.angle.`in`(Units.Degree))
     }
 }
