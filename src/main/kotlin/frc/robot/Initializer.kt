@@ -2,11 +2,6 @@ package frc.robot
 
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
-import frc.robot.subsystems.arm.elevator.Elevator
-import frc.robot.subsystems.arm.elevator.ElevatorIO
-import frc.robot.subsystems.arm.elevator.ElevatorIOReal
-import frc.robot.subsystems.arm.elevator.ElevatorIOSim
-import frc.robot.subsystems.arm.elevator.LoggedElevatorInputs
 import frc.robot.subsystems.drive.*
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIO
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIOSim
@@ -14,11 +9,6 @@ import frc.robot.subsystems.drive.ModuleIOs.ModuleIOTalonFX
 import frc.robot.subsystems.drive.gyroIOs.GyroIO
 import frc.robot.subsystems.drive.gyroIOs.GyroIONavX
 import frc.robot.subsystems.drive.gyroIOs.GyroIOSim
-import frc.robot.subsystems.intake.extender.Extender
-import frc.robot.subsystems.intake.extender.ExtenderIO
-import frc.robot.subsystems.intake.extender.ExtenderIOReal
-import frc.robot.subsystems.intake.extender.ExtenderIOSim
-import frc.robot.subsystems.intake.extender.LoggedExtenderInputs
 import frc.robot.subsystems.vision.Vision
 import frc.robot.subsystems.vision.VisionConstants
 import frc.robot.subsystems.vision.VisionIOPhotonVision
@@ -89,6 +79,18 @@ private val visionIOs =
     }.toTypedArray()
 
 val vision = Vision(drive, *visionIOs)
+
+val climber =
+    Climber(
+        when (CURRENT_MODE) {
+            Mode.REAL -> ClimberIOReal()
+            Mode.SIM -> ClimberIOSim()
+            Mode.REPLAY ->
+                object : ClimberIO {
+                    override var inputs = LoggedClimberInputs()
+                }
+        }
+    )
 
 val extender: Extender =
     when (CURRENT_MODE) {
