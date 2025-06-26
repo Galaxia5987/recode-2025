@@ -2,11 +2,6 @@ package frc.robot
 
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
-import frc.robot.subsystems.climb.Climber
-import frc.robot.subsystems.climb.ClimberIO
-import frc.robot.subsystems.climb.ClimberIOReal
-import frc.robot.subsystems.climb.ClimberIOSim
-import frc.robot.subsystems.climb.LoggedClimberInputs
 import frc.robot.subsystems.drive.*
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIO
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIOSim
@@ -93,6 +88,29 @@ val climber =
             Mode.REPLAY ->
                 object : ClimberIO {
                     override var inputs = LoggedClimberInputs()
+                }
+        }
+    )
+
+val extender: Extender =
+    when (CURRENT_MODE) {
+        Mode.REAL -> Extender(ExtenderIOReal())
+        Mode.SIM -> Extender(ExtenderIOSim())
+        else ->
+            Extender(
+                object : ExtenderIO {
+                    override val inputs = LoggedExtenderInputs()
+                }
+            )
+    }
+val elevator: Elevator =
+    Elevator(
+        when (CURRENT_MODE) {
+            Mode.REAL -> ElevatorIOReal()
+            Mode.SIM -> ElevatorIOSim()
+            Mode.REPLAY ->
+                object : ElevatorIO {
+                    override val inputs = LoggedElevatorInputs()
                 }
         }
     )
