@@ -20,7 +20,7 @@ class Gripper(private val io: GripperIO) : SubsystemBase() {
 
     @AutoLogOutput
     val hasCoral: Trigger =
-        Trigger { io.inputs.sensorDistance< DISTANCE_THRESHOLD }
+        Trigger { io.inputs.sensorDistance < DISTANCE_THRESHOLD }
             .debounce(
                 DEBOUNCE_TIME.`in`(Units.Seconds),
                 Debouncer.DebounceType.kBoth
@@ -40,7 +40,10 @@ class Gripper(private val io: GripperIO) : SubsystemBase() {
             )
 
     private fun setVoltage(voltage: Voltage): Command =
-        startEnd({ io.setVoltage(voltage) }, { io.setVoltage(STOP_VOLTAGE) })
+        this.startEnd(
+            { io.setVoltage(voltage) },
+            { io.setVoltage(STOP_VOLTAGE) }
+        )
 
     private fun getVoltage(): Double {
         return io.inputs.appliedVoltage.`in`(Units.Volts)
