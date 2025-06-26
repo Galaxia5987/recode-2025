@@ -30,11 +30,6 @@ class Wrist(private val io: WristIO) : SubsystemBase() {
         setpointValue.isNear(inputs.angle, AT_SET_POINT_THERSHOLD)
     }
 
-    @AutoLogOutput
-    var nearPoint: Trigger = Trigger {
-        setpointValue.isNear(io.inputs.angle, NEAR_SET_POINT_THERSHOLD)
-    }
-
     private val tuningAngleDegrees = LoggedNetworkNumber("tuning/WristAngle")
 
     private fun setVoltage(voltage: Voltage): Command =
