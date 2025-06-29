@@ -17,7 +17,7 @@ const val GEAR_RATIO = 1 / ((1.0 / 9.0) * (20.0 / 66.0) * (16.0 / 42.0))
 
 val FORWARD_SOFT_LIMIT = Rotation2d.fromRotations(1.8)
 val REVERSE_SOFT_LIMIT = Rotation2d.fromRotations(0.0)
-val GRER_RATIO = 1 / ((1.0 / 9.0) * (20.0 / 66.0) * (16.0 / 42.0))
+const val GRER_RATIO = 1 / ((1.0 / 9.0) * (20.0 / 66.0) * (16.0 / 42.0))
 val MOMENT_OF_INERTIA: MomentOfInertia = Units.KilogramSquareMeters.of(0.001)
 var AT_SET_POINT_THERSHOLD: Angle = Units.Degrees.of(1.5)
 var NEAR_SET_POINT_THERSHOLD: Angle = Units.Degrees.of(10.0)
@@ -32,7 +32,7 @@ var MOTOR_CONFIG =
 var MOTOR_CONFIG_SIM =
     TalonFXSim(
         1,
-        GRER_RATIO,
+        1.0,
         MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),
         1.0,
         TalonType.KRAKEN_FOC
