@@ -13,8 +13,8 @@ import com.ctre.phoenix6.signals.ReverseLimitTypeValue
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import frc.robot.lib.Gains
+import frc.robot.lib.extensions.toAngle
 import frc.robot.lib.gainsPIDSlot0
-import frc.robot.lib.toAngle
 
 enum class Heights(val height: Distance) {
     L1(Units.Centimeter.of(0.0)),

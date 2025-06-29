@@ -23,6 +23,8 @@ class Extender(private val io: ExtenderIO) : SubsystemBase() {
         )
 
     private var setpoint = Units.Meters.zero()
+    val length
+        get() = io.inputs.length
 
     @AutoLogOutput
     val atSetpoint = Trigger { io.inputs.length.isNear(setpoint, TOLERANCE) }

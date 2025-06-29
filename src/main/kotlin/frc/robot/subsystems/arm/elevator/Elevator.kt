@@ -20,6 +20,9 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
 
     private var setpoint = Units.Meters.zero()
 
+    val height
+        get() = io.inputs.height
+
     @AutoLogOutput
     val atSetpoint = Trigger { io.inputs.height.isNear(setpoint, TOLERANCE) }
 
