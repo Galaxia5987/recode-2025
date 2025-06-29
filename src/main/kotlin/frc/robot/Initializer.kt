@@ -2,6 +2,16 @@ package frc.robot
 
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
+import frc.robot.subsystems.arm.elevator.Elevator
+import frc.robot.subsystems.arm.elevator.ElevatorIO
+import frc.robot.subsystems.arm.elevator.ElevatorIOReal
+import frc.robot.subsystems.arm.elevator.ElevatorIOSim
+import frc.robot.subsystems.arm.elevator.LoggedElevatorInputs
+import frc.robot.subsystems.climb.Climber
+import frc.robot.subsystems.climb.ClimberIO
+import frc.robot.subsystems.climb.ClimberIOReal
+import frc.robot.subsystems.climb.ClimberIOSim
+import frc.robot.subsystems.climb.LoggedClimberInputs
 import frc.robot.subsystems.drive.*
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIO
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIOSim
@@ -9,10 +19,20 @@ import frc.robot.subsystems.drive.ModuleIOs.ModuleIOTalonFX
 import frc.robot.subsystems.drive.gyroIOs.GyroIO
 import frc.robot.subsystems.drive.gyroIOs.GyroIONavX
 import frc.robot.subsystems.drive.gyroIOs.GyroIOSim
+import frc.robot.subsystems.intake.extender.Extender
+import frc.robot.subsystems.intake.extender.ExtenderIO
+import frc.robot.subsystems.intake.extender.ExtenderIOReal
+import frc.robot.subsystems.intake.extender.ExtenderIOSim
+import frc.robot.subsystems.intake.extender.LoggedExtenderInputs
 import frc.robot.subsystems.vision.Vision
 import frc.robot.subsystems.vision.VisionConstants
 import frc.robot.subsystems.vision.VisionIOPhotonVision
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim
+import frc.robot.subsystems.wrist.LoggedWristInputs
+import frc.robot.subsystems.wrist.Wrist
+import frc.robot.subsystems.wrist.WristIO
+import frc.robot.subsystems.wrist.WristIOReal
+import frc.robot.subsystems.wrist.WristIOSim
 import org.ironmaple.simulation.SimulatedArena
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation
 
@@ -80,7 +100,7 @@ private val visionIOs =
 
 val vision = Vision(drive, *visionIOs)
 
-val climber =
+val climber: Climber =
     Climber(
         when (CURRENT_MODE) {
             Mode.REAL -> ClimberIOReal()
@@ -88,6 +108,18 @@ val climber =
             Mode.REPLAY ->
                 object : ClimberIO {
                     override var inputs = LoggedClimberInputs()
+                }
+        }
+    )
+
+val wrist: Wrist =
+    Wrist(
+        when (CURRENT_MODE) {
+            Mode.REAL -> WristIOReal()
+            Mode.SIM -> WristIOSim()
+            else ->
+                object : WristIO {
+                    override val inputs = LoggedWristInputs()
                 }
         }
     )
