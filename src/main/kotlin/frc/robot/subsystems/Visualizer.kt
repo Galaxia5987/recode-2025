@@ -3,7 +3,6 @@ package frc.robot.subsystems
 import edu.wpi.first.math.geometry.Pose3d
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.geometry.Translation3d
-import edu.wpi.first.units.Units
 import edu.wpi.first.units.Units.Meters
 import edu.wpi.first.units.measure.Angle
 import frc.robot.drive
@@ -13,6 +12,7 @@ import frc.robot.lib.getPose3d
 import frc.robot.lib.getRotation3d
 import frc.robot.lib.getTranslation3d
 import frc.robot.subsystems.drive.Drive
+import frc.robot.wrist
 
 private val swerveModulePose: Array<Translation2d> =
     Drive.getModuleTranslations()
@@ -90,7 +90,7 @@ class Visualizer {
                         z =
                             if (
                                 elevator.height - secondElevatorStageHeight >
-                                    Units.Meters.zero()
+                                    Meters.zero()
                             ) {
                                 (secondElevatorStageHeight)
                             } else {
@@ -104,6 +104,15 @@ class Visualizer {
             getPose3d(
                 ELEVATOR_SECOND_STAGE_POSITION +
                     getTranslation3d(z = elevator.height)
+            )
+
+    val WRIST_POSITION = getTranslation3d(z = 0.9)
+    val WRIST_ROTATION = getRotation3d(0.0)
+    val wristPos
+        get() =
+            getPose3d(
+                WRIST_POSITION + getTranslation3d(z = elevator.height),
+                getRotation3d(pitch = wrist.inputs.angle)
             )
 
     fun ROBOT_POSE(): Array<Pose3d> {
@@ -122,7 +131,7 @@ class Visualizer {
             extenderPose, // 10
             elevatorPoseFirstStage, // 11
             elevatorPoseSecondStage, // 12
-            defaultPose,
+            wristPos,
             defaultPose,
             defaultPose,
             defaultPose
