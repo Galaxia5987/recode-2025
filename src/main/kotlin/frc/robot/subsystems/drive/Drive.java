@@ -39,6 +39,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -101,6 +102,10 @@ public class Drive extends SubsystemBase implements Vision.VisionConsumer {
                             TunerConstants.FrontLeft.SlipCurrent,
                             1),
                     getModuleTranslations());
+    public Angle[] SwerveTurnAngle =
+            new Angle[] {Radians.zero(), Radians.zero(), Radians.zero(), Radians.zero()};
+    public Angle[] SwerveDriveAngle =
+            new Angle[] {Radians.zero(), Radians.zero(), Radians.zero(), Radians.zero()};
 
     public static final DriveTrainSimulationConfig mapleSimConfig =
             DriveTrainSimulationConfig.Default()
@@ -218,7 +223,17 @@ public class Drive extends SubsystemBase implements Vision.VisionConsumer {
         for (var module : modules) {
             module.periodic();
         }
+
         odometryLock.unlock();
+        SwerveTurnAngle[0] = modules[0].getAngle().getMeasure();
+        SwerveTurnAngle[1] = modules[1].getAngle().getMeasure();
+        SwerveTurnAngle[2] = modules[2].getAngle().getMeasure();
+        SwerveTurnAngle[3] = modules[3].getAngle().getMeasure();
+
+        SwerveDriveAngle[0] = Radians.of(modules[0].getWheelRadiusCharacterizationPosition());
+        SwerveDriveAngle[1] = Radians.of(modules[1].getWheelRadiusCharacterizationPosition());
+        SwerveDriveAngle[2] = Radians.of(modules[2].getWheelRadiusCharacterizationPosition());
+        SwerveDriveAngle[3] = Radians.of(modules[3].getWheelRadiusCharacterizationPosition());
 
         // Stop moving when disabled
         if (DriverStation.isDisabled()) {
