@@ -4,9 +4,12 @@ import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.ProfiledPIDController
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.units.Units.MetersPerSecond
+import edu.wpi.first.units.Units.Seconds
 import edu.wpi.first.units.measure.LinearVelocity
+import edu.wpi.first.units.measure.Time
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands.*
+import edu.wpi.first.wpilibj2.command.button.Trigger
 import frc.robot.drive
 import frc.robot.lib.controllers.TunableHolonomicDriveController
 import org.littletonrobotics.junction.Logger
@@ -64,6 +67,7 @@ fun alignToPose(
     linearVelocity: LinearVelocity = MetersPerSecond.zero(),
     tolerance: Pose2d = TOLERANCE,
     poseSupplier: () -> Pose2d = { drive.pose },
+    atGoalDeounce: Time = Seconds.of(0.1),
     holonomicController: Pair<TunableHolonomicDriveController, String> =
         Pair(controller, DEFAULT_CONTROLLER_NAME),
 ): Command =
@@ -85,6 +89,8 @@ fun alignToPose(
                         )
                     )
                 })
-                .until(controller::atReference)
+                .until(
+                    Trigger { controller.atReference() }.debounce(atGoalDeounce.`in`(Seconds))
+                )
         )
         .withName("Drive/AlignToPose")
