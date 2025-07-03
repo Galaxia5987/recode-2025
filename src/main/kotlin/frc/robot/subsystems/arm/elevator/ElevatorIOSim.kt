@@ -7,13 +7,13 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
 import edu.wpi.first.wpilibj.Timer
+import frc.robot.lib.extensions.toAngle
+import frc.robot.lib.extensions.toAngular
+import frc.robot.lib.extensions.toDistance
+import frc.robot.lib.extensions.toLinear
 import frc.robot.lib.gainsPIDController
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.lib.motors.TalonType
-import frc.robot.lib.toAngle
-import frc.robot.lib.toAngular
-import frc.robot.lib.toDistance
-import frc.robot.lib.toLinear
 import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean
 
 class ElevatorIOSim : ElevatorIO {
