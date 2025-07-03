@@ -11,16 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
 import frc.robot.lib.extensions.enableAutoLogOutputFor
 import frc.robot.subsystems.drive.DriveCommands
-import frc.robot.subsystems.intake.IsIdling
-import frc.robot.subsystems.intake.IsIntaking
-import frc.robot.subsystems.intake.IsOuttaking
-import frc.robot.subsystems.intake.IsResetting
 import frc.robot.subsystems.intake.bindIntakeTriggers
-import frc.robot.subsystems.intake.idle
-import frc.robot.subsystems.intake.intake
-import frc.robot.subsystems.intake.outtake
-import frc.robot.subsystems.intake.reset
-import frc.robot.subsystems.intake.startIntaking
 import org.ironmaple.simulation.SimulatedArena
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser

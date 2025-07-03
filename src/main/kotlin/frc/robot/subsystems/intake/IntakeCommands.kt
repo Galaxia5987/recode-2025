@@ -16,13 +16,15 @@ enum class IntakeState {
 
 private var intakeState = IntakeState.Resetting
 
-private fun setState(state: IntakeState) = Commands.runOnce({
-    intakeState = state
-})
+private fun setState(state: IntakeState) =
+    Commands.runOnce({ intakeState = state })
 
 fun startIntaking() = setState(IntakeState.Intaking)
+
 fun startOuttaking() = setState(IntakeState.Outtaking)
+
 fun startIdling() = setState(IntakeState.Idling)
+
 fun startResetting() = setState(IntakeState.Resetting)
 
 val IsIntaking = Trigger { intakeState == IntakeState.Intaking }
@@ -37,7 +39,26 @@ fun bindIntakeTriggers() {
     IsResetting.onTrue(reset())
 }
 
-fun intake() = sequence(extender.open(), WaitUntilCommand(extender.isOpen), roller.intake())
-fun outtake() = sequence(extender.open(), WaitUntilCommand(extender.isOpen), roller.outtake())
-fun idle() = sequence(extender.open(), WaitUntilCommand(extender.isOpen), roller.stop())
-fun reset() = sequence(roller.stop(), extender.close(), WaitUntilCommand(extender.isClosed))
+fun intake() =
+    sequence(
+        extender.open(),
+        WaitUntilCommand(extender.isOpen),
+        roller.intake()
+    )
+
+fun outtake() =
+    sequence(
+        extender.open(),
+        WaitUntilCommand(extender.isOpen),
+        roller.outtake()
+    )
+
+fun idle() =
+    sequence(extender.open(), WaitUntilCommand(extender.isOpen), roller.stop())
+
+fun reset() =
+    sequence(
+        roller.stop(),
+        extender.close(),
+        WaitUntilCommand(extender.isClosed)
+    )
