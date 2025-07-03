@@ -67,7 +67,7 @@ fun alignToPose(
     linearVelocity: LinearVelocity = MetersPerSecond.zero(),
     tolerance: Pose2d = TOLERANCE,
     poseSupplier: () -> Pose2d = { drive.pose },
-    atGoalDeounce: Time = Seconds.of(0.1),
+    atGoalDebounce: Time = Seconds.of(0.1),
     holonomicController: Pair<TunableHolonomicDriveController, String> =
         Pair(controller, DEFAULT_CONTROLLER_NAME),
 ): Command =
@@ -90,7 +90,7 @@ fun alignToPose(
                     )
                 })
                 .until(
-                    Trigger { controller.atReference() }.debounce(atGoalDeounce.`in`(Seconds))
+                    Trigger { controller.atReference() }.debounce(atGoalDebounce.`in`(Seconds))
                 )
         )
         .withName("Drive/AlignToPose")
