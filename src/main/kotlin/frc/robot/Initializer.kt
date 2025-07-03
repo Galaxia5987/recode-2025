@@ -2,6 +2,16 @@ package frc.robot
 
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
+import frc.robot.subsystems.arm.elevator.Elevator
+import frc.robot.subsystems.arm.elevator.ElevatorIO
+import frc.robot.subsystems.arm.elevator.ElevatorIOReal
+import frc.robot.subsystems.arm.elevator.ElevatorIOSim
+import frc.robot.subsystems.arm.elevator.LoggedElevatorInputs
+import frc.robot.subsystems.climb.Climber
+import frc.robot.subsystems.climb.ClimberIO
+import frc.robot.subsystems.climb.ClimberIOReal
+import frc.robot.subsystems.climb.ClimberIOSim
+import frc.robot.subsystems.climb.LoggedClimberInputs
 import frc.robot.subsystems.drive.*
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIO
 import frc.robot.subsystems.drive.ModuleIOs.ModuleIOSim
@@ -9,6 +19,11 @@ import frc.robot.subsystems.drive.ModuleIOs.ModuleIOTalonFX
 import frc.robot.subsystems.drive.gyroIOs.GyroIO
 import frc.robot.subsystems.drive.gyroIOs.GyroIONavX
 import frc.robot.subsystems.drive.gyroIOs.GyroIOSim
+import frc.robot.subsystems.intake.extender.Extender
+import frc.robot.subsystems.intake.extender.ExtenderIO
+import frc.robot.subsystems.intake.extender.ExtenderIOReal
+import frc.robot.subsystems.intake.extender.ExtenderIOSim
+import frc.robot.subsystems.intake.extender.LoggedExtenderInputs
 import frc.robot.subsystems.intake.into.LoggedRollerInputs
 import frc.robot.subsystems.intake.into.Roller
 import frc.robot.subsystems.intake.into.RollerIO
@@ -94,6 +109,9 @@ val roller =
                 object : RollerIO {
                     override val inputs: LoggedRollerInputs =
                         LoggedRollerInputs()
+                }
+        }
+    )
 
 val climber =
     Climber(

@@ -3,8 +3,8 @@ package frc.robot.subsystems.intake.extender
 import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC
 import com.ctre.phoenix6.hardware.TalonFX
 import edu.wpi.first.units.measure.Distance
-import frc.robot.lib.toAngle
-import frc.robot.lib.toDistance
+import frc.robot.lib.extensions.toAngle
+import frc.robot.lib.extensions.toDistance
 
 class ExtenderIOReal() : ExtenderIO {
     override val inputs: LoggedExtenderInputs = LoggedExtenderInputs()
