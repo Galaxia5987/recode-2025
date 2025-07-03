@@ -18,7 +18,6 @@ import frc.robot.subsystems.intake.IsResetting
 import frc.robot.subsystems.intake.bindIntakeTriggers
 import frc.robot.subsystems.intake.idle
 import frc.robot.subsystems.intake.intake
-import frc.robot.subsystems.intake.intakeState
 import frc.robot.subsystems.intake.outtake
 import frc.robot.subsystems.intake.reset
 import frc.robot.subsystems.intake.startIntaking
@@ -88,7 +87,6 @@ object RobotContainer {
 
         // Switch to X pattern when X button is pressed
         driverController.square().onTrue(runOnce(drive::stopWithX, drive))
-        driverController.cross().onTrue(startIntaking())
         // Reset gyro / odometry
         val resetOdometry =
             if (CURRENT_MODE == Mode.SIM)
