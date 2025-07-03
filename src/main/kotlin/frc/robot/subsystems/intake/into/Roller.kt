@@ -8,17 +8,6 @@ import org.littletonrobotics.junction.mechanism.LoggedMechanism2d
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d
 
 class Roller(private val io: RollerIO) : SubsystemBase() {
-    private val mechanism = LoggedMechanism2d(MECHANISM_WIDTH, MECHANISM_HEIGHT)
-    private val root =
-        mechanism.getRoot("Roller", MECHANISM_ROOT_X, MECHANISM_ROOT_Y)
-    private val rollerLigament =
-        root.append(
-            LoggedMechanismLigament2d(
-                "RollerLigament",
-                MECHANISM_LIGAMENT_LENGTH,
-                MECHANISM_LIGAMENT_ANGLE
-            )
-        )
 
     private var appliedVoltage = Units.Volt.zero()
     fun setVoltage(voltage: Voltage) =
@@ -36,7 +25,5 @@ class Roller(private val io: RollerIO) : SubsystemBase() {
         io.updateInputs()
         Logger.processInputs("Roller", io.inputs)
         Logger.recordOutput("RollerAppliedVoltage", appliedVoltage)
-        Logger.recordOutput("Roller2dMechanism", mechanism)
-        rollerLigament.angle = io.inputs.angle.`in`(Units.Degree)
     }
 }
