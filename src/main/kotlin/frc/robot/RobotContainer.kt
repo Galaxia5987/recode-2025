@@ -4,11 +4,12 @@ import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.auto.NamedCommands
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
+import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands.runOnce
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
-import frc.robot.lib.enableAutoLogOutputFor
+import frc.robot.lib.extensions.enableAutoLogOutputFor
 import frc.robot.subsystems.drive.DriveCommands
 import org.ironmaple.simulation.SimulatedArena
 import org.littletonrobotics.junction.AutoLogOutput
@@ -64,6 +65,14 @@ object RobotContainer {
                     { Rotation2d() }
                 )
             )
+
+        driverController
+            .cross()
+            .onTrue(climber.setVoltage(Units.Volts.of(-12.0)))
+
+        driverController
+            .square()
+            .onTrue(climber.setVoltage(Units.Volts.of(12.0)))
 
         // Switch to X pattern when X button is pressed
         driverController.square().onTrue(runOnce(drive::stopWithX, drive))

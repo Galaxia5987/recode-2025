@@ -94,6 +94,38 @@ val roller =
                 object : RollerIO {
                     override val inputs: LoggedRollerInputs =
                         LoggedRollerInputs()
+
+val climber =
+    Climber(
+        when (CURRENT_MODE) {
+            Mode.REAL -> ClimberIOReal()
+            Mode.SIM -> ClimberIOSim()
+            Mode.REPLAY ->
+                object : ClimberIO {
+                    override var inputs = LoggedClimberInputs()
+                }
+        }
+    )
+
+val extender: Extender =
+    when (CURRENT_MODE) {
+        Mode.REAL -> Extender(ExtenderIOReal())
+        Mode.SIM -> Extender(ExtenderIOSim())
+        else ->
+            Extender(
+                object : ExtenderIO {
+                    override val inputs = LoggedExtenderInputs()
+                }
+            )
+    }
+val elevator: Elevator =
+    Elevator(
+        when (CURRENT_MODE) {
+            Mode.REAL -> ElevatorIOReal()
+            Mode.SIM -> ElevatorIOSim()
+            Mode.REPLAY ->
+                object : ElevatorIO {
+                    override val inputs = LoggedElevatorInputs()
                 }
         }
     )
