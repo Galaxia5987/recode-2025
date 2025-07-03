@@ -9,11 +9,9 @@ import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d
 
 class Roller(private val io: RollerIO) : SubsystemBase() {
 
-    private var appliedVoltage = Units.Volt.zero()
     fun setVoltage(voltage: Voltage) =
         runOnce {
                 io.setVoltage(voltage)
-                appliedVoltage = voltage
             }
             .withName("Roller/setVoltage")
 
@@ -24,6 +22,5 @@ class Roller(private val io: RollerIO) : SubsystemBase() {
     override fun periodic() {
         io.updateInputs()
         Logger.processInputs("Roller", io.inputs)
-        Logger.recordOutput("RollerAppliedVoltage", appliedVoltage)
     }
 }
