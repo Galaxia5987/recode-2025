@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands.runOnce
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
-import frc.robot.lib.enableAutoLogOutputFor
-import frc.robot.lib.getPose2d
+import frc.robot.lib.extensions.enableAutoLogOutputFor
 import frc.robot.subsystems.drive.DriveCommands
-import frc.robot.subsystems.drive.alignToPose
 import org.ironmaple.simulation.SimulatedArena
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser
@@ -87,8 +85,6 @@ object RobotContainer {
         driverController
             .options()
             .onTrue(runOnce(resetOdometry).ignoringDisable(true))
-
-        driverController.circle().whileTrue(alignToPose(getPose2d(2.0, 2.0)))
     }
 
     fun getAutonomousCommand(): Command = autoChooser.get()
