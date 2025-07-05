@@ -11,7 +11,7 @@ import edu.wpi.first.units.Units.MetersPerSecond
 import edu.wpi.first.units.Units.Radians
 import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.units.measure.LinearVelocity
-import frc.robot.lib.log
+import frc.robot.lib.extensions.log
 import frc.robot.subsystems.drive.controller
 import org.littletonrobotics.junction.networktables.LoggedNetworkNumber
 
