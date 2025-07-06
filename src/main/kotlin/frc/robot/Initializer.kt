@@ -19,6 +19,11 @@ import frc.robot.subsystems.drive.ModuleIOs.ModuleIOTalonFX
 import frc.robot.subsystems.drive.gyroIOs.GyroIO
 import frc.robot.subsystems.drive.gyroIOs.GyroIONavX
 import frc.robot.subsystems.drive.gyroIOs.GyroIOSim
+import frc.robot.subsystems.gripper.Gripper
+import frc.robot.subsystems.gripper.GripperIO
+import frc.robot.subsystems.gripper.GripperIOReal
+import frc.robot.subsystems.gripper.GripperIOSim
+import frc.robot.subsystems.gripper.LoggedGripperInputs
 import frc.robot.subsystems.intake.extender.Extender
 import frc.robot.subsystems.intake.extender.ExtenderIO
 import frc.robot.subsystems.intake.extender.ExtenderIOReal
@@ -155,12 +160,23 @@ val elevator: Elevator =
 
 val wrist: Wrist =
     Wrist(
-        when(CURRENT_MODE){
+        when (CURRENT_MODE) {
             Mode.REAL -> WristIOReal()
             Mode.SIM -> WristIOSim()
             else ->
-                object : WristIO{
+                object : WristIO {
                     override val inputs = LoggedWristInputs()
+                }
+        }
+    )
+ val gripper: Gripper =
+    Gripper(
+        when(CURRENT_MODE){
+            Mode.REAL -> GripperIOReal()
+            Mode.SIM -> GripperIOSim()
+            else ->
+                object : GripperIO {
+                    override val inputs = LoggedGripperInputs()
                 }
         }
     )
