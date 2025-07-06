@@ -101,12 +101,23 @@ fun idle(): Command {
     TODO("Not yet implemented")
 }
 
-fun feeding() = sequence(
-    Commands.parallel(Commands.either(
-        pathfindToPose(FeederLeft),
-        pathfindToPose(FeederRight)
-    ) {
-        (FeederRight.distanceFromPoint(drive.pose.translation)
-        > FeederLeft.distanceFromPoint(drive.pose.translation))
-    }, Commands.parallel(elevator.feeder(),wrist.feeder()))
-)
+fun idle(): Command =
+    elevator.min().alongWith(wrist.feeder())
+
+fun feeding() =
+    sequence(
+        Commands.parallel(
+            Commands.either(
+                pathfindToPose(FeederLeft),
+                pathfindToPose(FeederRight)
+            ) {
+                (FeederRight.distanceFromPoint(drive.pose.translation) >
+                        FeederLeft.distanceFromPoint(drive.pose.translation))
+            },
+            elevator.feeder().alongWith(
+                wrist.feeder()
+            ),
+            gripper.intakeBySensor(),
+            Commands.runOnce({ robotState = RobotStates.IdleHasCoral })
+        )
+    )
