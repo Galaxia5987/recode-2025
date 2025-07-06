@@ -1,16 +1,68 @@
 package frc.robot
 
+import com.pathplanner.lib.util.FlippingUtil
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
+import edu.wpi.first.math.geometry.Transform2d
+import edu.wpi.first.units.Units.Centimeters
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.Commands.sequence
+import edu.wpi.first.wpilibj2.command.ConditionalCommand
 import edu.wpi.first.wpilibj2.command.button.Trigger
+import frc.robot.lib.extensions.cm
 import frc.robot.lib.extensions.distanceFromPoint
+import frc.robot.lib.extensions.flip
+import frc.robot.lib.extensions.m
+import frc.robot.lib.getTranslation2d
 import frc.robot.lib.pathfindToPose
+import frc.robot.subsystems.drive.alignToPose
 
 private val FeederRight = Pose2d(1.5, 0.9, Rotation2d.fromDegrees(-125.0))
 private val FeederLeft = Pose2d(1.5, 7.1, Rotation2d.fromDegrees(125.0))
+val reefLocation: ReefLocation = ReefLocation.Reef1Left
+val REEF_RADIUS = 0.8317.m
+val nearReefTolerance = 0.4.m
+
+enum class ReefLocation(val pose2d: Pose2d) {
+    Reef4Left(
+        ReefFaceRight.plus(
+            Transform2d(
+                (-4.0).cm,
+                Centimeters.zero(),
+                Rotation2d.kZero
+            )
+        )
+    ),
+    Reef4Right(
+        ReefFaceRight.plus(
+            Transform2d(
+                (-4.0).cm,
+                Centimeters.zero(),
+                Rotation2d.kZero
+            )
+        )
+    ),
+    Reef5Left(Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(60.0))),
+    Reef5Right(Reef4Right.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(60.0))),
+    Reef6Left(Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(120.0))),
+    Reef6Right(
+        Reef4Right.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(120.0))
+    ),
+    Reef1Left(Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(180.0))),
+    Reef1Right(Reef4Right.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(180.0))),
+    Reef2Left(Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(240.0))),
+    Reef2Right(Reef4Right.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(240.0))),
+    Reef3Left(Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(300.0))),
+    Reef3Right(Reef4Right.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(300.0)))
+}
+
+
+val ReefFaceLeft: Pose2d = Pose2d(14.32, 3.86, Rotation2d.k180deg).flip()
+val ReefFaceRight: Pose2d = Pose2d(14.32, 4.20, Rotation2d.k180deg).flip()
+
+
+val ReefCenter = getTranslation2d(4.48945, FlippingUtil.fieldSizeY / 2)
 
 enum class RobotStates {
     Idle,
@@ -31,14 +83,23 @@ private fun setRobotState(state: RobotStates) =
     Commands.runOnce({ robotState = state })
 
 fun startIdle() = setRobotState(RobotStates.Idle)
+
 fun startFeeding() = setRobotState(RobotStates.Feeding)
+
 fun startPlaceL1() = setRobotState(RobotStates.PlaceL1)
+
 fun startPlaceL2() = setRobotState(RobotStates.PlaceL2)
+
 fun startPlaceL3() = setRobotState(RobotStates.PlaceL3)
+
 fun startPlaceL4() = setRobotState(RobotStates.PlaceL4)
+
 fun startNet() = setRobotState(RobotStates.Net)
+
 fun startAlgaePickUpReef() = setRobotState(RobotStates.AlgaePickUpReef)
+
 fun startIdleHasCoral() = setRobotState(RobotStates.IdleHasCoral)
+
 fun startIdleHasAlgae() = setRobotState(RobotStates.IdleHasAlgae)
 
 // Triggers for each state
@@ -54,9 +115,9 @@ val IsIdleHasCoral = Trigger { robotState == RobotStates.IdleHasCoral }
 val IsIdleHasAlgae = Trigger { robotState == RobotStates.IdleHasAlgae }
 
 fun bindRobotStateTriggers() {
-    IsIdle.onTrue(idle())                        // Define this function
-    IsFeeding.onTrue(feeding())                     // Define this function
-    IsPlaceL1.onTrue(placeL1())                  // Define this function
+    IsIdle.onTrue(idle()) // Define this function
+    IsFeeding.onTrue(feeding()) // Define this function
+    IsPlaceL1.onTrue(placeL1()) // Define this function
     IsPlaceL2.onTrue(placeL2())
     IsPlaceL3.onTrue(placeL3())
     IsPlaceL4.onTrue(placeL4())
@@ -80,26 +141,45 @@ fun algaePickUpReef(): Command {
 fun net(): Command {
     TODO("Not yet implemented")
 }
+val isNearTargetPose
+    get() = (drive.pose.distanceFromPoint(reefLocation.pose2d.translation) < nearReefTolerance)
+fun placeL4(): Command = sequence(
+    pathfindToPose(reefLocation.pose2d),
+    Commands.parallel(
+        alignToPose(reefLocation.pose2d),
+        elevator.l4().alongWith(wrist.l4()).onlyIf { isNearTargetPose },
+    ),
+    gripper.outtake(),
+    Commands.runOnce({ robotState = RobotStates.Idle })
+)
 
-fun placeL4(): Command {
-    TODO("Not yet implemented")
-}
+fun placeL3(): Command = sequence(
+    pathfindToPose(reefLocation.pose2d),
+    Commands.parallel(
+        alignToPose(reefLocation.pose2d),elevator.l3().alongWith(wrist.l3()).onlyIf { isNearTargetPose }
+    ),
+    gripper.outtake(),
+    Commands.runOnce({ robotState = RobotStates.Idle })
+)
 
-fun placeL3(): Command {
-    TODO("Not yet implemented")
-}
+fun placeL2(): Command = sequence(
+    pathfindToPose(reefLocation.pose2d),
+    Commands.parallel(
+        alignToPose(reefLocation.pose2d),elevator.l2().alongWith(wrist.l2()).onlyIf { isNearTargetPose }
+    ),
+    gripper.outtake(),
+    Commands.runOnce({ robotState = RobotStates.Idle })
+)
 
-fun placeL2(): Command {
-    TODO("Not yet implemented")
-}
 
-fun placeL1(): Command {
-    TODO("Not yet implemented")
-}
-
-fun idle(): Command {
-    TODO("Not yet implemented")
-}
+fun placeL1(): Command = sequence(
+    pathfindToPose(reefLocation.pose2d),
+    Commands.parallel(
+        alignToPose(reefLocation.pose2d),elevator.l1().alongWith(wrist.l1()).onlyIf { isNearTargetPose }
+    ),
+    gripper.outtake(),
+    Commands.runOnce({ robotState = RobotStates.Idle })
+)
 
 fun idle(): Command =
     elevator.min().alongWith(wrist.feeder())
