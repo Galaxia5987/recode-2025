@@ -70,9 +70,8 @@ fun idleHasAlgae(): Command {
     TODO("Not yet implemented")
 }
 
-fun idleHasCoral(): Command {
-    TODO("Not yet implemented")
-}
+fun idleHasCoral(): Command =
+    elevator.min().alongWith(wrist.skyward())
 
 fun algaePickUpReef(): Command {
     TODO("Not yet implemented")
