@@ -83,6 +83,9 @@ public class TunerConstants {
     // Theoretical free speed (m/s) at 12 V applied output;
     // This needs to be tuned to your individual robot
     public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(4.69);
+    public static final AngularVelocity kPathFindOmegaVelocity = DegreesPerSecond.of(350);
+    public static final  LinearAcceleration kPathFindAcceleration = MetersPerSecondPerSecond.of(3.5);
+    public static final  AngularAcceleration  kPathFindAngularAcceleration = DegreesPerSecondPerSecond.of(485);
 
     // Every 1 rotation of the azimuth results in kCoupleRatio drive motor turns;
     // This may need to be tuned to your individual robot
