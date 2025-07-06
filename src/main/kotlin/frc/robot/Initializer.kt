@@ -33,6 +33,11 @@ import frc.robot.subsystems.vision.Vision
 import frc.robot.subsystems.vision.VisionConstants
 import frc.robot.subsystems.vision.VisionIOPhotonVision
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim
+import frc.robot.subsystems.wrist.LoggedWristInputs
+import frc.robot.subsystems.wrist.Wrist
+import frc.robot.subsystems.wrist.WristIO
+import frc.robot.subsystems.wrist.WristIOReal
+import frc.robot.subsystems.wrist.WristIOSim
 import org.ironmaple.simulation.SimulatedArena
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation
 
@@ -144,6 +149,18 @@ val elevator: Elevator =
             Mode.REPLAY ->
                 object : ElevatorIO {
                     override val inputs = LoggedElevatorInputs()
+                }
+        }
+    )
+
+val wrist: Wrist =
+    Wrist(
+        when(CURRENT_MODE){
+            Mode.REAL -> WristIOReal()
+            Mode.SIM -> WristIOSim()
+            else ->
+                object : WristIO{
+                    override val inputs = LoggedWristInputs()
                 }
         }
     )
