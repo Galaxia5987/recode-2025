@@ -71,6 +71,7 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
     fun l2() = setHeight(Heights.L2.height).withName("Elevator/L2")
     fun l3() = setHeight(Heights.L3.height).withName("Elevator/L3")
     fun l4() = setHeight(Heights.L4.height).withName("Elevator/L4")
+    fun feeder() = setHeight(Heights.FEEDER.height).withName("Elevator/FEEDER")
 
     override fun periodic() {
         io.updateInputs()
