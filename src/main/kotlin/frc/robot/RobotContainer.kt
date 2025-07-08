@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
 import frc.robot.lib.extensions.enableAutoLogOutputFor
 import frc.robot.subsystems.drive.DriveCommands
+import frc.robot.subsystems.intake.bindIntakeTriggers
 import org.ironmaple.simulation.SimulatedArena
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser
@@ -29,6 +30,7 @@ object RobotContainer {
                 "Auto Choices",
                 AutoBuilder.buildAutoChooser()
             )
+        bindIntakeTriggers()
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -76,7 +78,6 @@ object RobotContainer {
 
         // Switch to X pattern when X button is pressed
         driverController.square().onTrue(runOnce(drive::stopWithX, drive))
-
         // Reset gyro / odometry
         val resetOdometry =
             if (CURRENT_MODE == Mode.SIM)
@@ -128,6 +129,10 @@ object RobotContainer {
             "Drive SysId (Dynamic Reverse)",
             drive.sysIdDynamic(SysIdRoutine.Direction.kReverse)
         )
+    }
+
+    private fun bindTriggers() {
+        bindIntakeTriggers()
     }
 
     fun resetSimulationField() {
