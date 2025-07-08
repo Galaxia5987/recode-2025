@@ -4,7 +4,6 @@ import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.auto.NamedCommands
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
-import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands.runOnce
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller
@@ -30,7 +29,7 @@ object RobotContainer {
                 "Auto Choices",
                 AutoBuilder.buildAutoChooser()
             )
-        bindIntakeTriggers()
+        bindTriggers()
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -67,15 +66,9 @@ object RobotContainer {
                     { Rotation2d() }
                 )
             )
-
         driverController
             .cross()
-            .onTrue(climber.setVoltage(Units.Volts.of(-12.0)))
-
-        driverController
-            .square()
-            .onTrue(climber.setVoltage(Units.Volts.of(12.0)))
-
+            .onTrue(startPlaceL1().alongWith(setReef1Left()))
         // Switch to X pattern when X button is pressed
         driverController.square().onTrue(runOnce(drive::stopWithX, drive))
         // Reset gyro / odometry
@@ -133,6 +126,7 @@ object RobotContainer {
 
     private fun bindTriggers() {
         bindIntakeTriggers()
+        bindRobotStateTriggers()
     }
 
     fun resetSimulationField() {

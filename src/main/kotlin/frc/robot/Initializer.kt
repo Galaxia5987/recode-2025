@@ -169,9 +169,9 @@ val wrist: Wrist =
                 }
         }
     )
- val gripper: Gripper =
+val gripper: Gripper =
     Gripper(
-        when(CURRENT_MODE){
+        when (CURRENT_MODE) {
             Mode.REAL -> GripperIOReal()
             Mode.SIM -> GripperIOSim()
             else ->

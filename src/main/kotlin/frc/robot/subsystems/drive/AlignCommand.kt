@@ -90,7 +90,8 @@ fun alignToPose(
                     )
                 })
                 .until(
-                    Trigger { controller.atReference() }.debounce(atGoalDebounce.`in`(Seconds))
+                    Trigger { controller.atReference() }
+                        .debounce(atGoalDebounce.`in`(Seconds))
                 )
         )
         .withName("Drive/AlignToPose")
