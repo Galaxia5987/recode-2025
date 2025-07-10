@@ -13,12 +13,6 @@ import frc.robot.subsystems.climb.ClimberIOReal
 import frc.robot.subsystems.climb.ClimberIOSim
 import frc.robot.subsystems.climb.LoggedClimberInputs
 import frc.robot.subsystems.drive.*
-import frc.robot.subsystems.drive.ModuleIOs.ModuleIO
-import frc.robot.subsystems.drive.ModuleIOs.ModuleIOSim
-import frc.robot.subsystems.drive.ModuleIOs.ModuleIOTalonFX
-import frc.robot.subsystems.drive.gyroIOs.GyroIO
-import frc.robot.subsystems.drive.gyroIOs.GyroIONavX
-import frc.robot.subsystems.drive.gyroIOs.GyroIOSim
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.gripper.GripperIO
 import frc.robot.subsystems.gripper.GripperIOReal
@@ -43,11 +37,12 @@ import frc.robot.subsystems.wrist.Wrist
 import frc.robot.subsystems.wrist.WristIO
 import frc.robot.subsystems.wrist.WristIOReal
 import frc.robot.subsystems.wrist.WristIOSim
+import java.util.*
 import org.ironmaple.simulation.SimulatedArena
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation
 
 val driveSimulation: SwerveDriveSimulation? =
-    if (CURRENT_MODE != Mode.REPLAY)
+    if (CURRENT_MODE == Mode.SIM)
         SwerveDriveSimulation(
                 Drive.mapleSimConfig,
                 Pose2d(3.0, 3.0, Rotation2d())
@@ -67,7 +62,13 @@ private val driveModuleIOs =
         .mapIndexed { index, module ->
             when (CURRENT_MODE) {
                 Mode.REAL -> ModuleIOTalonFX(module)
-                Mode.SIM -> ModuleIOSim(driveSimulation!!.modules[index])
+                Mode.SIM ->
+                    ModuleIOMapleSim(
+                        driveSimulation?.modules?.get(index)
+                            ?: throw java.lang.Exception(
+                                "Sim Swerve Module is null"
+                            )
+                    )
                 Mode.REPLAY -> object : ModuleIO {}
             }
         }
@@ -75,7 +76,7 @@ private val driveModuleIOs =
 
 private val gyroIO =
     when (CURRENT_MODE) {
-        Mode.REAL -> GyroIONavX()
+        Mode.REAL -> GyroIOPigeon2()
         Mode.SIM ->
             GyroIOSim(
                 driveSimulation?.gyroSimulation
@@ -84,12 +85,7 @@ private val gyroIO =
         else -> object : GyroIO {}
     }
 
-val drive =
-    Drive(
-        gyroIO,
-        driveModuleIOs,
-        driveSimulation?.let { it::setSimulationWorldPose } ?: { _: Pose2d -> }
-    )
+val drive = Drive(gyroIO, driveModuleIOs, Optional.ofNullable(driveSimulation))
 
 private val visionIOs =
     when (CURRENT_MODE) {
@@ -108,7 +104,7 @@ private val visionIOs =
         Mode.REPLAY -> emptyList()
     }.toTypedArray()
 
-val vision = Vision(drive, *visionIOs)
+val vision = Vision(drive::addVisionMeasurement, *visionIOs)
 
 val roller =
     Roller(

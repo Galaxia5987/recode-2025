@@ -38,9 +38,9 @@ const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
 val GAINS = Gains(0.5)
 
-const val MAIN_MOTOR_ID = 1
-const val AUX_MOTOR_ID = 2
-const val LIMIT_SWITCH_ID = 3
+const val MAIN_MOTOR_ID = 13
+const val AUX_MOTOR_ID = 14
+const val LIMIT_SWITCH_ID = 11
 
 val MOTOR_CONFIG: TalonFXConfiguration =
     TalonFXConfiguration().apply {

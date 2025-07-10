@@ -174,6 +174,14 @@ fun HolonomicDriveController.log() {
     xController.log("XController")
     yController.log("YController")
     thetaController.log("ThetaController")
+    recordOutput(
+        "Alignment/Controller/SetpointPose",
+        Pose2d(
+            xController.setpoint,
+            yController.setpoint,
+            thetaController.goal.position.rot.toRotation2d()
+        )
+    )
     recordOutput("Alignment/Controllers/AtGoal", atReference())
 }
 

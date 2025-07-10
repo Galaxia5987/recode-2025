@@ -15,6 +15,7 @@ import frc.robot.Mode.REAL
 import frc.robot.Mode.REPLAY
 import frc.robot.Mode.SIM
 import frc.robot.lib.extensions.enableAutoLogOutputFor
+import frc.robot.subsystems.drive.TunerConstants
 import org.ironmaple.simulation.SimulatedArena
 import org.littletonrobotics.junction.LogFileUtil
 import org.littletonrobotics.junction.LoggedRobot
@@ -64,6 +65,8 @@ object Robot : LoggedRobot() {
                 else -> "Unknown"
             }
         )
+
+        TunerConstants.init()
 
         when (CURRENT_MODE) {
             REAL -> {
@@ -129,6 +132,7 @@ object Robot : LoggedRobot() {
      * LiveWindow and SmartDashboard integrated updating.
      */
     override fun robotPeriodic() {
+        log()
         CommandScheduler.getInstance().run()
     }
 

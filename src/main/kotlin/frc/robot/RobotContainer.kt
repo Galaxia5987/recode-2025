@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
 import frc.robot.lib.extensions.enableAutoLogOutputFor
 import frc.robot.subsystems.drive.DriveCommands
+import frc.robot.subsystems.drive.alignToPose
 import frc.robot.subsystems.intake.bindIntakeTriggers
 import org.ironmaple.simulation.SimulatedArena
 import org.littletonrobotics.junction.AutoLogOutput
@@ -48,6 +49,7 @@ object RobotContainer {
     private fun configureDefaultCommands() {
         drive.defaultCommand =
             DriveCommands.joystickDrive(
+                drive,
                 { -driverController.leftY },
                 { -driverController.leftX },
                 { -driverController.rightX * 0.8 }
@@ -69,6 +71,7 @@ object RobotContainer {
         driverController
             .cross()
             .onTrue(startPlaceL1().alongWith(setReef1Left()))
+        driverController.square().onTrue(alignToPose(reefLocation.pose2d))
         // Switch to X pattern when X button is pressed
         driverController.square().onTrue(runOnce(drive::stopWithX, drive))
         // Reset gyro / odometry
@@ -97,15 +100,6 @@ object RobotContainer {
 
         NamedCommands.registerCommands(namedCommands)
 
-        // Set up SysId routines
-        autoChooser.addOption(
-            "Drive Wheel Radius Characterization",
-            DriveCommands.wheelRadiusCharacterization()
-        )
-        autoChooser.addOption(
-            "Drive Simple FF Characterization",
-            DriveCommands.feedforwardCharacterization()
-        )
         autoChooser.addOption(
             "Drive SysId (Quasistatic Forward)",
             drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward)

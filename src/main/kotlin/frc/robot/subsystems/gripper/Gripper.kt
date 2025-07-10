@@ -59,6 +59,12 @@ class Gripper(private val io: GripperIO) : SubsystemBase() {
             .withName("Gripper/intakeBySensor")
     fun outtake(): Command =
         setVoltage(FAST_OUTTAKE_VOLTAGE).withName("Gripper/outTake")
+    fun outtakeBySensor(): Command =
+        Commands.sequence(
+            outtake(),
+            WaitUntilCommand(hasCoral.negate()),
+            stop()
+        )
     fun removeAlgae(): Command =
         setVoltage(REMOVE_ALGAE_VOLTAGE).withName("Gripper/RemoveAlgae")
     fun outtakeAlgae(): Command =

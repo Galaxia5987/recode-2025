@@ -3,8 +3,10 @@ package frc.robot.subsystems.arm.elevator
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 import edu.wpi.first.units.measure.LinearVelocity
+import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.ConditionalCommand
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand
 import edu.wpi.first.wpilibj2.command.button.Trigger
 import kotlin.math.pow
 import org.littletonrobotics.junction.AutoLogOutput
@@ -61,11 +63,14 @@ class Elevator(private val io: ElevatorIO) : SubsystemBase() {
             .withName("Elevator/setVelocity")
 
     fun setHeight(height: Distance) =
-        runOnce {
-                io.setHeight(height)
-                setpoint = height
-            }
-            .withName("Elevator/setHeight")
+        Commands.sequence(
+            runOnce {
+                    io.setHeight(height)
+                    setpoint = height
+                }
+                .withName("Elevator/setHeight"),
+            WaitUntilCommand(atSetpoint)
+        )
 
     fun l1() = setHeight(Heights.L1.height).withName("Elevator/L1")
     fun l2() = setHeight(Heights.L2.height).withName("Elevator/L2")

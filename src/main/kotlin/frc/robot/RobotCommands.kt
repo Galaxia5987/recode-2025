@@ -16,16 +16,21 @@ import frc.robot.lib.extensions.m
 import frc.robot.lib.getTranslation2d
 import frc.robot.lib.pathfindToPose
 import frc.robot.subsystems.drive.alignToPose
+import org.littletonrobotics.junction.Logger
 
 private val FeederRight = Pose2d(1.5, 0.9, Rotation2d.fromDegrees(-125.0))
 private val FeederLeft = Pose2d(1.5, 7.1, Rotation2d.fromDegrees(125.0))
 val reefLocation: ReefLocation = ReefLocation.Reef1Left
 val REEF_RADIUS = 0.8317.m
 val nearReefTolerance = 0.4.m
+val ReefFaceLeft
+    get() = Pose2d(14.32, 3.86, Rotation2d.k180deg).flip()
+val ReefFaceRight
+    get() = Pose2d(14.32, 4.20, Rotation2d.k180deg).flip()
 
 enum class ReefLocation(val pose2d: Pose2d) {
     Reef4Left(
-        ReefFaceRight.plus(
+        ReefFaceLeft.plus(
             Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
         )
     ),
@@ -78,10 +83,8 @@ enum class ReefLocation(val pose2d: Pose2d) {
     )
 }
 
-val ReefFaceLeft: Pose2d = Pose2d(14.32, 3.86, Rotation2d.k180deg).flip()
-val ReefFaceRight: Pose2d = Pose2d(14.32, 4.20, Rotation2d.k180deg).flip()
-
-val ReefCenter = getTranslation2d(4.48945, FlippingUtil.fieldSizeY / 2)
+val ReefCenter
+    get() = getTranslation2d(4.48945, FlippingUtil.fieldSizeY / 2)
 
 enum class RobotStates {
     Idle,
@@ -151,10 +154,14 @@ fun bindRobotStateTriggers() {
     IsPlaceL2.onTrue(placeL2())
     IsPlaceL3.onTrue(placeL3())
     IsPlaceL4.onTrue(placeL4())
-    IsNet.onTrue(net())
-    IsAlgaePickUpReef.onTrue(algaePickUpReef())
+    //    IsNet.onTrue(net())
+    //    IsAlgaePickUpReef.onTrue(algaePickUpReef())
     IsIdleHasCoral.onTrue(idleHasCoral())
-    IsIdleHasAlgae.onTrue(idleHasAlgae())
+    //    IsIdleHasAlgae.onTrue(idleHasAlgae())
+}
+
+fun log() {
+    Logger.recordOutput("robot state", robotState)
 }
 
 fun idleHasAlgae(): Command {
@@ -183,7 +190,7 @@ fun placeL4(): Command =
             alignToPose(reefLocation.pose2d),
             elevator.l4().alongWith(wrist.l4()).onlyIf { isNearTargetPose },
         ),
-        gripper.outtake(),
+        gripper.outtakeBySensor(),
         Commands.runOnce({ robotState = RobotStates.Idle })
     )
 
@@ -194,7 +201,7 @@ fun placeL3(): Command =
             alignToPose(reefLocation.pose2d),
             elevator.l3().alongWith(wrist.l3()).onlyIf { isNearTargetPose }
         ),
-        gripper.outtake(),
+        gripper.outtakeBySensor(),
         Commands.runOnce({ robotState = RobotStates.Idle })
     )
 
@@ -205,20 +212,21 @@ fun placeL2(): Command =
             alignToPose(reefLocation.pose2d),
             elevator.l2().alongWith(wrist.l2()).onlyIf { isNearTargetPose }
         ),
-        gripper.outtake(),
+        gripper.outtakeBySensor(),
         Commands.runOnce({ robotState = RobotStates.Idle })
     )
 
 fun placeL1(): Command =
     sequence(
-        pathfindToPose(reefLocation.pose2d),
-        Commands.parallel(
-            alignToPose(reefLocation.pose2d),
-            elevator.l1().alongWith(wrist.l1()).onlyIf { isNearTargetPose }
-        ),
-        gripper.outtake(),
-        Commands.runOnce({ robotState = RobotStates.Idle })
-    )
+            //            pathfindToPose(reefLocation.pose2d),
+            Commands.parallel(
+                alignToPose(reefLocation.pose2d),
+                elevator.l1().alongWith(wrist.l1()).onlyIf { isNearTargetPose }
+            ),
+            gripper.outtakeBySensor(),
+            Commands.runOnce({ robotState = RobotStates.Idle })
+        )
+        .handleInterrupt { robotState = RobotStates.IdleHasCoral }
 
 fun idle(): Command = elevator.min().alongWith(wrist.feeder())
 
