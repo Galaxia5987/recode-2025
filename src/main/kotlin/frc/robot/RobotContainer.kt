@@ -70,8 +70,10 @@ object RobotContainer {
             )
         driverController
             .cross()
-            .onTrue(startPlaceL1().alongWith(setReef1Left()))
-        driverController.square().onTrue(alignToPose(reefLocation.pose2d))
+            .onTrue(startPlaceL1().alongWith(setReef4Left()))
+
+
+        driverController.triangle().onTrue(drive.defer { alignToPose(ReefLocation.Reef1Left.pose2d) })
         // Switch to X pattern when X button is pressed
         driverController.square().onTrue(runOnce(drive::stopWithX, drive))
         // Reset gyro / odometry

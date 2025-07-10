@@ -89,7 +89,6 @@ object Robot : LoggedRobot() {
         }
         Logger.start()
         RobotContainer // Initialize robot container.
-
         enableAutoLogOutputFor(this)
 
         DriverStation.silenceJoystickConnectionWarning(true)

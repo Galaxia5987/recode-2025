@@ -20,39 +20,39 @@ import org.littletonrobotics.junction.Logger
 
 private val FeederRight = Pose2d(1.5, 0.9, Rotation2d.fromDegrees(-125.0))
 private val FeederLeft = Pose2d(1.5, 7.1, Rotation2d.fromDegrees(125.0))
-val reefLocation: ReefLocation = ReefLocation.Reef1Right
 val REEF_RADIUS = 0.8317.m
 val nearReefTolerance = 0.4.m
 val ReefFaceLeft
     get() = Pose2d(14.32, 3.86, Rotation2d.k180deg).flip()
 val ReefFaceRight
     get() = Pose2d(14.32, 4.20, Rotation2d.k180deg).flip()
-
 val ReefLeftLocation
     get() =
         if (IS_RED) {
             ReefFaceLeft.plus(
-                Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
-            )
-        } else {
-            ReefFaceLeft.plus(
                     Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
                 )
                 .flip()
+        } else {
+            ReefFaceLeft.plus(
+                Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
+            )
         }
 
 val ReefRightLocation
     get() =
         if (IS_RED) {
             ReefFaceRight.plus(
-                Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
-            )
-        } else {
-            ReefFaceRight.plus(
                     Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
                 )
                 .flip()
+        } else {
+            ReefFaceRight.plus(
+                Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
+            )
         }
+
+val reefLocation: ReefLocation = ReefLocation.Reef1Right
 
 enum class ReefLocation(val pose2d: Pose2d) {
     Reef4Left(ReefLeftLocation),
@@ -102,7 +102,12 @@ enum class ReefLocation(val pose2d: Pose2d) {
 }
 
 val ReefCenter
-    get() = getTranslation2d(4.48945, FlippingUtil.fieldSizeY / 2)
+    get() =
+        if (IS_RED) {
+            getTranslation2d(4.48945, FlippingUtil.fieldSizeY / 2).flip()
+        } else {
+            getTranslation2d(4.48945, FlippingUtil.fieldSizeY / 2)
+        }
 
 enum class RobotStates {
     Idle,
@@ -180,6 +185,12 @@ fun bindRobotStateTriggers() {
 
 fun log() {
     Logger.recordOutput("robot state", robotState)
+    Logger.recordOutput("is red", IS_RED)
+    Logger.recordOutput("reef Location",reefLocation.pose2d)
+    Logger.recordOutput("reef 1 left", ReefLocation.Reef1Left.pose2d)
+    Logger.recordOutput("reef Center",ReefCenter)
+    Logger.recordOutput("reef right",ReefRightLocation)
+    Logger.recordOutput("reef Left",ReefLeftLocation)
 }
 
 fun idleHasAlgae(): Command {
@@ -238,7 +249,7 @@ fun placeL1(): Command =
     sequence(
             //            pathfindToPose(reefLocation.pose2d),
             Commands.parallel(
-                alignToPose(reefLocation.pose2d),
+                alignToPose(ReefLocation.Reef1Left.pose2d),
                 elevator.l1().alongWith(wrist.l1()).onlyIf { isNearTargetPose }
             ),
             gripper.outtakeBySensor(),
