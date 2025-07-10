@@ -20,7 +20,7 @@ import org.littletonrobotics.junction.Logger
 
 private val FeederRight = Pose2d(1.5, 0.9, Rotation2d.fromDegrees(-125.0))
 private val FeederLeft = Pose2d(1.5, 7.1, Rotation2d.fromDegrees(125.0))
-val reefLocation: ReefLocation = ReefLocation.Reef1Left
+val reefLocation: ReefLocation = ReefLocation.Reef1Right
 val REEF_RADIUS = 0.8317.m
 val nearReefTolerance = 0.4.m
 val ReefFaceLeft
@@ -28,55 +28,73 @@ val ReefFaceLeft
 val ReefFaceRight
     get() = Pose2d(14.32, 4.20, Rotation2d.k180deg).flip()
 
+val ReefLeftLocation
+    get() =
+        if (IS_RED) {
+            ReefFaceLeft.plus(
+                Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
+            )
+        } else {
+            ReefFaceLeft.plus(
+                    Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
+                )
+                .flip()
+        }
+
+val ReefRightLocation
+    get() =
+        if (IS_RED) {
+            ReefFaceRight.plus(
+                Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
+            )
+        } else {
+            ReefFaceRight.plus(
+                    Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
+                )
+                .flip()
+        }
+
 enum class ReefLocation(val pose2d: Pose2d) {
-    Reef4Left(
-        ReefFaceLeft.plus(
-            Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
-        )
-    ),
-    Reef4Right(
-        ReefFaceRight.plus(
-            Transform2d((-4.0).cm, Centimeters.zero(), Rotation2d.kZero)
-        )
-    ),
+    Reef4Left(ReefLeftLocation),
+    Reef4Right(ReefRightLocation),
     Reef5Left(
-        Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(60.0))
+        ReefLeftLocation.rotateAround(ReefCenter, Rotation2d.fromDegrees(60.0))
     ),
     Reef5Right(
-        Reef4Right.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(60.0))
+        ReefRightLocation.rotateAround(ReefCenter, Rotation2d.fromDegrees(60.0))
     ),
     Reef6Left(
-        Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(120.0))
+        ReefLeftLocation.rotateAround(ReefCenter, Rotation2d.fromDegrees(120.0))
     ),
     Reef6Right(
-        Reef4Right.pose2d.rotateAround(
+        ReefRightLocation.rotateAround(
             ReefCenter,
             Rotation2d.fromDegrees(120.0)
         )
     ),
     Reef1Left(
-        Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(180.0))
+        ReefLeftLocation.rotateAround(ReefCenter, Rotation2d.fromDegrees(180.0))
     ),
     Reef1Right(
-        Reef4Right.pose2d.rotateAround(
+        ReefRightLocation.rotateAround(
             ReefCenter,
             Rotation2d.fromDegrees(180.0)
         )
     ),
     Reef2Left(
-        Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(240.0))
+        ReefLeftLocation.rotateAround(ReefCenter, Rotation2d.fromDegrees(240.0))
     ),
     Reef2Right(
-        Reef4Right.pose2d.rotateAround(
+        ReefRightLocation.rotateAround(
             ReefCenter,
             Rotation2d.fromDegrees(240.0)
         )
     ),
     Reef3Left(
-        Reef4Left.pose2d.rotateAround(ReefCenter, Rotation2d.fromDegrees(300.0))
+        ReefLeftLocation.rotateAround(ReefCenter, Rotation2d.fromDegrees(300.0))
     ),
     Reef3Right(
-        Reef4Right.pose2d.rotateAround(
+        ReefRightLocation.rotateAround(
             ReefCenter,
             Rotation2d.fromDegrees(300.0)
         )
