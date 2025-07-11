@@ -350,6 +350,12 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putData(field);
     }
 
+    public void fieldOrientedRunVelocity(ChassisSpeeds fieldSpeeds) {
+        limitlessRunVelocity(
+                ChassisSpeeds.fromFieldRelativeSpeeds(
+                        fieldSpeeds, getRotation()));
+    }
+
     public void limitlessRunVelocity(ChassisSpeeds speeds) {
         // Calculate module setpoints
         ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
