@@ -76,6 +76,7 @@ object RobotContainer {
         driverController.triangle().onTrue(drive.defer { alignToPose(ReefLocation.Reef1Left.pose2d) })
         // Switch to X pattern when X button is pressed
         driverController.square().onTrue(runOnce(drive::stopWithX, drive))
+        driverController.options().onTrue(runOnce({drive.resetGyro(Rotation2d())}))
         // Reset gyro / odometry
         val resetOdometry =
             if (CURRENT_MODE == Mode.SIM)
