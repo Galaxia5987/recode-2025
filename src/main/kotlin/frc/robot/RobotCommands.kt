@@ -52,7 +52,7 @@ val ReefRightLocation
             )
         }
 
-val reefLocation: ReefLocation = ReefLocation.Reef1Right
+var reefLocation: ReefLocation = ReefLocation.Reef1Right
 
 enum class ReefLocation(val pose2d: Pose2d) {
     Reef4Left(ReefLeftLocation),
@@ -187,7 +187,9 @@ fun log() {
     Logger.recordOutput("robot state", robotState)
     Logger.recordOutput("is red", IS_RED)
     Logger.recordOutput("reef Location",reefLocation.pose2d)
-    Logger.recordOutput("reef 1 left", ReefLocation.Reef1Left.pose2d)
+    ReefLocation.entries.forEach {
+    Logger.recordOutput("ReefLocations/${it.name}",it.pose2d)
+    }
     Logger.recordOutput("reef Center",ReefCenter)
     Logger.recordOutput("reef right",ReefRightLocation)
     Logger.recordOutput("reef Left",ReefLeftLocation)
@@ -214,42 +216,42 @@ val isNearTargetPose
 
 fun placeL4(): Command =
     sequence(
-        pathfindToPose(reefLocation.pose2d),
+//        pathfindToPose(reefLocation.pose2d),
         Commands.parallel(
-            alignToPose(reefLocation.pose2d),
+            drive.defer {alignToPose(reefLocation.pose2d)},
             elevator.l4().alongWith(wrist.l4()).onlyIf { isNearTargetPose },
         ),
         gripper.outtakeBySensor(),
         Commands.runOnce({ robotState = RobotStates.Idle })
-    )
+    ).handleInterrupt { robotState = RobotStates.IdleHasCoral }
 
 fun placeL3(): Command =
     sequence(
-        pathfindToPose(reefLocation.pose2d),
+//        pathfindToPose(reefLocation.pose2d),
         Commands.parallel(
-            alignToPose(reefLocation.pose2d),
+            drive.defer {alignToPose(reefLocation.pose2d)},
             elevator.l3().alongWith(wrist.l3()).onlyIf { isNearTargetPose }
         ),
         gripper.outtakeBySensor(),
         Commands.runOnce({ robotState = RobotStates.Idle })
-    )
+    ).handleInterrupt { robotState = RobotStates.IdleHasCoral }
 
 fun placeL2(): Command =
     sequence(
-        pathfindToPose(reefLocation.pose2d),
+//        pathfindToPose(reefLocation.pose2d),
         Commands.parallel(
-            alignToPose(reefLocation.pose2d),
+            drive.defer {alignToPose(reefLocation.pose2d)},
             elevator.l2().alongWith(wrist.l2()).onlyIf { isNearTargetPose }
         ),
         gripper.outtakeBySensor(),
         Commands.runOnce({ robotState = RobotStates.Idle })
-    )
+    ).handleInterrupt { robotState = RobotStates.IdleHasCoral }
 
 fun placeL1(): Command =
     sequence(
             //            pathfindToPose(reefLocation.pose2d),
             Commands.parallel(
-                alignToPose(ReefLocation.Reef1Left.pose2d),
+                drive.defer {alignToPose(reefLocation.pose2d)},
                 elevator.l1().alongWith(wrist.l1()).onlyIf { isNearTargetPose }
             ),
             gripper.outtakeBySensor(),
