@@ -3,6 +3,7 @@ package frc.robot.subsystems.arm.elevator
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs
 import com.ctre.phoenix6.configs.FeedbackConfigs
 import com.ctre.phoenix6.configs.HardwareLimitSwitchConfigs
+import com.ctre.phoenix6.configs.MotionMagicConfigs
 import com.ctre.phoenix6.configs.MotorOutputConfigs
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
@@ -36,7 +37,7 @@ val MOMENT_OF_INERTIA = Units.KilogramSquareMeters.of(0.003)
 
 const val CONVERSION_FACTOR = 1.0
 const val GEAR_RATIO = 1.0
-val GAINS = Gains(0.5)
+val GAINS = Gains(4.0, kD = 0.3)
 
 const val MAIN_MOTOR_ID = 13
 const val AUX_MOTOR_ID = 14
@@ -75,4 +76,9 @@ val MOTOR_CONFIG: TalonFXConfiguration =
                 StatorCurrentLimit = 80.0
                 SupplyCurrentLimit = 40.0
             }
+        MotionMagic = MotionMagicConfigs().apply {
+            MotionMagicCruiseVelocity = 60.0
+            MotionMagicAcceleration = 120.0
+            MotionMagicJerk = 1300.0
+        }
     }

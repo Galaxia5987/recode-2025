@@ -1,6 +1,7 @@
 package frc.robot.subsystems.arm.elevator
 
 import com.ctre.phoenix6.controls.Follower
+import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC
 import com.ctre.phoenix6.controls.MotionMagicVelocityTorqueCurrentFOC
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
 import com.ctre.phoenix6.hardware.TalonFX
@@ -13,7 +14,7 @@ import frc.robot.lib.extensions.toLinear
 
 class ElevatorIOReal() : ElevatorIO {
     override val inputs = LoggedElevatorInputs()
-    private val positionTorqueRequest = PositionTorqueCurrentFOC(0.0)
+    private val positionTorqueRequest = MotionMagicTorqueCurrentFOC(0.0)
     private val velocityTorqueRequest = MotionMagicVelocityTorqueCurrentFOC(0.0)
     private val mainMotor = TalonFX(MAIN_MOTOR_ID)
     private val auxMotor = TalonFX(AUX_MOTOR_ID)
