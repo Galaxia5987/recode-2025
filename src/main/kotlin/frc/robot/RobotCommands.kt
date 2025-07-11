@@ -148,7 +148,7 @@ fun startIdleHasCoral() = setRobotState(RobotStates.IdleHasCoral)
 fun startIdleHasAlgae() = setRobotState(RobotStates.IdleHasAlgae)
 
 private fun setReefLocation(reefPlacementLocation: ReefLocation) =
-    Commands.runOnce({ reefLocation == reefPlacementLocation })
+    Commands.runOnce({ reefLocation = reefPlacementLocation })
 
 fun setReef4Left() = setReefLocation(ReefLocation.Reef4Left)
 
